@@ -2,6 +2,7 @@ import { autoBattle } from "./data/object.js";
 import { LZString } from "./lz-string.js";
 import { build as buildObject } from "./data/buildObject.js";
 
+import { u2Mutations } from "./data/mutations.js";
 import ABC from "./controller.js";
 
 let simConfig = ABC.defaultConfig();
@@ -271,6 +272,18 @@ function makeOneTimersBtns() {
             }
         }
     }
+
+    // Temporarily add mutations.
+    let mutationsDiv = document.createElement("div");
+    mutationsDiv.id = "mutationsDiv";
+    mutationsDiv.className = "oneTimersInpDiv";
+    parDir.appendChild(mutationsDiv);
+    let mutationsButton = document.createElement("button");
+    mutationsButton.innerHTML = "Mutations";
+    mutationsButton.id = "Mutations_Button";
+    mutationsButton.classList.add("uncheckedButton", "button");
+    mutationsDiv.appendChild(mutationsButton);
+    addChangeForMutation(mutationsButton);
 }
 
 function addChangeForLevel(item) {
@@ -331,6 +344,11 @@ function addChangeForRingInput(input) {
         if (autoRunChecked && button.classList.contains("checkedButton"))
             startSimulation();
     });
+}
+
+function addChangeForMutation(input) {
+    addChangeForButton(input);
+    u2Mutations.tree.Dust.purchased = !u2Mutations.tree.Dust.purchased;
 }
 
 function isInt(value) {
