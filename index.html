@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="index.js" type="module"></script>
         <link rel="stylesheet" href="style.css" />
-        <title>SA Simulator (5.8.0)</title>
+        <title>SA Simulator Test Server</title>
     </head>
 
     <body>
@@ -32,25 +32,58 @@
                         <span id="effects"></span>
                     </div>
                     <fieldset id="shanknanigans">
-                      <legend>Huffy</legend>
-                      <table>
-                        <tr id="huffyPoisonRow" class="displayNone"><td>Chance to poison</td><td id="huffyPoison">0%</td></tr>
-                        <tr id="huffyBleedRow" class="displayNone"><td>Chance to bleed</td><td id="huffyBleed">0%</td></tr>
-                        <tr id="huffyShockRow" class="displayNone"><td>Chance to shock</td><td id="huffyShock">0%</td></tr>
-                        <tr id="huffyShankRow" class ="displayNone"><td>Shank reduction</td><td id="huffyShank">n/a</td></tr>
-                      </table>
+                        <legend>Huffy</legend>
+                        <table>
+                            <tr id="huffyPoisonRow" class="displayNone">
+                                <td>Chance to poison</td>
+                                <td id="huffyPoison">0%</td>
+                            </tr>
+                            <tr id="huffyBleedRow" class="displayNone">
+                                <td>Chance to bleed</td>
+                                <td id="huffyBleed">0%</td>
+                            </tr>
+                            <tr id="huffyShockRow" class="displayNone">
+                                <td>Chance to shock</td>
+                                <td id="huffyShock">0%</td>
+                            </tr>
+                            <tr id="huffyShankRow" class="displayNone">
+                                <td>Shank reduction</td>
+                                <td id="huffyShank">n/a</td>
+                            </tr>
+                        </table>
                     </fieldset>
                     <fieldset id="enemygans">
-                      <legend>Enemy</legend>
-                      <table>
-                        <tr><td>Poison resist</td><td id="enemyResistPoison">0%</td></tr>
-                        <tr><td>Bleed resist</td><td id="enemyResistBleed">0%</td></tr>
-                        <tr><td>Shock resist</td><td id="enemyResistShock">0%</td></tr>
-                        <tr id="enemyPoisonRow" class="displayNone"><td>Chance to poison</td><td id="enemyPoison">0%</td></tr>
-                        <tr id="enemyBleedRow" class="displayNone"><td>Chance to bleed</td><td id="enemyBleed">0%</td></tr>
-                        <tr id="enemyShockRow" class="displayNone"><td>Chance to shock</td><td id="enemyShock">0%</td></tr>
-                        <tr id="enemyShankRow" class="displayNone"><td>Shank reduction</td><td id="enemyShank">n/a</td></tr>
-                      </table>
+                        <legend>Enemy</legend>
+                        <table>
+                            <tr>
+                                <td>Poison resist</td>
+                                <td id="enemyResistPoison">0%</td>
+                            </tr>
+                            <tr>
+                                <td>Bleed resist</td>
+                                <td id="enemyResistBleed">0%</td>
+                            </tr>
+                            <tr>
+                                <td>Shock resist</td>
+                                <td id="enemyResistShock">0%</td>
+                            </tr>
+                            <tr id="enemyPoisonRow" class="displayNone">
+                                <td>Chance to poison</td>
+                                <td id="enemyPoison">0%</td>
+                            </tr>
+                            <tr id="enemyBleedRow" class="displayNone">
+                                <td>Chance to bleed</td>
+                                <td id="enemyBleed">0%</td>
+                            </tr>
+                            <tr id="enemyShockRow" class="displayNone">
+                                <td>Chance to shock</td>
+                                <td id="enemyShock">0%</td>
+                            </tr>
+                            <tr id="enemyShankRow" class="displayNone">
+                                <td>Shank reduction</td>
+                                <td id="enemyShank">n/a</td>
+                            </tr>
+                        </table>
                     </fieldset>
                 </div>
             </div>
@@ -109,15 +142,15 @@
                         >Remaining time: <span id="remainingTime"></span>
                     </span>
                     <fieldset>
-                      <legend>Game</legend>
-                      <span>Dust: <span id="dustPs"></span></span>
-                      <span>Shards: <span id="shardsPs"></span></span>
+                        <legend>Game</legend>
+                        <span>Dust: <span id="dustPs"></span></span>
+                        <span>Shards: <span id="shardsPs"></span></span>
                     </fieldset>
                     <fieldset>
-                      <legend>Base (use for sheet and stuff)</legend>
-                      <span>Dust: <span id="baseDustPs"></span></span>
-                      <span>Shards: <span id="baseShardsPs"></span></span>
-                      <span>Info: <span id="baseInfo"></span></span>
+                        <legend>Base (use for sheet and stuff)</legend>
+                        <span>Dust: <span id="baseDustPs"></span></span>
+                        <span>Shards: <span id="baseShardsPs"></span></span>
+                        <span>Info: <span id="baseInfo"></span></span>
                     </fieldset>
                     <span
                         >Average fight time: <span id="averageFightTime"></span
