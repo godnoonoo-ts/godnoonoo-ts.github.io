@@ -279,7 +279,7 @@ function makeOneTimersBtns() {
     mutationsDiv.className = "oneTimersInpDiv";
     parDir.appendChild(mutationsDiv);
     let mutationsButton = document.createElement("button");
-    mutationsButton.innerHTML = "Mutations";
+    mutationsButton.innerHTML = "Dust mutation";
     mutationsButton.id = "Mutations_Button";
     mutationsButton.classList.add("uncheckedButton", "button");
     mutationsDiv.appendChild(mutationsButton);
@@ -347,8 +347,13 @@ function addChangeForRingInput(input) {
 }
 
 function addChangeForMutation(input) {
-    addChangeForButton(input);
-    u2Mutations.tree.Dust.purchased = !u2Mutations.tree.Dust.purchased;
+    input.addEventListener("click", () => {
+        swapChecked(input);
+        calcBuildCost(true);
+        u2Mutations.tree.Dust.purchased = !u2Mutations.tree.Dust.purchased;
+        if (autoRunChecked && input.classList.contains("checkedButton"))
+            startSimulation();
+    });
 }
 
 function isInt(value) {
