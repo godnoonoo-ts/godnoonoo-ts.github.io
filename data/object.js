@@ -2994,7 +2994,7 @@ export let autoBattle = {
         }
         if (u2Mutations.tree.Dust.purchased) {
             var mutMult = 1.25;
-            if (u2Mutations.tree.Dust.purchased) {
+            if (u2Mutations.tree.Dust2.purchased) {
                 mutMult += 0.25;
             }
             amt *= mutMult;
