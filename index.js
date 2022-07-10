@@ -278,12 +278,22 @@ function makeOneTimersBtns() {
     mutationsDiv.id = "mutationsDiv";
     mutationsDiv.className = "oneTimersInpDiv";
     parDir.appendChild(mutationsDiv);
+
+    // Button 1
     let mutationsButton = document.createElement("button");
-    mutationsButton.innerHTML = "Dust mutation";
+    mutationsButton.innerHTML = "Dusty";
     mutationsButton.id = "Mutations_Button";
     mutationsButton.classList.add("uncheckedButton", "button");
     mutationsDiv.appendChild(mutationsButton);
-    addChangeForMutation(mutationsButton);
+    addChangeForMutation(mutationsButton, 1);
+
+    // Button 2
+    mutationsButton = document.createElement("button");
+    mutationsButton.innerHTML = "Dustier";
+    mutationsButton.id = "Mutations_Button_2";
+    mutationsButton.classList.add("uncheckedButton", "button");
+    mutationsDiv.appendChild(mutationsButton);
+    addChangeForMutation(mutationsButton, 2);
 }
 
 function addChangeForLevel(item) {
@@ -346,11 +356,15 @@ function addChangeForRingInput(input) {
     });
 }
 
-function addChangeForMutation(input) {
+function addChangeForMutation(input, version) {
     input.addEventListener("click", () => {
         swapChecked(input);
         calcBuildCost(true);
-        u2Mutations.tree.Dust.purchased = !u2Mutations.tree.Dust.purchased;
+        if (version === 1)
+            u2Mutations.tree.Dust.purchased = !u2Mutations.tree.Dust.purchased;
+        else
+            u2Mutations.tree.Dust2.purchased =
+                !u2Mutations.tree.Dust2.purchased;
         if (autoRunChecked && input.classList.contains("checkedButton"))
             startSimulation();
     });
