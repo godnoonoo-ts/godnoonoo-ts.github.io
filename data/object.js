@@ -2443,12 +2443,10 @@ export let autoBattle = {
       if (itemObj.doStuff) itemObj.doStuff();
     }
 
-    if (this.items.Sundering_Scythe.equipped && this.trimp.shockTime > 10000)
-      this.trimp.shockTime = 10000;
-    if (this.items.Blessed_Protector.equipped)
-      this.items.Blessed_Protector.afterCheck();
-    if (this.items.Grounded_Crown.equipped)
-      this.items.Grounded_Crown.afterCheck();
+	if (this.items.Sundering_Scythe.equipped && this.trimp.shockTime > 10000) this.trimp.shockTime = 10000;
+    if (this.items.Blessed_Protector.equipped) this.items.Blessed_Protector.afterCheck(); //after anything that might hurt huffy
+    if (this.items.Grounded_Crown.equipped) this.items.Grounded_Crown.afterCheck(); //just deals damage
+    if (this.items.Haunted_Harpoon.equipped) this.items.Haunted_Harpoon.afterCheck(); //after anything that might increase the damage of huffy's bleeds
 
     this.trimp.attackSpeed *= this.enemy.slowAura;
     if (this.trimp.attackSpeed <= 500) {
@@ -2545,13 +2543,7 @@ export let autoBattle = {
         attacker.health = attacker.maxHealth;
     }
     if (attacker.bleed.time > 0) {
-      var attackerShock = 1;
-      if (attacker.shock.time > 0) {
-        attackerShock = 1 + attacker.shock.mod;
-      }
-      var bdamage =
-        this.getAttack(defender) * attacker.bleed.mod * attackerShock;
-      bdamage -= attacker.defense;
+      var bdamage = this.getBleedDamage(attacker, defender);
       bdamage = this.damageCreature(attacker, bdamage);
       var defLifesteal = defender.lifesteal - attacker.lifestealResist;
       if (defLifesteal > 0) {
