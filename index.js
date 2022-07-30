@@ -980,7 +980,7 @@ function onSavePaste(event) {
     if (paste.slice(-1) === "=" || paste.slice(-1) === "A") {
         save = JSON.parse(LZ.decompressFromBase64(paste));
         resetToSave();
-    } else if (paste.includes("||")) {
+    } else if (paste.includes("\t")) {
         buildObject.loadFromSheet(paste);
     } else {
         console.log("Fuck");

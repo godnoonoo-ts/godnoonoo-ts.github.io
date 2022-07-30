@@ -1683,66 +1683,42 @@ export let autoBattle = {
           },
           //nullifium armor 225
           //handful of mold 230
-          Haunted_Harpoon: {
+          Haunted_Harpoon: { 
             owned: false,
             equipped: false,
             hidden: false,
             level: 1,
             zone: 235,
-            description: function () {
-              return (
-                "+" +
-                prettify(this.health()) +
-                " Health, +" +
-                prettify(this.bleedMod() * 100) +
-                "% Bleed Damage, +" +
-                prettify(this.shockMod() * 100) +
-                "% Shock Damage. If the Enemy is Bleeding and has been alive for at least 5 seconds, Huffy gains " +
-                prettify(this.attack()) +
-                " Attack, and the Enemy takes an additional " +
-                prettify(this.bleedTickMult() * 100) +
-                "% of its Bleed damage every second."
-              );
+            description: function(){
+                return "+" + prettify(this.health()) + " Health. If the Enemy is Bleeding and has been alive for at least 5 seconds, Huffy gains " + prettify(this.attack()) + " Attack, and the Enemy takes an additional " + prettify(this.bleedTickMult() * 100) + "% of its Bleed damage every second."
             },
-            upgrade:
-              "+10,000 Attack, +5000 Health, +300% Bleed Damage, +300% Shock Damage, +100% of Bleed Damage taken per second",
-            health: function () {
-              return 5000 + 5000 * this.level;
+            upgrade: "+10,000 Attack, +5000 Health, +100% of Bleed Damage taken per second",
+            health: function(){
+                return 5000 + (5000 * this.level);
             },
-            bleedMod: function () {
-              return 5 + 3 * this.level;
+            bleedTickMult: function(){
+                return 9 + this.level;
             },
-            shockMod: function () {
-              return 5 + 3 * this.level;
+            attack: function(){
+                return 15000 + (10000 * this.level);
             },
-            bleedTickMult: function () {
-              return 9 + this.level;
+            doStuff: function(){
+                if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000) autoBattle.trimp.attack += this.attack();
+                autoBattle.trimp.maxHealth += this.health();
             },
-            attack: function () {
-              return 15000 + 10000 * this.level;
-            },
-            doStuff: function () {
-              if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000)
-                autoBattle.trimp.attack += this.attack();
-              autoBattle.trimp.maxHealth += this.health();
-              autoBattle.trimp.bleedMod += this.bleedMod();
-              autoBattle.trimp.shockMod += this.shockMod();
-            },
-            afterCheck: function () {
-              if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000) {
-                var bdamage = autoBattle.getBleedDamage(
-                  autoBattle.enemy,
-                  autoBattle.trimp
-                );
-                var pct = this.bleedTickMult() * (autoBattle.frameTime / 1000);
-                bdamage *= pct;
-                autoBattle.damageCreature(autoBattle.enemy, bdamage);
-              }
+            afterCheck: function(){
+                if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000){
+                    var bdamage = autoBattle.getBleedDamage(autoBattle.enemy, autoBattle.trimp);
+                    var pct = this.bleedTickMult() * (autoBattle.frameTime / 1000);
+                    bdamage *= pct;
+                    autoBattle.damageCreature(autoBattle.enemy, bdamage);
+                    
+                }
             },
             dustType: "shards",
             startPrice: 15e5,
-            priceMod: 20,
-          },
+            priceMod: 20
+        },
     //Final calc items
     //After all shock resist
     Stormbringer: {
@@ -3034,25 +3010,21 @@ export let autoBattle = {
   getDustMult: function () {
     var amt = 1;
     if (this.items.Lifegiving_Gem.equipped) {
-      amt *= 1 + this.items.Lifegiving_Gem.dustIncrease();
-    }
-    if (this.oneTimers.Dusty_Tome.owned) {
-      amt += 0.05 * (this.maxEnemyLevel - 1);
+        amt *= (1 + this.items.Lifegiving_Gem.dustIncrease());
     }
     amt += this.trimp.dustMult;
-    if (u2Mutations.tree.Dust.purchased) {
-      var mutMult = 1.25;
-      if (u2Mutations.tree.Dust2.purchased) {
-        mutMult += 0.25;
-      }
-      amt *= mutMult;
+    if (this.oneTimers.Dusty_Tome.owned) {
+        amt *= (1 + (0.05 * (this.maxEnemyLevel - 1)));
     }
-    if (
-      this.items.Box_of_Spores.equipped &&
-      this.enemy.bleed.time <= 0 &&
-      this.enemy.poison.time >= 0
-    ) {
-      amt *= this.items.Box_of_Spores.dustMult();
+    if (u2Mutations.tree.Dust.purchased) {
+        var mutMult = 1.25;
+        if (u2Mutations.tree.Dust2.purchased) {
+            mutMult += 0.25;
+        }
+        amt *= mutMult;
+    }
+    if (this.items.Box_of_Spores.equipped && this.enemy.bleed.time <= 0 && this.enemy.poison.time >= 0) {
+        amt *= this.items.Box_of_Spores.dustMult();
     }
     return amt;
   },
