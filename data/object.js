@@ -42,7 +42,7 @@ export let autoBattle = {
   },
   rings: {
     level: 1,
-    mods: ["attack"],
+    mods: [],
   },
   template: function () {
     return {
