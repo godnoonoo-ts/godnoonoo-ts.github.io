@@ -425,6 +425,8 @@ function clearOneTimers() {
     }
     //ring levels above 10 do stuff even if ring isn't equipped
     AB.rings.level = 1;
+    //clear ring mods
+    AB.rings.mods = [];
     ABC.modifiedAB();
 }
 
