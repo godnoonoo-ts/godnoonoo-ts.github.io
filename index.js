@@ -1270,6 +1270,7 @@ function swapChecked(item, checked) {
         }
     }
 }
+}
 
 function toScientific(number, accuracy = 2, negative = false) {
     // Convert number to scientific notation.
