@@ -1659,66 +1659,78 @@ export let autoBattle = {
       startPrice: 6300,
       priceMod: 15,
     },
-        //stormbringer 215
-        Box_of_Spores: {
-            owned: false,
-            equipped: false,
-            hidden: false,
-            level: 1,
-            zone: 220,
-            description: function () {
-              return (
-                "If the Enemy dies while Poisoned and not Bleeding, it drops " +
-                this.dustMult() +
-                "x more Dust."
-              );
-            },
-            upgrade: "+1x Dust",
-            dustMult: function () {
-              return 4 + this.level;
-            },
-            dustType: "shards",
-            startPrice: 60000,
-            priceMod: 15,
-          },
-          //nullifium armor 225
-          //handful of mold 230
-          Haunted_Harpoon: { 
-            owned: false,
-            equipped: false,
-            hidden: false,
-            level: 1,
-            zone: 235,
-            description: function(){
-                return "+" + prettify(this.health()) + " Health. If the Enemy is Bleeding and has been alive for at least 5 seconds, Huffy gains " + prettify(this.attack()) + " Attack, and the Enemy takes an additional " + prettify(this.bleedTickMult() * 100) + "% of its Bleed damage every second."
-            },
-            upgrade: "+10,000 Attack, +5000 Health, +100% of Bleed Damage taken per second",
-            health: function(){
-                return 5000 + (5000 * this.level);
-            },
-            bleedTickMult: function(){
-                return 9 + this.level;
-            },
-            attack: function(){
-                return 15000 + (10000 * this.level);
-            },
-            doStuff: function(){
-                if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000) autoBattle.trimp.attack += this.attack();
-                autoBattle.trimp.maxHealth += this.health();
-            },
-            afterCheck: function(){
-                if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000){
-                    var bdamage = autoBattle.getBleedDamage(autoBattle.enemy, autoBattle.trimp);
-                    var pct = this.bleedTickMult() * (autoBattle.frameTime / 1000);
-                    bdamage *= pct;
-                    autoBattle.damageCreature(autoBattle.enemy, bdamage);
-                    
-                }
-            },
-            dustType: "shards",
-            startPrice: 15e5,
-            priceMod: 20
-        },
+    //stormbringer 215
+    Box_of_Spores: {
+      owned: false,
+      equipped: false,
+      hidden: false,
+      level: 1,
+      zone: 220,
+      description: function () {
+        return (
+          "If the Enemy dies while Poisoned and not Bleeding, it drops " +
+          this.dustMult() +
+          "x more Dust."
+        );
+      },
+      upgrade: "+1x Dust",
+      dustMult: function () {
+        return 4 + this.level;
+      },
+      dustType: "shards",
+      startPrice: 60000,
+      priceMod: 15,
+    },
+    //nullifium armor 225
+    //Myco Mitts 230
+    Haunted_Harpoon: {
+      owned: false,
+      equipped: false,
+      hidden: false,
+      level: 1,
+      zone: 235,
+      description: function () {
+        return (
+          "+" +
+          prettify(this.health()) +
+          " Health. If the Enemy is Bleeding and has been alive for at least 5 seconds, Huffy gains " +
+          prettify(this.attack()) +
+          " Attack, and the Enemy takes an additional " +
+          prettify(this.bleedTickMult() * 100) +
+          "% of its Bleed damage every second."
+        );
+      },
+      upgrade:
+        "+10,000 Attack, +5000 Health, +100% of Bleed Damage taken per second",
+      health: function () {
+        return 5000 + 5000 * this.level;
+      },
+      bleedTickMult: function () {
+        return 9 + this.level;
+      },
+      attack: function () {
+        return 15000 + 10000 * this.level;
+      },
+      doStuff: function () {
+        if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000)
+          autoBattle.trimp.attack += this.attack();
+        autoBattle.trimp.maxHealth += this.health();
+      },
+      afterCheck: function () {
+        if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000) {
+          var bdamage = autoBattle.getBleedDamage(
+            autoBattle.enemy,
+            autoBattle.trimp
+          );
+          var pct = this.bleedTickMult() * (autoBattle.frameTime / 1000);
+          bdamage *= pct;
+          autoBattle.damageCreature(autoBattle.enemy, bdamage);
+        }
+      },
+      dustType: "shards",
+      startPrice: 15e5,
+      priceMod: 20,
+    },
     //Final calc items
     //After all shock resist
     Stormbringer: {
@@ -2232,7 +2244,7 @@ export let autoBattle = {
       dustType: "shards",
     },
     //Final Poison Damage item
-    Handful_of_Mold: {
+    Myco_Mitts: {
       owned: false,
       equipped: false,
       hidden: false,
@@ -2240,7 +2252,7 @@ export let autoBattle = {
       zone: 230,
       description: function () {
         return (
-          "Huffy isn't excited about holding this item but can't deny the results. Multiplies the damage dealt by Poison ticks by " +
+          "Multiplies the damage dealt by Poison ticks by " +
           this.poisonMult() +
           "x."
         );
@@ -2419,10 +2431,14 @@ export let autoBattle = {
       if (itemObj.doStuff) itemObj.doStuff();
     }
 
-	if (this.items.Sundering_Scythe.equipped && this.trimp.shockTime > 10000) this.trimp.shockTime = 10000;
-    if (this.items.Blessed_Protector.equipped) this.items.Blessed_Protector.afterCheck(); //after anything that might hurt huffy
-    if (this.items.Grounded_Crown.equipped) this.items.Grounded_Crown.afterCheck(); //just deals damage
-    if (this.items.Haunted_Harpoon.equipped) this.items.Haunted_Harpoon.afterCheck(); //after anything that might increase the damage of huffy's bleeds
+    if (this.items.Sundering_Scythe.equipped && this.trimp.shockTime > 10000)
+      this.trimp.shockTime = 10000;
+    if (this.items.Blessed_Protector.equipped)
+      this.items.Blessed_Protector.afterCheck(); //after anything that might hurt huffy
+    if (this.items.Grounded_Crown.equipped)
+      this.items.Grounded_Crown.afterCheck(); //just deals damage
+    if (this.items.Haunted_Harpoon.equipped)
+      this.items.Haunted_Harpoon.afterCheck(); //after anything that might increase the damage of huffy's bleeds
 
     this.trimp.attackSpeed *= this.enemy.slowAura;
     if (this.trimp.attackSpeed <= 500) {
@@ -3010,21 +3026,25 @@ export let autoBattle = {
   getDustMult: function () {
     var amt = 1;
     if (this.items.Lifegiving_Gem.equipped) {
-        amt *= (1 + this.items.Lifegiving_Gem.dustIncrease());
+      amt *= 1 + this.items.Lifegiving_Gem.dustIncrease();
     }
     amt += this.trimp.dustMult;
     if (this.oneTimers.Dusty_Tome.owned) {
-        amt *= (1 + (0.05 * (this.maxEnemyLevel - 1)));
+      amt *= 1 + 0.05 * (this.maxEnemyLevel - 1);
     }
     if (u2Mutations.tree.Dust.purchased) {
-        var mutMult = 1.25;
-        if (u2Mutations.tree.Dust2.purchased) {
-            mutMult += 0.25;
-        }
-        amt *= mutMult;
+      var mutMult = 1.25;
+      if (u2Mutations.tree.Dust2.purchased) {
+        mutMult += 0.25;
+      }
+      amt *= mutMult;
     }
-    if (this.items.Box_of_Spores.equipped && this.enemy.bleed.time <= 0 && this.enemy.poison.time >= 0) {
-        amt *= this.items.Box_of_Spores.dustMult();
+    if (
+      this.items.Box_of_Spores.equipped &&
+      this.enemy.bleed.time <= 0 &&
+      this.enemy.poison.time >= 0
+    ) {
+      amt *= this.items.Box_of_Spores.dustMult();
     }
     return amt;
   },
