@@ -1,6 +1,7 @@
 import { autoBattle } from "./data/object.js";
 import { LZString } from "./lz-string.js";
 import { build as buildObject } from "./data/buildObject.js";
+
 import { u2Mutations } from "./data/mutations.js";
 import ABC from "./controller.js";
 import builder from "./builder.js";
@@ -395,9 +396,33 @@ function makeOneTimersBtns() {
                     if (autoRunChecked) startSimulation();
                 });
                 div.appendChild(button);
+                addChangeForButton(button);
             }
         }
     }
+
+    // Temporarily add mutations.
+    let mutationsDiv = document.createElement("div");
+    mutationsDiv.id = "mutationsDiv";
+    mutationsDiv.className = "oneTimersInpDiv";
+    parDir.appendChild(mutationsDiv);
+
+    // Button 1
+    let mutationsButton = document.createElement("button");
+    mutationsButton.innerHTML = "Dusty";
+    mutationsButton.id = "Mutations_Button";
+    mutationsButton.classList.add("uncheckedButton", "button");
+    mutationsDiv.appendChild(mutationsButton);
+    addChangeForMutation(mutationsButton, 1);
+
+    // Button 2
+    mutationsButton = document.createElement("button");
+    mutationsButton.innerHTML = "Dustier";
+    mutationsButton.id = "Mutations_Button_2";
+    mutationsButton.classList.add("uncheckedButton", "button");
+    mutationsDiv.appendChild(mutationsButton);
+    addChangeForMutation(mutationsButton, 2);
+}
 
     let mutationsDiv = document.createElement("div");
     mutationsDiv.id = "mutationsDiv";
@@ -422,40 +447,63 @@ function makeOneTimersBtns() {
         ABC.modifiedAB(); // always stop sim or someone will get half the run with more income
         if (autoRunChecked) startSimulation();
     });
-    mutationsDiv.appendChild(mutationsButton);
+}
 
-    // Button 2
-    mutationsButton = document.createElement("button");
-    mutationsButton.innerHTML = "Dustier";
-    mutationsButton.id = "Mutations_Button_2";
-    mutationsButton.classList.add("uncheckedButton", "button");
-    mutationsButton.addEventListener("click", (event) => {
-        swapChecked(event.target);
-        u2Mutations.tree.Dust2.purchased = !u2Mutations.tree.Dust2.purchased;
-        if (
-            u2Mutations.tree.Dust2.purchased &&
-            !u2Mutations.tree.Dust.purchased
-        ) {
-            u2Mutations.tree.Dust.purchased = true; // can't have one without the other
-            swapChecked(document.getElementById("Mutations_Button"), true);
+function addChangeForButton(button) {
+    button.addEventListener("click", (event) => {
+        swapChecked(button);
+        calcBuildCost(true);
+        if (autoRunChecked && button.classList.contains("checkedButton"))
+            startSimulation();
+    });
+}
+
+function addChangeForButtonEquip(button) {
+    button.addEventListener("click", (event) => {
+        let lvl = document.getElementById(
+            button.id.replace("_Button", "_Input")
+        );
+        let name = button.id.replace("_Button", "");
+        if (parseInt(lvl.value) > 0) {
+            AB.equip(name);
+            ABC.modifiedAB();
         }
-        ABC.modifiedAB(); // always stop sim or someone will get half the run with more income
-        if (autoRunChecked) startSimulation();
-    });
-    mutationsDiv.appendChild(mutationsButton);
 
-    // Scruffy 21
-    let scruffyButton = document.createElement("button");
-    scruffyButton.innerHTML = "S21";
-    scruffyButton.id = "S21_Button";
-    scruffyButton.classList.add("uncheckedButton", "button");
-    scruffyButton.addEventListener("click", (event) => {
-        swapChecked(event.target);
-        AB.scruffyLvl21 = !AB.scruffyLvl21;
-        ABC.modifiedAB();
-        if (autoRunChecked) startSimulation();
+        // Set limbs.
+        elements.limbsUsed.innerHTML = countLimbsUsed();
     });
-    mutationsDiv.appendChild(scruffyButton);
+    addChangeForButton(button);
+}
+
+function addChangeForRingInput(input) {
+    input.addEventListener("change", (event) => {
+        let value = event.target.value;
+        if (parseInt(Number(value)) >= 1) {
+            value = Number(value).toString();
+            event.target.value = value;
+            AB.rings.level = value;
+            ABC.modifiedAB();
+        } else {
+            event.target.value = 1;
+        }
+        calcBuildCost(true);
+        if (autoRunChecked && button.classList.contains("checkedButton"))
+            startSimulation();
+    });
+}
+
+function addChangeForMutation(input, version) {
+    input.addEventListener("click", () => {
+        swapChecked(input);
+        calcBuildCost(true);
+        if (version === 1)
+            u2Mutations.tree.Dust.purchased = !u2Mutations.tree.Dust.purchased;
+        else
+            u2Mutations.tree.Dust2.purchased =
+                !u2Mutations.tree.Dust2.purchased;
+        if (autoRunChecked && input.classList.contains("checkedButton"))
+            startSimulation();
+    });
 }
 
 function isInt(value) {
@@ -476,17 +524,28 @@ function clearItems() {
     ABC.modifiedAB();
 }
 
-function setItemsFromInputs() {
-    ABC.modifiedAB(); // get that out of the way
-    for (let itemId in AB.items) {
-        let equipped = document
-            .getElementById(itemId + "_Button")
-            .classList.contains("checkedButton");
-        let level = parseInt(document.getElementById(itemId + "_Input").value);
-        builder.setItem(itemId, equipped, level, true); // true= don't do stuff yet, wait for all changes
+function setItems() {
+    let items = document.querySelectorAll("input.equipInput");
+    let ogItems = AB.items;
+    for (const ogItem in ogItems) {
+        items.forEach((item) => {
+            let name = item.id.replace("_Input", "");
+            let val = parseInt(item.value);
+            if (ogItem === name && val > 0) {
+                AB.items[name].owned = true;
+                AB.items[name].level = val;
+                if (item.previousSibling.classList.contains("checkedButton")) {
+                    AB.equip(name);
+                }
+            }
+        });
     }
-    builder.readEquips();
-    builder.updateDisplay();
+    ABC.modifiedAB();
+}
+
+function setActiveOneTimers() {
+    clearOneTimers();
+    setOneTimers();
 }
 
 function clearOneTimers() {
@@ -497,6 +556,7 @@ function clearOneTimers() {
     }
     //ring levels above 10 do stuff even if ring isn't equipped
     AB.rings.level = 1;
+    //clear ring mods
     AB.rings.mods = [];
     ABC.modifiedAB();
 }
@@ -633,9 +693,40 @@ function setItemsInHtml(
     swapChecked(document.getElementById("Mutations_Button_2"), mutations[1]);
     u2Mutations.tree.Dust2.purchased = mutations[1];
 
-    // Scruffy 21
-    AB.scruffyLvl21 = scruffy > 1466015503701000;
-    swapChecked(document.getElementById("S21_Button"), AB.scruffyLvl21);
+function resetItemsInHtml() {
+    let itemBoxes = document.querySelectorAll("input.equipInput");
+    itemBoxes.forEach((box) => {
+        box.value = 1;
+        let button = box.previousSibling;
+        button.classList.remove("checkedButton");
+        button.classList.add("uncheckedButton");
+    });
+
+    let OTBoxes = document.querySelectorAll("button.oneTimerButton");
+    OTBoxes.forEach((button) => {
+        button.classList.remove("checkedButton");
+        button.classList.add("uncheckedButton");
+    });
+
+    let target = document.getElementById("currentLevel");
+    target.value = 1;
+
+    target = document.getElementById("highestLevel");
+    target.value = 1;
+
+    // Set limbs
+    elements.limbsUsed.innerHTML = 0;
+}
+
+function orderByUnlock() {
+    let order = AB.getItemOrder();
+    let sorted = [];
+    let n = order.length;
+    for (let i = 0; i < n; i++) {
+        let item = order[i];
+        sorted.push(item.name);
+    }
+    return sorted;
 }
 
 function addListeners() {
@@ -1000,7 +1091,7 @@ function onSavePaste(event) {
     if (paste.slice(-1) === "=" || paste.slice(-1) === "A") {
         save = JSON.parse(LZ.decompressFromBase64(paste));
         resetToSave();
-    } else if (paste.includes("||") || paste.includes("\t")) {
+    } else if (paste.includes("\t")) {
         buildObject.loadFromSheet(paste);
     } else {
         console.log("Error importing!");
