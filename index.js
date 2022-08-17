@@ -213,6 +213,20 @@ const startSimulation = () => {
     runSimulation();
 };
 
+function startSimulationFromButton () {
+    if (!ABC.stuffModified) {
+        let newConfig = {...simConfig};
+        newConfig.fights += ABC.battles;
+        newConfig.seconds += ABC.seconds;
+        ABC.reconfigure(newConfig);
+        if (!ABC.isRunning()) {
+            runSimulation();
+        }
+    } else {
+        startSimulation();
+    }
+}
+
 const stopSimulation = () => {
     ABC.stop();
 };
@@ -643,7 +657,7 @@ function addListeners() {
     // Start button
     document
         .getElementById("startButton")
-        .addEventListener("click", startSimulation);
+        .addEventListener("click", startSimulationFromButton);
 
     // Stop button
     document
