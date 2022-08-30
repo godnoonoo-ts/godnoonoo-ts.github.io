@@ -213,9 +213,9 @@ const startSimulation = () => {
     runSimulation();
 };
 
-function startSimulationFromButton () {
+function startSimulationFromButton() {
     if (!ABC.stuffModified) {
-        let newConfig = {...simConfig};
+        let newConfig = { ...simConfig };
         newConfig.fights += ABC.battles;
         newConfig.seconds += ABC.seconds;
         ABC.reconfigure(newConfig);
@@ -328,7 +328,7 @@ function partEquipDiv(parts, ind) {
         input.className = "equipInput";
         input.id = item + "_Input";
         input.setAttribute("data-name", item);
-        input.addEventListener("change", (event) => {
+        input.addEventListener("input", (event) => {
             let value = parseInt(event.target.value);
             value = value >= 1 ? value : 1;
             event.target.value = value;
@@ -368,7 +368,7 @@ function makeOneTimersBtns() {
                 input.type = "number";
                 input.value = 1;
                 input.id = "The_Ring_Input";
-                input.addEventListener("change", (event) => {
+                input.addEventListener("input", (event) => {
                     let value = parseInt(event.target.value);
                     value = value >= 1 ? value : 1;
                     event.target.value = value;
@@ -665,11 +665,11 @@ function addListeners() {
         .addEventListener("click", stopSimulation);
 
     // Config
-    document.getElementById("simHours").addEventListener("change", (event) => {
+    document.getElementById("simHours").addEventListener("input", (event) => {
         simConfig.seconds = parseInt(event.target.value) * 60 * 60;
         ABC.reconfigure(simConfig);
     });
-    document.getElementById("simFights").addEventListener("change", (event) => {
+    document.getElementById("simFights").addEventListener("input", (event) => {
         simConfig.fights = parseInt(event.target.value);
         ABC.reconfigure(simConfig);
     });
@@ -677,7 +677,7 @@ function addListeners() {
     // SA level
     target = document.getElementById("currentLevel");
     target.value = AB.enemyLevel;
-    target.addEventListener("change", (event) => {
+    target.addEventListener("input", (event) => {
         let value = parseInt(event.target.value);
         let maxLvl = document.getElementById("highestLevel");
         if (value < 1) {
@@ -695,7 +695,7 @@ function addListeners() {
     // SA highest level
     target = document.getElementById("highestLevel");
     target.value = AB.maxEnemyLevel;
-    target.addEventListener("change", (event) => {
+    target.addEventListener("input", (event) => {
         let value = parseInt(event.target.value);
         if (value < 1) event.target.value = 1;
         builder.setMaxEnemyLevel(value);
