@@ -1,0 +1,191 @@
+body {
+  background-color: darkgray;
+  color: black;
+}
+
+#mainDiv {
+  display: flex;
+}
+
+#leftSideDiv {
+  display: flex;
+}
+
+#rightSideDiv {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1em;
+}
+
+#equipDiv {
+  display: flex;
+  flex-direction: row;
+  margin-right: 1em;
+}
+
+#otherDiv {
+  max-width: 25em;
+}
+
+.partDiv {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+.equipInpDiv {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid darkslateblue;
+}
+
+.equipInpDiv button {
+  margin-right: 1em;
+}
+
+#oneTimersDiv {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+.oneTimersInpDiv {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid darkslateblue;
+  flex-direction: column;
+}
+
+#topDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+#The_Ring_Button {
+  flex-grow: 2;
+}
+
+#The_Ring_Input {
+  width: 2.5em;
+  text-align: right;
+}
+
+.equipInput {
+  width: 2.5em;
+  text-align: right;
+}
+
+#resultsDiv, #resultsDiv > fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+#baseDustPs, #baseShardsPs {
+  font-weight: bold;
+},
+
+#otherInputs {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 1em 0 0;
+}
+
+.levelInp {
+  display: flex;
+  justify-content: space-between;
+}
+
+#currentLevel {
+  width: 3em;
+}
+
+#highestLevel {
+  width: 3em;
+}
+
+#resultsDiv > span {
+  border-bottom: 1px solid darkslateblue;
+}
+
+#startButton {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#calcButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+#bestUpgradesDiv {
+  display: flex;
+  flex-direction: vertical;
+  justify-content: space-between;
+}
+
+#bestUpgradesDiv div {
+  display: flex;
+  flex-direction: column;
+}
+
+#inputAndCheckRingDiv {
+  display: flex;
+  justify-content: right;
+  margin-left: 1em;
+}
+
+#inputAndCheckRingDiv input {
+  width: 2.5em;
+}
+
+#ringModDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkedButton {
+  /* Set background to orange */
+  background-color: rgba(242, 140, 40, 0.5);
+}
+
+#affordTimeDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+#affordTimeInputDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+#affordTimeBtn {
+  flex: 1 0 auto;
+}
+
+#affordTimeSelect {
+  flex: 2 0 auto;
+}
+
+.displayNone {
+  display: none;
+}
+
+#run {
+  display: inline-flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+#affordDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.simInput {
+  width: 5em;
+}
+
+#bestUpgradesMessage {
+  display: block;
+}
