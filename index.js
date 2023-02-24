@@ -75,7 +75,7 @@ function getElements() {
         averageKillTime: document.getElementById("averageKillTime"),
         averageHealthLeft: document.getElementById("averageHealthLeft"),
         averageHealthLeftLoses: document.getElementById(
-            "averageHealthLeftLoses"
+            "averageHealthLeftLoses",
         ),
         bestFight: document.getElementById("bestFight"),
         shardsPs: document.getElementById("shardsPs"),
@@ -140,6 +140,7 @@ const wrapup = () => {
         // <standarization stuff>
         let assumeTomeLevel = 43;
         let assumeDustierLevel = 85;
+        let assumeS21 = 134;
         // </standarization stuff>
         if (AB.enemyLevel >= assumeTomeLevel) {
             unmultipliedDust *= 1 + 0.05 * AB.enemyLevel;
@@ -147,6 +148,10 @@ const wrapup = () => {
         if (AB.enemyLevel >= assumeDustierLevel) {
             unmultipliedDust *= 1.5;
         }
+        if (AB.enemyLevel >= assumeS21) {
+            unmultipliedDust *= 5;
+        }
+
         elements.baseDustPs.innerHTML = toScientific(unmultipliedDust) + " D/s";
         elements.baseShardsPs.innerHTML =
             toScientific(AB.enemyLevel >= 51 ? unmultipliedDust / 1e9 : 0) +
@@ -270,18 +275,18 @@ function setEverythingFromInputs() {
             }
             builder.setRingLevel(
                 parseInt(document.getElementById("The_Ring_Input").value),
-                true
+                true,
             );
         }
     });
 
     builder.readEquips();
     builder.setMaxEnemyLevel(
-        parseInt(document.getElementById("highestLevel").value)
+        parseInt(document.getElementById("highestLevel").value),
     );
     builder.setEnemyLevel(
         parseInt(document.getElementById("currentLevel").value),
-        true
+        true,
     );
     builder.updateDisplay();
     builder.recalcCost();
@@ -404,7 +409,7 @@ function makeOneTimersBtns() {
                 button.addEventListener("click", (event) => {
                     swapChecked(event.target);
                     builder.toggleOneTimer(
-                        event.target.getAttribute("data-name")
+                        event.target.getAttribute("data-name"),
                     );
                     if (autoRunChecked) startSimulation();
                 });
@@ -603,7 +608,7 @@ function setItemsInHtml(
     maxLevel,
     rings,
     mutations,
-    scruffy
+    scruffy,
 ) {
     let itemBoxes = document.querySelectorAll("input.equipInput");
     itemBoxes.forEach((box) => {
@@ -626,7 +631,7 @@ function setItemsInHtml(
                     // check if mod is selected
                     swapChecked(
                         children[i],
-                        rings.mods.indexOf(children[i].innerHTML) != -1
+                        rings.mods.indexOf(children[i].innerHTML) != -1,
                     );
                 }
                 let inputLvl = document.getElementById("The_Ring_Input");
@@ -788,10 +793,10 @@ let findBestStorage = {
         let bestPaybackDust;
         if (dustItems.length) {
             bestUpgradeDust = dustItems.reduce((a, b) =>
-                a.increase > b.increase ? a : b
+                a.increase > b.increase ? a : b,
             );
             bestPaybackDust = dustItems.reduce((a, b) =>
-                a.time < b.time ? a : b
+                a.time < b.time ? a : b,
             );
         }
 
@@ -800,10 +805,10 @@ let findBestStorage = {
         let bestPaybackShards;
         if (shardItems.length) {
             bestUpgradeShards = shardItems.reduce((a, b) =>
-                a.increase > b.increase ? a : b
+                a.increase > b.increase ? a : b,
             );
             bestPaybackShards = shardItems.reduce((a, b) =>
-                a.time < b.time ? a : b
+                a.time < b.time ? a : b,
             );
         }
 
@@ -860,7 +865,7 @@ let findBestStorage = {
                 item.displayName +
                 " " +
                 Math.floor(ABC.getProgress() * 100) +
-                "%"
+                "%",
         );
 
         let newDps = AB.getDustPs();
@@ -1098,7 +1103,7 @@ function resetToSave() {
             maxLevel,
             ring,
             mutations,
-            scruffy
+            scruffy,
         );
 
         setEverythingFromInputs();
@@ -1384,7 +1389,7 @@ let ringModsResults = {
 
         ringModsResults.modCombinationNames = getRingModCombinations();
         ringModsResults.modCombinationNames.sort(
-            (a, b) => a.indexOf("defense") - b.indexOf("defense")
+            (a, b) => a.indexOf("defense") - b.indexOf("defense"),
         );
         let currentCombo = ringModsResults.modCombinationNames[0];
 
@@ -1499,7 +1504,7 @@ let ringModsResults = {
                 formatNames(AB.rings.mods) +
                 " " +
                 Math.floor(ABC.getProgress() * 100) +
-                "%"
+                "%",
         );
 
         let dps = AB.getDustPs();
