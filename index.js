@@ -140,7 +140,7 @@ const wrapup = () => {
         // <standarization stuff>
         let assumeTomeLevel = 43;
         let assumeDustierLevel = 85;
-        let assumeS21 = 134;
+        let assumeS21 = 122;
         // </standarization stuff>
         if (AB.enemyLevel >= assumeTomeLevel) {
             unmultipliedDust *= 1 + 0.05 * AB.enemyLevel;
