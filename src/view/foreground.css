@@ -1,0 +1,440 @@
+/*
+Stylesheet
+*/
+
+#foreground {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* General */
+
+.generalButton {
+    min-height: 1.8em;
+}
+
+.generalInput {
+    width: 3em;
+    height: 1.4em;
+    border-color: rgb(64, 64, 64);
+    background-color: rgb(32, 32, 32);
+}
+
+.text {
+    color: rgb(255, 255, 255);
+    font-size: medium;
+}
+
+.blackText {
+    color: rgb(0, 0, 0);
+    font-size: medium;
+}
+
+.small-text {
+    color: rgb(255, 255, 255);
+    font-size: small;
+}
+
+/* Hover */
+
+.hover {
+    display: none;
+    background-color: rgb(39, 117, 124);
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.itemHover {
+    margin-top: 8em;
+    margin-left: 4em;
+    padding: 10px;
+    width: 30em;
+}
+
+.bonusHover {
+    margin-top: 0.5em;
+    padding: 10px;
+    width: 24em;
+}
+
+/* Main panels */
+
+#itemsPanel {
+    display: flex;
+    flex-direction: row;
+}
+
+#panel2 {
+    margin-left: 2em;
+}
+
+#panel3 {
+    margin-left: 2em;
+}
+
+/* Items */
+
+.partTable {
+    margin: 0.5em 1em;
+    table-layout: fixed;
+}
+
+.partTable > tr {
+    vertical-align: middle;
+}
+
+.equipInpDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: center;
+}
+
+.itemsButton {
+    text-align: left;
+    order: 0;
+    flex: 5 1 auto;
+    align-self: auto;
+}
+
+.equipInput {
+    order: 1;
+    flex: 0 1 auto;
+    align-self: auto;
+    margin-left: 0.5em;
+}
+
+/* Bonuses */
+
+#bonusesPanel {
+    margin-bottom: 2em;
+    padding: 0.5em 1em;
+}
+
+#oneTimersPanel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+.oneTimerButton {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+}
+
+#ringPanel {
+    margin-top: 0.3em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+#ringInput {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: auto;
+}
+
+#ringModsDiv {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#mutationsPanel {
+    margin-top: 0.3em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+.mutationsButton {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+}
+
+/* Info */
+
+#infoPanel {
+    border-collapse: collapse;
+    margin-bottom: 2em;
+}
+
+#infoPanel > tbody > tr > td {
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: black;
+}
+
+#buildCostDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: flex-start;
+    padding: 0.3em 1em;
+}
+
+#limbsDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0.3em 1em;
+}
+
+#limbsUsed {
+    font-size: large;
+}
+
+#maxLevelDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0.3em 1em;
+}
+
+#currentLevelDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0.3em 1em;
+}
+
+#effectsDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0.3em 1em;
+}
+
+/* Resistance */
+
+#resistancePanel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: flex-start;
+    padding: 0.3em 1em;
+}
+
+#enemyResistanceDiv {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: flex-start;
+    padding: 0.2em;
+}
+
+/* More info */
+#timeAffordTime {
+    display: none;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+/* Simulation */
+
+#simulationPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em 1em;
+    margin-bottom: 2em;
+    min-width: 30em;
+}
+
+#saveImportInp {
+    width: 5em;
+}
+
+#dustGainsDiv {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+/* Results */
+
+#resultsPanel {
+    display: flex;
+    justify-content: center;
+    padding: 0.3em 1em;
+    margin-bottom: 2em;
+}
+
+/* Calc panel */
+#calcPanel {
+    display: table;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3em 1em;
+}
+
+#calcBtns2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Calc results panel */
+
+#bestGradesResults {
+    display: none;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestGradesResults div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestGradesResults span {
+    height: 1.3em;
+}
+
+#bestModsResults {
+    display: none;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestModsResults div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestModsResults span {
+    height: 1.3em;
+}
+
+#bestDropResults {
+    display: none;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestDropResults div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestDropResults span {
+    height: 1.3em;
+}
+
+#bestAddResults {
+    display: none;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestAddResults div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+#bestAddResults span {
+    height: 1.3em;
+}
+
+/* Colours */
+
+.dark {
+    background-color: rgb(32, 32, 32);
+}
+
+.dark-light {
+    background-color: rgb(64, 64, 64);
+}
+
+.dustColour {
+    background-color: rgb(213, 86, 114);
+}
+
+.shardsColour {
+    background-color: rgb(76, 125, 148);
+}
+
+.oneTimerColour {
+    background-color: rgb(87, 0, 0);
+}
+
+.theRingColour {
+    background-color: rgb(26, 29, 26);
+}
+
+.unlockColour {
+    background-color: rgb(116, 142, 84);
+}
+
+.uncheckedButton {
+    background-color: rgb(11, 89, 153);
+}
+
+.checkedButton {
+    background-color: rgb(174, 92, 10);
+}
+
+.butButton {
+    background-color: rgb(143, 140, 0);
+}
