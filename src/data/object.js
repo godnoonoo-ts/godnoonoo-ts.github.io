@@ -191,8 +191,7 @@ export let autoBattle = {
                     "% Enemy Attack Time."
                 );
             },
-            upgrade:
-                "-2% Huffy Attack Time, +2% Enemy Attack Time (compounding)",
+            upgrade: "-2% Huffy Attack Time, +2% Enemy Attack Time (compounding)",
             trimpAttackSpeed: function () {
                 return Math.pow(0.98, this.level);
             },
@@ -249,16 +248,13 @@ export let autoBattle = {
                     "Can create a Bleed on the Enemy for 10 seconds. +" +
                     prettify(this.bleedMod() * 100) +
                     "% Bleed Damage" +
-                    (this.level >= 5
-                        ? ", +" + prettify(this.attack()) + " Attack"
-                        : "") +
+                    (this.level >= 5 ? ", +" + prettify(this.attack()) + " Attack" : "") +
                     ". +" +
                     prettify(this.bleedChance()) +
                     "% Bleed Chance, doubled if the Enemy is Shocked or Poisoned."
                 );
             },
-            upgrade:
-                "+10 Attack and +20% Bleed Damage per 5 levels. +5% Bleed Damage and +3% Bleed Chance",
+            upgrade: "+10 Attack and +20% Bleed Damage per 5 levels. +5% Bleed Damage and +3% Bleed Chance",
             attack: function () {
                 return Math.floor(this.level / 5) * 10;
             },
@@ -273,11 +269,9 @@ export let autoBattle = {
             doStuff: function () {
                 autoBattle.trimp.attack += this.attack();
                 autoBattle.trimp.bleedMod += this.bleedMod();
-                if (autoBattle.trimp.bleedTime < 10000)
-                    autoBattle.trimp.bleedTime = 10000;
+                if (autoBattle.trimp.bleedTime < 10000) autoBattle.trimp.bleedTime = 10000;
                 autoBattle.trimp.bleedChance +=
-                    autoBattle.enemy.poison.time > 0 ||
-                    autoBattle.enemy.shock.time > 0
+                    autoBattle.enemy.poison.time > 0 || autoBattle.enemy.shock.time > 0
                         ? this.bleedChance() * 2
                         : this.bleedChance();
             },
@@ -303,12 +297,8 @@ export let autoBattle = {
             doStuff: function () {
                 autoBattle.trimp.poisonMod += this.effect();
                 autoBattle.trimp.poisonChance +=
-                    autoBattle.enemy.shock.time > 0 ||
-                    autoBattle.enemy.bleed.time > 0
-                        ? 50
-                        : 25;
-                if (autoBattle.trimp.poisonTime < 10000)
-                    autoBattle.trimp.poisonTime = 10000;
+                    autoBattle.enemy.shock.time > 0 || autoBattle.enemy.bleed.time > 0 ? 50 : 25;
+                if (autoBattle.trimp.poisonTime < 10000) autoBattle.trimp.poisonTime = 10000;
             },
             priceMod: 6,
             startPrice: 50,
@@ -331,10 +321,7 @@ export let autoBattle = {
             },
             doStuff: function () {
                 autoBattle.trimp.shockChance +=
-                    autoBattle.enemy.bleed.time > 0 ||
-                    autoBattle.enemy.poison.time > 0
-                        ? 70
-                        : 35;
+                    autoBattle.enemy.bleed.time > 0 || autoBattle.enemy.poison.time > 0 ? 70 : 35;
                 autoBattle.trimp.shockMod += this.shockMod();
                 autoBattle.trimp.shockTime = 10000;
             },
@@ -381,8 +368,7 @@ export let autoBattle = {
                     "."
                 );
             },
-            upgrade:
-                "+1 Max Poison Stack per 4 levels. +1 Defense, +4% standard Poison Chance",
+            upgrade: "+1 Max Poison Stack per 4 levels. +1 Defense, +4% standard Poison Chance",
             defenseEffect: function () {
                 return this.level;
             },
@@ -394,8 +380,7 @@ export let autoBattle = {
                 return 1 + levels;
             },
             doStuff: function () {
-                if (autoBattle.enemy.poison.time > 0)
-                    autoBattle.trimp.defense += this.defenseEffect();
+                if (autoBattle.enemy.poison.time > 0) autoBattle.trimp.defense += this.defenseEffect();
                 else autoBattle.trimp.poisonChance += 50;
                 autoBattle.trimp.poisonChance += this.poisonChance();
                 autoBattle.trimp.poisonStack += this.poisonStack();
@@ -412,11 +397,7 @@ export let autoBattle = {
             zone: 87,
             description: function () {
                 return (
-                    "+" +
-                    prettify(this.defense()) +
-                    " Defense. +" +
-                    prettify(this.resistance()) +
-                    "% to all Resistances."
+                    "+" + prettify(this.defense()) + " Defense. +" + prettify(this.resistance()) + "% to all Resistances."
                 );
             },
             upgrade: "+2 Defense, +5% Resist",
@@ -454,14 +435,7 @@ export let autoBattle = {
                 return 0.2 + 0.1 * this.level;
             },
             dustIncrease: function () {
-                return (
-                    this.effect() +
-                    Math.max(
-                        0,
-                        autoBattle.trimp.lifesteal -
-                            autoBattle.enemy.lifestealResist,
-                    )
-                );
+                return this.effect() + Math.max(0, autoBattle.trimp.lifesteal - autoBattle.enemy.lifestealResist);
             },
             startPrice: 650,
             priceMod: 4,
@@ -556,13 +530,7 @@ export let autoBattle = {
             level: 1,
             zone: 103,
             description: function () {
-                return (
-                    "+" +
-                    prettify(this.defense()) +
-                    " Defense. +" +
-                    prettify(this.health()) +
-                    " Health."
-                );
+                return "+" + prettify(this.defense()) + " Defense. +" + prettify(this.health()) + " Health.";
             },
             upgrade: "+6 defense, +100 health",
             defense: function () {
@@ -606,13 +574,11 @@ export let autoBattle = {
                 return 0.4 + 0.1 * this.level;
             },
             doStuff: function () {
-                if (autoBattle.trimp.shockTime < 20000)
-                    autoBattle.trimp.shockTime = 20000;
+                if (autoBattle.trimp.shockTime < 20000) autoBattle.trimp.shockTime = 20000;
                 autoBattle.trimp.shockMod += this.shockMod();
                 autoBattle.trimp.shockChance += this.shockChance();
                 autoBattle.trimp.attack += this.attack();
-                if (autoBattle.enemy.shock.time <= 0)
-                    autoBattle.trimp.attackSpeed *= 0.75;
+                if (autoBattle.enemy.shock.time <= 0) autoBattle.trimp.attackSpeed *= 0.75;
                 else autoBattle.trimp.lifesteal += 0.25;
             },
             priceMod: 5,
@@ -642,10 +608,8 @@ export let autoBattle = {
                 return 5 + 2 * this.level;
             },
             doStuff: function () {
-                if (autoBattle.enemy.poison.time > 0)
-                    autoBattle.enemy.attack *= 0.85;
-                if (autoBattle.trimp.poisonTime < 10000)
-                    autoBattle.trimp.poisonTime = 10000;
+                if (autoBattle.enemy.poison.time > 0) autoBattle.enemy.attack *= 0.85;
+                if (autoBattle.trimp.poisonTime < 10000) autoBattle.trimp.poisonTime = 10000;
                 autoBattle.trimp.poisonChance += this.poisonChance();
                 autoBattle.trimp.poisonMod += this.poisonMod();
             },
@@ -669,8 +633,7 @@ export let autoBattle = {
                     "% less damage from all sources."
                 );
             },
-            upgrade:
-                "+6 Attack, +6% Lifesteal, -3% damage taken (compounding, never reaching 75%)",
+            upgrade: "+6 Attack, +6% Lifesteal, -3% damage taken (compounding, never reaching 75%)",
             damageTakenMult: function () {
                 return (0.825 * Math.pow(0.93, this.level - 1)) / 1.5 + 0.25;
             },
@@ -681,11 +644,7 @@ export let autoBattle = {
                 return 0.09 + 0.06 * this.level;
             },
             doStuff: function () {
-                if (
-                    autoBattle.trimp.bleed.time > 0 ||
-                    autoBattle.trimp.shock.time > 0 ||
-                    autoBattle.trimp.poison.time > 0
-                ) {
+                if (autoBattle.trimp.bleed.time > 0 || autoBattle.trimp.shock.time > 0 || autoBattle.trimp.poison.time > 0) {
                     autoBattle.trimp.damageTakenMult *= this.damageTakenMult();
                     autoBattle.trimp.attack += this.attack();
                     autoBattle.trimp.lifesteal += this.lifesteal();
@@ -714,8 +673,7 @@ export let autoBattle = {
                     "%."
                 );
             },
-            upgrade:
-                "+3 Defense, +15% Shock Chance, +15% Shock Damage, +2% Enemy Attack Time",
+            upgrade: "+3 Defense, +15% Shock Chance, +15% Shock Damage, +2% Enemy Attack Time",
             defense: function () {
                 return 7 + 3 * this.level;
             },
@@ -843,19 +801,20 @@ export let autoBattle = {
                     "% of your Attack Speed bar whenever you cause or receive a Bleed."
                 );
             },
-            upgrade: "+5% Bleed Chance, +2 Attack, +5% bar filled on Bleed",
+            upgrade: "+5% Bleed Chance, +2 Attack, +5% (up to +160%) bar filled on Bleed",
             attack: function () {
                 return 6 + this.level * 2;
             },
             onBleed: function () {
-                autoBattle.trimp.lastAttack +=
-                    autoBattle.trimp.attackSpeed * this.barFill();
+                autoBattle.trimp.lastAttack += autoBattle.trimp.attackSpeed * this.barFill();
             },
             bleedChance: function () {
                 return 25 + 5 * this.level;
             },
             barFill: function () {
-                return 0.2 + 0.05 * this.level;
+                var fill = 0.2 + 0.05 * this.level;
+                if (fill > 1.6) fill = 1.6;
+                return fill;
             },
             doStuff: function () {
                 autoBattle.trimp.bleedChance += this.bleedChance();
@@ -889,10 +848,7 @@ export let autoBattle = {
             },
             doStuff: function () {
                 autoBattle.trimp.attack += this.attack();
-                if (
-                    autoBattle.enemy.bleed.time <= 0 &&
-                    autoBattle.enemy.poison.time <= 0
-                ) {
+                if (autoBattle.enemy.bleed.time <= 0 && autoBattle.enemy.poison.time <= 0) {
                     autoBattle.trimp.lifesteal += this.lifesteal();
                 }
             },
@@ -920,8 +876,7 @@ export let autoBattle = {
                     " Attack for each time you've Shocked this Enemy (up to 10 times)."
                 );
             },
-            upgrade:
-                "+5% Shock Chance, +5% Shock Damage, -5% Attack Time, +5% Shock Resist, +1 Attack per Shock",
+            upgrade: "+5% Shock Chance, +5% Shock Damage, -5% Attack Time, +5% Shock Resist, +1 Attack per Shock",
             attackSpeed: function () {
                 return 0.9 * Math.pow(0.95, this.level);
             },
@@ -940,10 +895,8 @@ export let autoBattle = {
             doStuff: function () {
                 autoBattle.trimp.shockMod += this.shockMod();
                 autoBattle.trimp.shockChance += this.shockChance();
-                if (autoBattle.enemy.shock.time >= 0)
-                    autoBattle.trimp.attackSpeed *= this.attackSpeed();
-                autoBattle.trimp.attack +=
-                    Math.min(10, autoBattle.enemy.shock.count) * this.attack();
+                if (autoBattle.enemy.shock.time >= 0) autoBattle.trimp.attackSpeed *= this.attackSpeed();
+                autoBattle.trimp.attack += Math.min(10, autoBattle.enemy.shock.count) * this.attack();
                 autoBattle.trimp.shockResist += this.shockResist();
             },
             priceMod: 5,
@@ -977,15 +930,12 @@ export let autoBattle = {
                 return 500 + 100 * this.level;
             },
             doStuff: function () {
-                if (autoBattle.enemy.health == autoBattle.enemy.maxHealth)
-                    autoBattle.trimp.bleedChance += 100;
+                if (autoBattle.enemy.health == autoBattle.enemy.maxHealth) autoBattle.trimp.bleedChance += 100;
                 else autoBattle.trimp.bleedChance += 25;
                 autoBattle.trimp.maxHealth += this.health();
-                if (autoBattle.enemy.bleed.time > 0)
-                    autoBattle.trimp.attack += this.attack();
+                if (autoBattle.enemy.bleed.time > 0) autoBattle.trimp.attack += this.attack();
                 autoBattle.trimp.bleedMod += this.bleedMod();
-                if (autoBattle.trimp.bleedTime <= 10000)
-                    autoBattle.trimp.bleedTime = 10000;
+                if (autoBattle.trimp.bleedTime <= 10000) autoBattle.trimp.bleedTime = 10000;
             },
             priceMod: 4,
             startPrice: 3000000,
@@ -1067,10 +1017,7 @@ export let autoBattle = {
                 return 30 + 20 * this.level;
             },
             doStuff: function () {
-                if (
-                    autoBattle.items.Rusty_Dagger.equipped ||
-                    autoBattle.items.Big_Cleaver.equipped
-                )
+                if (autoBattle.items.Rusty_Dagger.equipped || autoBattle.items.Big_Cleaver.equipped)
                     autoBattle.trimp.attack += this.attack();
                 autoBattle.trimp.maxHealth += this.health();
                 autoBattle.trimp.defense += this.defense();
@@ -1108,10 +1055,7 @@ export let autoBattle = {
             },
             doStuff: function () {
                 var enemy = autoBattle.enemy;
-                if (
-                    enemy.shock.time <= 0 ||
-                    enemy.shock.mod < this.shockMod()
-                ) {
+                if (enemy.shock.time <= 0 || enemy.shock.mod < this.shockMod()) {
                     enemy.shock.time = 9999999;
                     enemy.shock.mod = this.shockMod();
                 }
@@ -1181,8 +1125,7 @@ export let autoBattle = {
                     " per stack of Poison when your Poisons deal damage."
                 );
             },
-            upgrade:
-                "+2% Poison Tick Rate, +0.05 Poison Damage per Enemy Resist, +5 Heal on Poison Tick",
+            upgrade: "+2% Poison Tick Rate, +0.05 Poison Damage per Enemy Resist, +5 Heal on Poison Tick",
             tickMult: function () {
                 return 0.816 * Math.pow(0.98, this.level);
             },
@@ -1193,8 +1136,7 @@ export let autoBattle = {
                 return 5 + 5 * this.level;
             },
             poisonMod: function () {
-                var res =
-                    autoBattle.enemy.bleedResist + autoBattle.enemy.shockResist;
+                var res = autoBattle.enemy.bleedResist + autoBattle.enemy.shockResist;
                 return Math.floor(res * this.eachPoison());
             },
             doStuff: function () {
@@ -1226,8 +1168,7 @@ export let autoBattle = {
                     " Max Stacks)."
                 );
             },
-            upgrade:
-                "+15% Poison Chance, +20 Poison Damage, +50 Defense, +500 Health, +2 Max Stacks",
+            upgrade: "+15% Poison Chance, +20 Poison Damage, +50 Defense, +500 Health, +2 Max Stacks",
             poisonChance: function () {
                 return 35 + 15 * this.level;
             },
@@ -1246,13 +1187,12 @@ export let autoBattle = {
             doStuff: function () {
                 autoBattle.trimp.poisonChance += this.poisonChance();
                 autoBattle.trimp.poisonMod += this.poisonMod();
-                if (autoBattle.trimp.poisonTime < 20000)
-                    autoBattle.trimp.poisonTime = 20000;
+                if (autoBattle.trimp.poisonTime < 20000) autoBattle.trimp.poisonTime = 20000;
                 autoBattle.trimp.defense += this.defense();
                 autoBattle.trimp.maxHealth += this.health();
                 autoBattle.trimp.poisonStack += Math.min(
                     this.maxStacks(),
-                    Math.floor(autoBattle.enemy.poison.hitsAtMax / 3),
+                    Math.floor(autoBattle.enemy.poison.hitsAtMax / 3)
                 );
             },
             startPrice: 100e6,
@@ -1292,17 +1232,10 @@ export let autoBattle = {
                 return 500 + 1000 * this.level;
             },
             afterCheck: function () {
-                if (
-                    autoBattle.enemy.poison.time > 0 ||
-                    autoBattle.enemy.bleed.time > 0
-                ) {
+                if (autoBattle.enemy.poison.time > 0 || autoBattle.enemy.bleed.time > 0) {
                     var mod = 20 / autoBattle.frameTime;
-                    autoBattle.trimp.health -=
-                        autoBattle.trimp.maxHealth *
-                        mod *
-                        autoBattle.trimp.damageTakenMult;
-                    if (autoBattle.trimp.health < 0.01)
-                        autoBattle.trimp.health = 0;
+                    autoBattle.trimp.health -= autoBattle.trimp.maxHealth * mod * autoBattle.trimp.damageTakenMult;
+                    if (autoBattle.trimp.health < 0.01) autoBattle.trimp.health = 0;
                 }
             },
             doStuff: function () {
@@ -1333,8 +1266,7 @@ export let autoBattle = {
                     "% Bleed Chance. If you have an item that can cause a Bleed, the Enemy starts combat with 25% less Max Health."
                 );
             },
-            upgrade:
-                "+75 Attack, +10% Lifesteal, +75% Bleed Damage, +50% Bleed Chance",
+            upgrade: "+75 Attack, +10% Lifesteal, +75% Bleed Damage, +50% Bleed Chance",
             attack: function () {
                 return 125 + 75 * this.level;
             },
@@ -1404,8 +1336,7 @@ export let autoBattle = {
                 autoBattle.trimp.attack += this.attack();
                 autoBattle.trimp.bleedMod += this.bleedMod();
                 autoBattle.trimp.maxHealth += this.health();
-                if (autoBattle.trimp.bleedTime <= 10000)
-                    autoBattle.trimp.bleedTime = 10000;
+                if (autoBattle.trimp.bleedTime <= 10000) autoBattle.trimp.bleedTime = 10000;
             },
         },
         Blessed_Protector: {
@@ -1437,8 +1368,7 @@ export let autoBattle = {
             },
             afterCheck: function () {
                 if (autoBattle.trimp.health <= 0) return;
-                var healthPct =
-                    autoBattle.trimp.health / autoBattle.trimp.maxHealth;
+                var healthPct = autoBattle.trimp.health / autoBattle.trimp.maxHealth;
                 if (healthPct < 0.5) {
                     autoBattle.trimp.damageTakenMult *= 0.7;
                 }
@@ -1490,10 +1420,7 @@ export let autoBattle = {
                 var stacks = Math.floor(autoBattle.trimp.dmgTaken / 15000) + 1;
                 var maxStacks = this.stacks();
                 if (stacks > maxStacks) stacks = maxStacks;
-                autoBattle.trimp.attackSpeed *= Math.pow(
-                    this.attackTime(),
-                    stacks,
-                );
+                autoBattle.trimp.attackSpeed *= Math.pow(this.attackTime(), stacks);
                 autoBattle.trimp.maxHealth += this.health();
             },
             dustType: "shards",
@@ -1519,8 +1446,7 @@ export let autoBattle = {
                     " Poison Damage."
                 );
             },
-            upgrade:
-                "+250 Attack, +5 Max Poison Stacks, +200% Bleed Damage, +250 Poison Damage",
+            upgrade: "+250 Attack, +5 Max Poison Stacks, +200% Bleed Damage, +250 Poison Damage",
             attack: function () {
                 return 250 + 250 * this.level;
             },
@@ -1536,10 +1462,8 @@ export let autoBattle = {
             doStuff: function () {
                 autoBattle.trimp.attack += this.attack();
                 autoBattle.trimp.poisonStack += this.poisonStack();
-                if (autoBattle.enemy.poison.time > 0)
-                    autoBattle.trimp.bleedMod += this.bleedMod();
-                if (autoBattle.enemy.bleed.time > 0)
-                    autoBattle.trimp.poisonMod += this.poisonMod();
+                if (autoBattle.enemy.poison.time > 0) autoBattle.trimp.bleedMod += this.bleedMod();
+                if (autoBattle.enemy.bleed.time > 0) autoBattle.trimp.poisonMod += this.poisonMod();
             },
             dustType: "shards",
             startPrice: 159,
@@ -1617,8 +1541,7 @@ export let autoBattle = {
                 return 5 + 5 * this.level;
             },
             active: function () {
-                if (this.equipped && autoBattle.enemy.poison.time > 0)
-                    return true;
+                if (this.equipped && autoBattle.enemy.poison.time > 0) return true;
                 return false;
             },
             doStuff: function () {
@@ -1626,8 +1549,7 @@ export let autoBattle = {
                 autoBattle.trimp.poisonMod += this.poisonMod();
                 autoBattle.trimp.poisonStack += this.poisonStack();
                 if (autoBattle.battleTime > autoBattle.trimp.lastGoo + 1000) {
-                    if (autoBattle.trimp.lastGoo == -1)
-                        autoBattle.trimp.lastGoo = autoBattle.battleTime;
+                    if (autoBattle.trimp.lastGoo == -1) autoBattle.trimp.lastGoo = autoBattle.battleTime;
                     else autoBattle.trimp.lastGoo += 1000;
                     var dmg = autoBattle.trimp.gooStored * 0.1;
                     autoBattle.trimp.gooStored -= dmg;
@@ -1657,8 +1579,7 @@ export let autoBattle = {
                     " Poison Damage, +1 Poison Stack Rate, and Poisons tick 10% faster."
                 );
             },
-            upgrade:
-                "+2500 Attack, +300% Bleed Damage, +300% Shock Damage, +1000 Poison Damage",
+            upgrade: "+2500 Attack, +300% Bleed Damage, +300% Shock Damage, +1000 Poison Damage",
             attack: function () {
                 return 2500 + 2500 * this.level;
             },
@@ -1691,11 +1612,7 @@ export let autoBattle = {
             level: 1,
             zone: 220,
             description: function () {
-                return (
-                    "If the Enemy dies while Poisoned after never Bleeding, it drops " +
-                    this.dustMult() +
-                    "x more Dust."
-                );
+                return "If the Enemy dies while Poisoned after never Bleeding, it drops " + this.dustMult() + "x more Dust.";
             },
             upgrade: "+1x Dust",
             dustMult: function () {
@@ -1724,8 +1641,7 @@ export let autoBattle = {
                     "% of its Bleed damage every second."
                 );
             },
-            upgrade:
-                "+10,000 Attack, +5000 Health, +100% of Bleed Damage taken per second",
+            upgrade: "+10,000 Attack, +5000 Health, +100% of Bleed Damage taken per second",
             health: function () {
                 return 5000 + 5000 * this.level;
             },
@@ -1736,24 +1652,14 @@ export let autoBattle = {
                 return 15000 + 10000 * this.level;
             },
             doStuff: function () {
-                if (
-                    autoBattle.enemy.bleed.time > 0 &&
-                    autoBattle.battleTime > 5000
-                )
+                if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000)
                     autoBattle.trimp.attack += this.attack();
                 autoBattle.trimp.maxHealth += this.health();
             },
             afterCheck: function () {
-                if (
-                    autoBattle.enemy.bleed.time > 0 &&
-                    autoBattle.battleTime > 5000
-                ) {
-                    var bdamage = autoBattle.getBleedDamage(
-                        autoBattle.enemy,
-                        autoBattle.trimp,
-                    );
-                    var pct =
-                        this.bleedTickMult() * (autoBattle.frameTime / 1000);
+                if (autoBattle.enemy.bleed.time > 0 && autoBattle.battleTime > 5000) {
+                    var bdamage = autoBattle.getBleedDamage(autoBattle.enemy, autoBattle.trimp);
+                    var pct = this.bleedTickMult() * (autoBattle.frameTime / 1000);
                     bdamage *= pct;
                     autoBattle.damageCreature(autoBattle.enemy, bdamage);
                 }
@@ -1813,8 +1719,7 @@ export let autoBattle = {
                     "% Lifesteal if the enemy is Bleeding."
                 );
             },
-            upgrade:
-                "+1s Minimum Bleed Time, +4% Bleed Chance, +2.5% Lifesteal",
+            upgrade: "+1s Minimum Bleed Time, +4% Bleed Chance, +2.5% Lifesteal",
             bleedTime: function () {
                 return 11 + 1 * this.level;
             },
@@ -1825,13 +1730,9 @@ export let autoBattle = {
                 return 21 + this.level * 4;
             },
             doStuff: function () {
-                if (
-                    autoBattle.trimp.bleedTime > 0 &&
-                    autoBattle.trimp.bleedTime < this.bleedTime() * 1000
-                )
+                if (autoBattle.trimp.bleedTime > 0 && autoBattle.trimp.bleedTime < this.bleedTime() * 1000)
                     autoBattle.trimp.bleedTime = this.bleedTime() * 1000;
-                if (autoBattle.enemy.bleed.time > 0)
-                    autoBattle.trimp.lifesteal += this.lifesteal();
+                if (autoBattle.enemy.bleed.time > 0) autoBattle.trimp.lifesteal += this.lifesteal();
                 autoBattle.trimp.bleedChance += this.bleedChance();
             },
             startPrice: 300,
@@ -1869,10 +1770,7 @@ export let autoBattle = {
                     autoBattle.trimp.defense += this.defense();
                 }
                 var poisonTime = this.poisonTime();
-                if (
-                    autoBattle.trimp.poisonTime > 0 &&
-                    autoBattle.trimp.poisonTime < poisonTime
-                )
+                if (autoBattle.trimp.poisonTime > 0 && autoBattle.trimp.poisonTime < poisonTime)
                     autoBattle.trimp.poisonTime = poisonTime;
                 autoBattle.trimp.poisonChance += this.poisonChance();
             },
@@ -1899,8 +1797,7 @@ export let autoBattle = {
                     "% Bleed Damage."
                 );
             },
-            upgrade:
-                "+2 defense, +20 health, +2.5% Lifesteal, +10% Bleed Damage",
+            upgrade: "+2 defense, +20 health, +2.5% Lifesteal, +10% Bleed Damage",
             defense: function () {
                 return 4 + this.level * 2;
             },
@@ -1915,11 +1812,10 @@ export let autoBattle = {
             },
             doStuff: function () {
                 var bleedChance = autoBattle.trimp.bleedChance;
-                if (autoBattle.items.Sacrificial_Shank.equipped)
-                    bleedChance = Math.floor(bleedChance * 0.75);
+                if (autoBattle.items.Sacrificial_Shank.equipped) bleedChance = Math.floor(bleedChance * 0.75);
                 if (
                     bleedChance > autoBattle.enemy.bleedResist &&
-                    autoBattle.trimp.bleedTime > 0 &&
+                    (autoBattle.trimp.bleedTime > 0 || autoBattle.items.Doppelganger_Diadem.equipped) &&
                     autoBattle.trimp.bleedMod > 0
                 ) {
                     autoBattle.trimp.defense += this.defense();
@@ -1961,8 +1857,7 @@ export let autoBattle = {
             },
             doStuff: function () {
                 var poisonChance = autoBattle.trimp.poisonChance;
-                if (autoBattle.items.Sacrificial_Shank.equipped)
-                    poisonChance = Math.floor(poisonChance * 0.75);
+                if (autoBattle.items.Sacrificial_Shank.equipped) poisonChance = Math.floor(poisonChance * 0.75);
                 if (
                     poisonChance > autoBattle.enemy.poisonResist &&
                     autoBattle.trimp.poisonMod > 0 &&
@@ -1996,8 +1891,7 @@ export let autoBattle = {
                     "% Lifesteal."
                 );
             },
-            upgrade:
-                "+4 Defense, +10% Shock Chance, +10% Shock Damage, +10% Lifesteal",
+            upgrade: "+4 Defense, +10% Shock Chance, +10% Shock Damage, +10% Lifesteal",
             defenseEffect: function () {
                 return 6 + 4 * this.level;
             },
@@ -2011,15 +1905,12 @@ export let autoBattle = {
                 return 0.05 + 0.1 * this.level;
             },
             doStuff: function () {
-                var hufPct =
-                    autoBattle.trimp.health / autoBattle.trimp.maxHealth;
-                var enemyPct =
-                    autoBattle.enemy.health / autoBattle.enemy.maxHealth;
+                var hufPct = autoBattle.trimp.health / autoBattle.trimp.maxHealth;
+                var enemyPct = autoBattle.enemy.health / autoBattle.enemy.maxHealth;
                 if (hufPct > enemyPct) {
                     autoBattle.trimp.shockChance += this.shockChance();
                     autoBattle.trimp.shockMod += this.shockMod();
-                    if (autoBattle.trimp.shockTime < 15000)
-                        autoBattle.trimp.shockTime = 15000;
+                    if (autoBattle.trimp.shockTime < 15000) autoBattle.trimp.shockTime = 15000;
                     autoBattle.trimp.defense += this.defenseEffect();
                 } else {
                     autoBattle.trimp.lifesteal += this.lifestealEffect();
@@ -2043,13 +1934,12 @@ export let autoBattle = {
                     prettify((1 - this.attackTime()) * 100) +
                     "% Attack Time, +" +
                     prettify(this.resist()) +
-                    " to all Resists, and +" +
+                    "% to all Resists, and +" +
                     prettify(this.lifesteal() * 100) +
                     "% Lifesteal per 10% Huffy or Enemy status chance lost."
                 );
             },
-            upgrade:
-                "-1% Attack Time, +1% Resists, +1% Lifesteal per 10% status chance lost",
+            upgrade: "-1% Attack Time, +1% Resists, +1% Lifesteal per 10% status chance lost",
             attackTime: function () {
                 return Math.pow(0.99, this.level);
             },
@@ -2097,10 +1987,7 @@ export let autoBattle = {
                 }
                 totalReduce = Math.floor(totalReduce / 10);
                 if (totalReduce <= 0) return;
-                autoBattle.trimp.attackSpeed *= Math.pow(
-                    this.attackTime(),
-                    totalReduce,
-                );
+                autoBattle.trimp.attackSpeed *= Math.pow(this.attackTime(), totalReduce);
                 autoBattle.trimp.lifesteal += this.lifesteal() * totalReduce;
                 autoBattle.trimp.poisonResist += this.resist() * totalReduce;
                 autoBattle.trimp.bleedResist += this.resist() * totalReduce;
@@ -2131,8 +2018,7 @@ export let autoBattle = {
                     "% Shock Damage. Multiplies Huffy's Max Health by his Lifesteal value, then multiplies his Lifesteal by 0.5."
                 );
             },
-            upgrade:
-                "+1000 Health, +300 Defense, +100% Lifesteal, +200% Bleed Damage, +200% Shock Damage",
+            upgrade: "+1000 Health, +300 Defense, +100% Lifesteal, +200% Bleed Damage, +200% Shock Damage",
             health: function () {
                 return 2000 + 1000 * this.level;
             },
@@ -2154,8 +2040,7 @@ export let autoBattle = {
                 autoBattle.trimp.lifesteal += this.lifesteal();
                 autoBattle.trimp.bleedMod += this.bleedMod();
                 autoBattle.trimp.shockMod += this.shockMod();
-                if (autoBattle.items.Monkimp_Paw.equipped)
-                    autoBattle.trimp.lifesteal *= 0.75; //monkimp paw special interaction
+                if (autoBattle.items.Monkimp_Paw.equipped) autoBattle.trimp.lifesteal *= 0.75; //monkimp paw special interaction
                 autoBattle.trimp.maxHealth *= autoBattle.trimp.lifesteal;
                 autoBattle.trimp.lifesteal *= 0.5;
             },
@@ -2171,11 +2056,7 @@ export let autoBattle = {
             level: 1,
             zone: 155,
             description: function () {
-                return (
-                    "+" +
-                    prettify(this.attack()) +
-                    " Attack, removes a fourth of your total Lifesteal."
-                );
+                return "+" + prettify(this.attack()) + " Attack, removes a fourth of your total Lifesteal.";
             },
             upgrade: "+100 Attack",
             attack: function () {
@@ -2183,10 +2064,8 @@ export let autoBattle = {
             },
             doStuff: function () {
                 autoBattle.trimp.attack += this.attack();
-                if (!autoBattle.items.Basket_of_Souls.equipped)
-                    autoBattle.trimp.lifesteal *= 0.75; //basket of souls special interaction
-                if (autoBattle.trimp.lifesteal < 0)
-                    autoBattle.trimp.lifesteal = 0;
+                if (!autoBattle.items.Basket_of_Souls.equipped) autoBattle.trimp.lifesteal *= 0.75; //basket of souls special interaction
+                if (autoBattle.trimp.lifesteal < 0) autoBattle.trimp.lifesteal = 0;
             },
             startPrice: 200e6,
             priceMod: 10,
@@ -2240,14 +2119,33 @@ export let autoBattle = {
                 return 1.5 + this.level * 0.5;
             },
             doStuff: function () {
-                if (autoBattle.enemy.poison.time <= 0)
-                    autoBattle.trimp.lifesteal += this.lifesteal();
+                if (autoBattle.enemy.poison.time <= 0) autoBattle.trimp.lifesteal += this.lifesteal();
                 autoBattle.trimp.maxHealth *= this.statMult();
                 autoBattle.trimp.attack *= this.statMult();
             },
             dustType: "shards",
             startPrice: 200000,
             priceMod: 20,
+        },
+        Doppelganger_Diadem: {
+            owned: false,
+            equipped: false,
+            hidden: false,
+            level: 1,
+            zone: 250,
+            description: function () {
+                return "Can create a Bleed on the Enemy for 10 seconds. 2x Attack if the Signet is equipped, x2 again if Doppelganger is alive. Doppelganger has 50% more health and can resurrect once per fight.";
+            },
+            doStuff: function () {
+                if (autoBattle.trimp.bleedTime <= 10000) autoBattle.trimp.bleedTime = 10000;
+                if (autoBattle.items.Doppelganger_Signet.equipped) {
+                    autoBattle.trimp.attack *= 2;
+                    if (!autoBattle.trimp.doppDown) autoBattle.trimp.attack *= 2;
+                    if (typeof autoBattle.trimp.doppLives === "undefined") autoBattle.trimp.doppLives = 1;
+                }
+            },
+            noUpgrade: true,
+            dustType: "shards",
         },
         Doppelganger_Signet: {
             //actual final attack item
@@ -2262,24 +2160,30 @@ export let autoBattle = {
             },
             onDeath: function () {
                 var damageDealt = autoBattle.enemy.dmgTaken;
-                autoBattle.damageCreature(
-                    autoBattle.enemy,
-                    damageDealt,
-                    false,
-                    true,
-                );
+                autoBattle.damageCreature(autoBattle.enemy, damageDealt, false, true);
                 autoBattle.enemy.defense *= 0.5;
-                autoBattle.trimp.doppDown = true;
+                if (autoBattle.trimp.doppLives) autoBattle.trimp.doppLives--;
+                else autoBattle.trimp.doppDown = true;
+            },
+            doppHealth: function () {
+                var healthAmt = autoBattle.trimp.maxHealth;
+                if (autoBattle.items.Doppelganger_Diadem.equipped) {
+                    healthAmt *= 1.5;
+                    if (!autoBattle.trimp.doppLives) healthAmt *= 2;
+                }
+                return healthAmt;
+            },
+            explodeDmg: function () {
+                var damageAmt = autoBattle.enemy.dmgTaken;
+                if (autoBattle.items.Doppelganger_Diadem.equipped && autoBattle.trimp.doppLives == 1) damageAmt *= 2;
+                return damageAmt;
             },
             doStuff: function () {
                 if (autoBattle.trimp.doppDown) return;
                 autoBattle.trimp.attack *= 2;
                 autoBattle.trimp.damageTakenMult *= 0.5;
                 autoBattle.trimp.poisonRate++;
-                if (
-                    autoBattle.trimp.dmgTaken >= autoBattle.trimp.maxHealth ||
-                    autoBattle.enemy.dmgTaken >= autoBattle.enemy.health
-                )
+                if (autoBattle.trimp.dmgTaken >= this.doppHealth() || this.explodeDmg() >= autoBattle.enemy.health)
                     this.onDeath();
             },
             noUpgrade: true,
@@ -2293,11 +2197,7 @@ export let autoBattle = {
             level: 1,
             zone: 230,
             description: function () {
-                return (
-                    "Multiplies the damage dealt by Poison ticks by " +
-                    this.poisonMult() +
-                    "x."
-                );
+                return "Multiplies the damage dealt by Poison ticks by " + this.poisonMult() + "x.";
             },
             upgrade: "+1x to Poison Damage multiplier",
             poisonMult: function () {
@@ -2380,8 +2280,7 @@ export let autoBattle = {
             requiredItems: 15,
         },
         Master_of_Arms: {
-            description:
-                "Huffy gains +200 Health, +10 Attack, and +2 Poison Damage.",
+            description: "Huffy gains +200 Health, +10 Attack, and +2 Poison Damage.",
             owned: false,
             requiredItems: 19,
         },
@@ -2400,14 +2299,12 @@ export let autoBattle = {
             requiredItems: 21,
         },
         Battlescruff: {
-            description:
-                "Increases all Scruffy XP gained by +2% for each Spire Assault level cleared.",
+            description: "Increases all Scruffy XP gained by +2% for each Spire Assault level cleared.",
             owned: false,
             requiredItems: 23,
         },
         Collectology: {
-            description:
-                "Collectors add 2 Hubs each PLUS another extra Hub for every 30 Spire Assault levels cleared.",
+            description: "Collectors add 2 Hubs each PLUS another extra Hub for every 30 Spire Assault levels cleared.",
             owned: false,
             requiredItems: 28,
             getHubs: function () {
@@ -2415,8 +2312,7 @@ export let autoBattle = {
             },
         },
         Dusty_Tome: {
-            description:
-                "+5% Dust found on all levels per Spire Assault level cleared.",
+            description: "+5% Dust found on all levels per Spire Assault level cleared.",
             owned: false,
             requiredItems: 32,
         },
@@ -2426,8 +2322,7 @@ export let autoBattle = {
             requiredItems: 34,
         },
         Nullicious: {
-            description:
-                "Increase the base Nu value of U2 Heirlooms by 0.5% per Spire Assault level cleared.",
+            description: "Increase the base Nu value of U2 Heirlooms by 0.5% per Spire Assault level cleared.",
             owned: false,
             requiredItems: 36,
             getMult: function () {
@@ -2435,8 +2330,7 @@ export let autoBattle = {
             },
         },
         Suprism: {
-            description:
-                "Increases Prismatic Shield by 3% per Spire Assault level cleared.",
+            description: "Increases Prismatic Shield by 3% per Spire Assault level cleared.",
             getMult: function () {
                 return (autoBattle.maxEnemyLevel - 1) * 0.03;
             },
@@ -2449,8 +2343,7 @@ export let autoBattle = {
             requiredItems: 42,
             useShards: true,
             onPurchase: function () {
-                document.getElementById("autoBattleRingBtn").style.display =
-                    "inline-block";
+                document.getElementById("autoBattleRingBtn").style.display = "inline-block";
             },
         },
         Mass_Hysteria: {
@@ -2460,10 +2353,19 @@ export let autoBattle = {
             useShards: true,
         },
         Burstier: {
-            description: "Gamma Burst now triggers at 4 stacks.",
+            description: "Gamma Burst requires 1 fewer attack before triggering.",
             owned: false,
             requiredItems: 48,
             useShards: true,
+        },
+        Radiant_Ring: {
+            description: "Your ring gains a third slot.",
+            owned: false,
+            requiredItems: 50,
+            useShards: true,
+            onPurchase: function () {
+                autoBattle.checkAddRingSlot();
+            },
         },
         Expanding_Tauntimp: {
             description:
@@ -2475,8 +2377,7 @@ export let autoBattle = {
             useShards: true,
         },
         More_Expansion: {
-            description:
-                "Unlock the Expansion Perk, further increasing the power of your Tauntimps",
+            description: "Unlock the Expansion Perk, further increasing the power of your Tauntimps",
             owned: false,
             requiredItems: 53,
             owned: false,
@@ -2553,20 +2454,15 @@ export let autoBattle = {
             this.enemy.lastExplode += this.frameTime;
             if (this.enemy.lastExplode >= this.enemy.explodeFreq) {
                 this.enemy.lastExplode -= this.enemy.explodeFreq;
-                var dmg =
-                    this.enemy.explodeDamage * this.getAttack(this.enemy) -
-                    this.trimp.defense;
+                var dmg = this.enemy.explodeDamage * this.getAttack(this.enemy) - this.trimp.defense;
                 this.damageCreature(this.trimp, dmg);
             }
         }
         this.checkPoison(this.enemy);
         if (this.enemy.bleed.time > 0) this.enemy.bleed.time -= this.frameTime;
-        if (this.enemy.shock.time > 0 && this.enemy.shock.time != 9999999)
-            this.enemy.shock.time -= this.frameTime;
-        if (this.trimp.health > this.trimp.maxHealth)
-            this.trimp.health = this.trimp.maxHealth;
-        if (this.enemy.health > this.enemy.maxHealth)
-            this.enemy.health = this.enemy.maxHealth;
+        if (this.enemy.shock.time > 0 && this.enemy.shock.time != 9999999) this.enemy.shock.time -= this.frameTime;
+        if (this.trimp.health > this.trimp.maxHealth) this.trimp.health = this.trimp.maxHealth;
+        if (this.enemy.health > this.enemy.maxHealth) this.enemy.health = this.enemy.maxHealth;
         if (this.trimp.health <= 0) {
             this.trimpDied();
             return;
@@ -2610,17 +2506,10 @@ export let autoBattle = {
             if (itemObj.doStuff) itemObj.doStuff();
         }
 
-        if (
-            this.items.Sundering_Scythe.equipped &&
-            this.trimp.shockTime > 10000
-        )
-            this.trimp.shockTime = 10000;
-        if (this.items.Blessed_Protector.equipped)
-            this.items.Blessed_Protector.afterCheck(); //after anything that might hurt huffy
-        if (this.items.Grounded_Crown.equipped)
-            this.items.Grounded_Crown.afterCheck(); //just deals damage
-        if (this.items.Haunted_Harpoon.equipped)
-            this.items.Haunted_Harpoon.afterCheck(); //after anything that might increase the damage of huffy's bleeds
+        if (this.items.Sundering_Scythe.equipped && this.trimp.shockTime > 10000) this.trimp.shockTime = 10000;
+        if (this.items.Blessed_Protector.equipped) this.items.Blessed_Protector.afterCheck(); //after anything that might hurt huffy
+        if (this.items.Grounded_Crown.equipped) this.items.Grounded_Crown.afterCheck(); //just deals damage
+        if (this.items.Haunted_Harpoon.equipped) this.items.Haunted_Harpoon.afterCheck(); //after anything that might increase the damage of huffy's bleeds
 
         this.trimp.attackSpeed *= this.enemy.slowAura;
         if (this.trimp.attackSpeed <= 500) {
@@ -2632,12 +2521,7 @@ export let autoBattle = {
         dmg *= creature.damageTakenMult;
         if (creature.isEthereal && !ignoreEth) creature.health += dmg;
         else {
-            if (
-                !fromGoo &&
-                creature.isTrimp &&
-                this.items.Goo_Golem.equipped &&
-                this.items.Goo_Golem.active()
-            ) {
+            if (!fromGoo && creature.isTrimp && this.items.Goo_Golem.equipped && this.items.Goo_Golem.active()) {
                 creature.gooStored += dmg;
             } else {
                 creature.health -= dmg;
@@ -2658,15 +2542,13 @@ export let autoBattle = {
                 }
                 creature.poison.lastTick -= tickTime;
                 creature.poison.time -= tickTime;
-                var dmg =
-                    creature.poison.mod * creature.poison.stacks * shockMod;
+                var dmg = creature.poison.mod * creature.poison.stacks * shockMod;
                 dmg = this.damageCreature(creature, dmg);
                 if (opponent.poisonHeal) {
                     var healFor = opponent.poisonHeal * creature.poison.stacks;
                     if (this.items.The_Globulator.equipped) healFor *= 2;
                     this.trimp.health += healFor;
-                    if (this.trimp.health > this.trimp.maxHealth)
-                        this.trimp.health = this.trimp.maxHealth;
+                    if (this.trimp.health > this.trimp.maxHealth) this.trimp.health = this.trimp.maxHealth;
                 }
                 if (creature.poison.time <= 0) {
                     creature.poison.time = 0;
@@ -2685,10 +2567,7 @@ export let autoBattle = {
     },
     getBerserkMult: function () {
         if (this.enemy.berserkMod == -1) return 1;
-        return Math.pow(
-            this.enemy.berserkMod,
-            Math.floor(this.enemy.berserkStack / this.enemy.berserkEvery),
-        );
+        return Math.pow(this.enemy.berserkMod, Math.floor(this.enemy.berserkStack / this.enemy.berserkEvery));
     },
     rollDamage: function (attacker, luck = false) {
         var baseAttack = this.getAttack(attacker);
@@ -2714,8 +2593,7 @@ export let autoBattle = {
         var atkLifesteal = attacker.lifesteal - defender.lifestealResist;
         if (atkLifesteal > 0) {
             attacker.health += damage * atkLifesteal;
-            if (attacker.health > attacker.maxHealth)
-                attacker.health = attacker.maxHealth;
+            if (attacker.health > attacker.maxHealth) attacker.health = attacker.maxHealth;
         }
         if (attacker.bleed.time > 0) {
             var bdamage = this.getBleedDamage(attacker, defender);
@@ -2723,11 +2601,9 @@ export let autoBattle = {
             var defLifesteal = defender.lifesteal - attacker.lifestealResist;
             if (defLifesteal > 0) {
                 var healAmt = bdamage * defLifesteal;
-                if (defender.isTrimp && this.items.Recycler.equipped)
-                    healAmt *= 2;
+                if (defender.isTrimp && this.items.Recycler.equipped) healAmt *= 2;
                 defender.health += healAmt;
-                if (defender.health > defender.maxHealth)
-                    defender.health = defender.maxHealth;
+                if (defender.health > defender.maxHealth) defender.health = defender.maxHealth;
             }
             if (attacker.bleed.time <= 0) {
                 attacker.bleed.time = 0;
@@ -2739,44 +2615,29 @@ export let autoBattle = {
             bleedChance > 0 &&
             attacker.bleedMod > 0 &&
             attacker.bleedTime > 0 &&
-            (defender.bleed.time <= 0 ||
-                (this.items.Sundering_Scythe.equipped &&
-                    defender.bleed.time <= 5000))
+            (defender.bleed.time <= 0 || (this.items.Sundering_Scythe.equipped && defender.bleed.time <= 5000))
         ) {
             var roll = Math.floor(Math.random() * 100);
             if (roll < bleedChance) {
-                if (this.items.Bloodstained_Gloves.equipped)
-                    this.items.Bloodstained_Gloves.onBleed();
+                if (this.items.Bloodstained_Gloves.equipped) this.items.Bloodstained_Gloves.onBleed();
                 if (this.items.Bag_of_Nails.equipped) this.enemy.noSlow = true;
-                if (defender.bleed.mod < attacker.bleedMod)
-                    defender.bleed.mod = 1 + attacker.bleedMod;
-                if (defender.bleed.time < attacker.bleedTime)
-                    defender.bleed.time = attacker.bleedTime;
+                if (defender.bleed.mod < attacker.bleedMod) defender.bleed.mod = 1 + attacker.bleedMod;
+                if (defender.bleed.time < attacker.bleedTime) defender.bleed.time = attacker.bleedTime;
                 if (defender.bleed.time > 0) defender.hadBleed = true;
             }
         }
         var poisonChance = attacker.poisonChance - defender.poisonResist;
-        if (
-            poisonChance > 0 &&
-            attacker.poisonMod > 0 &&
-            attacker.poisonTime > 0
-        ) {
+        if (poisonChance > 0 && attacker.poisonMod > 0 && attacker.poisonTime > 0) {
             var roll = Math.floor(Math.random() * 100);
             if (roll < poisonChance) {
-                if (defender.poison.time < attacker.poisonTime)
-                    defender.poison.time = attacker.poisonTime;
+                if (defender.poison.time < attacker.poisonTime) defender.poison.time = attacker.poisonTime;
                 var stackRate = attacker.poisonRate;
                 for (var x = 0; x < stackRate; x++) {
                     defender.poison.mod = attacker.poisonMod;
                     if (defender.poison.stacks < attacker.poisonStack) {
                         defender.poison.stacks++;
-                        if (
-                            attacker.isTrimp &&
-                            this.items.The_Globulator.equipped
-                        )
-                            this.items.The_Globulator.onPoisonStack(
-                                defender.poison.stacks,
-                            );
+                        if (attacker.isTrimp && this.items.The_Globulator.equipped)
+                            this.items.The_Globulator.onPoisonStack(defender.poison.stacks);
                     } else defender.poison.hitsAtMax++;
                 }
             }
@@ -2786,14 +2647,11 @@ export let autoBattle = {
             shockChance > 0 &&
             attacker.shockMod > 0 &&
             attacker.shockTime > 0 &&
-            (defender.shock.time <= 0 ||
-                (defender.shock.time == 9999999 &&
-                    attacker.shockMod > defender.shock.mod))
+            (defender.shock.time <= 0 || (defender.shock.time == 9999999 && attacker.shockMod > defender.shock.mod))
         ) {
             var roll = Math.floor(Math.random() * 100);
             if (roll < shockChance) {
-                if (attacker.isTrimp && this.items.Eelimp_in_a_Bottle.equipped)
-                    defender.lastAttack = 0;
+                if (attacker.isTrimp && this.items.Eelimp_in_a_Bottle.equipped) defender.lastAttack = 0;
                 defender.shock.time = attacker.shockTime;
                 defender.shock.mod = attacker.shockMod;
                 defender.shock.count++;
@@ -2811,8 +2669,7 @@ export let autoBattle = {
         if (attacker.shock.time > 0) {
             attackerShock = 1 + attacker.shock.mod;
         }
-        var bdamage =
-            this.getAttack(defender) * attacker.bleed.mod * attackerShock;
+        var bdamage = this.getAttack(defender) * attacker.bleed.mod * attackerShock;
         bdamage -= attacker.defense;
         return bdamage;
     },
@@ -2842,16 +2699,13 @@ export let autoBattle = {
         this.enemy.poisonResist += this.enemyLevel;
         this.enemy.bleedResist += this.enemyLevel;
         this.enemy.shockResist += this.enemyLevel;
-        if (this.enemyLevel >= 15)
-            this.enemy.lifestealResist += 0.03 * (this.enemy.level - 14);
+        if (this.enemyLevel >= 15) this.enemy.lifestealResist += 0.03 * (this.enemy.level - 14);
         if (this.enemyLevel >= 30) this.enemy.enrageMult = 1.5;
         this.setProfile();
         this.enemy.maxHealth = this.enemy.baseHealth;
         this.enemy.health = this.enemy.baseHealth;
-        if (this.items.Fearsome_Piercer.equipped)
-            this.items.Fearsome_Piercer.onEnemy();
-        if (this.items.Sacrificial_Shank.equipped)
-            this.items.Sacrificial_Shank.onEnemy();
+        if (this.items.Fearsome_Piercer.equipped) this.items.Fearsome_Piercer.onEnemy();
+        if (this.items.Sacrificial_Shank.equipped) this.items.Sacrificial_Shank.onEnemy();
 
         this.fight();
         if (resetStats) this.resetStats();
@@ -2871,19 +2725,10 @@ export let autoBattle = {
         if (this.enemyLevel <= 50) doubleResist = true;
         var effects = ["Healthy", "Fast", "Strong", "Defensive"];
         if (this.enemyLevel > 5) {
-            effects.push(
-                "Poisoning",
-                "Bloodletting",
-                "Shocking",
-                "Lifestealing",
-            );
+            effects.push("Poisoning", "Bloodletting", "Shocking", "Lifestealing");
         }
         if (this.enemyLevel > 10) {
-            effects.push(
-                "Poison Resistant",
-                "Shock Resistant",
-                "Bleed Resistant",
-            );
+            effects.push("Poison Resistant", "Shock Resistant", "Bleed Resistant");
         }
         if (this.enemyLevel > 20) {
             effects.push("Enraging");
@@ -2892,8 +2737,7 @@ export let autoBattle = {
             effects.push("Explosive", "Berserking", "Slowing", "Ethereal");
         }
         var effectsCount;
-        if (this.enemyLevel < 25)
-            effectsCount = Math.ceil((this.enemyLevel + 1) / 5);
+        if (this.enemyLevel < 25) effectsCount = Math.ceil((this.enemyLevel + 1) / 5);
         else effectsCount = 4 + Math.ceil((this.enemyLevel - 19) / 10);
         var selectedEffects = [];
         var selectedEffectsCount = [];
@@ -2933,104 +2777,62 @@ export let autoBattle = {
                 case "Healthy":
                     var mod = this.enemyLevel / 30;
                     healthMult += Math.min(1, mod);
-                    if (selectedEffectsCount[checkSelected] >= 4)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 4) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Strong":
                     var mod = this.enemyLevel / 30;
                     attackMult += Math.min(1, mod);
-                    if (selectedEffectsCount[checkSelected] >= 4)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 4) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Fast":
                     var mod = Math.pow(0.98, this.enemyLevel);
                     this.enemy.baseAttackSpeed *= Math.max(0.5, mod);
-                    if (selectedEffectsCount[checkSelected] >= 2)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 2) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Poisoning":
-                    this.enemy.poisonChance += Math.ceil(
-                        this.enemyLevel * 3 * repeatMod,
-                    );
-                    this.enemy.poisonMod += Math.ceil(
-                        (this.enemyLevel / 5) * repeatMod,
-                    );
-                    if (this.enemyLevel >= 30)
-                        this.enemy.poisonMod += this.enemyLevel - 29;
-                    if (totalStacks == 1)
-                        this.enemy.poisonStack += Math.floor(
-                            this.enemyLevel / 10,
-                        );
+                    this.enemy.poisonChance += Math.ceil(this.enemyLevel * 3 * repeatMod);
+                    this.enemy.poisonMod += Math.ceil((this.enemyLevel / 5) * repeatMod);
+                    if (this.enemyLevel >= 30) this.enemy.poisonMod += this.enemyLevel - 29;
+                    if (totalStacks == 1) this.enemy.poisonStack += Math.floor(this.enemyLevel / 10);
                     else this.enemy.poisonStack++;
-                    this.enemy.poisonTime =
-                        2500 + Math.ceil(this.enemyLevel / 5) * 2500;
+                    this.enemy.poisonTime = 2500 + Math.ceil(this.enemyLevel / 5) * 2500;
                     break;
                 case "Bloodletting":
-                    this.enemy.bleedChance += Math.ceil(
-                        this.enemyLevel * 3 * repeatMod,
-                    );
-                    this.enemy.bleedMod += Math.ceil(
-                        Math.min(2, this.enemyLevel / 20) * repeatMod,
-                    );
+                    this.enemy.bleedChance += Math.ceil(this.enemyLevel * 3 * repeatMod);
+                    this.enemy.bleedMod += Math.ceil(Math.min(2, this.enemyLevel / 20) * repeatMod);
                     this.enemy.bleedTime = 8000;
                     break;
                 case "Shocking":
-                    this.enemy.shockChance += Math.ceil(
-                        this.enemyLevel * 3 * repeatMod,
-                    );
-                    this.enemy.shockMod += Math.ceil(
-                        Math.min(2.5, this.enemyLevel / 15) * repeatMod,
-                    );
+                    this.enemy.shockChance += Math.ceil(this.enemyLevel * 3 * repeatMod);
+                    this.enemy.shockMod += Math.ceil(Math.min(2.5, this.enemyLevel / 15) * repeatMod);
                     this.enemy.shockTime = 8000;
                     break;
                 case "Poison Resistant":
                     this.enemy.poisonResist += 10 * this.enemyLevel;
                     effects.splice(effects.indexOf(effect), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Bleed Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Bleed Resistant") != -1)
                         effects.splice(effects.indexOf("Shock Resistant"), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Shock Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Shock Resistant") != -1)
                         effects.splice(effects.indexOf("Bleed Resistant"), 1);
                     break;
                 case "Bleed Resistant":
                     this.enemy.bleedResist += 10 * this.enemyLevel;
                     effects.splice(effects.indexOf(effect), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Poison Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Poison Resistant") != -1)
                         effects.splice(effects.indexOf("Shock Resistant"), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Shock Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Shock Resistant") != -1)
                         effects.splice(effects.indexOf("Poison Resistant"), 1);
                     break;
                 case "Shock Resistant":
                     this.enemy.shockResist += 10 * this.enemyLevel;
                     effects.splice(effects.indexOf(effect), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Bleed Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Bleed Resistant") != -1)
                         effects.splice(effects.indexOf("Poison Resistant"), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Poison Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Poison Resistant") != -1)
                         effects.splice(effects.indexOf("Bleed Resistant"), 1);
                     break;
                 case "Defensive":
-                    this.enemy.defense += Math.ceil(
-                        this.enemy.level *
-                            0.75 *
-                            Math.pow(1.05, this.enemy.level),
-                    );
+                    this.enemy.defense += Math.ceil(this.enemy.level * 0.75 * Math.pow(1.05, this.enemy.level));
                     break;
                 case "Lifestealing":
                     this.enemy.lifesteal += Math.min(1, this.enemyLevel / 50);
@@ -3038,8 +2840,7 @@ export let autoBattle = {
                 case "Enraging":
                     this.enemy.enrageFreq -= 10;
                     this.enemy.enrageMult += 0.1;
-                    if (selectedEffectsCount[checkSelected] >= 2)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 2) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Slowing":
                     this.enemy.slowAura += 0.1;
@@ -3088,8 +2889,7 @@ export let autoBattle = {
         this.enemy.baseAttack *= attackMult;
         for (var x = 0; x < selectedEffects.length; x++) {
             this.profile += selectedEffects[x];
-            if (selectedEffectsCount[x] > 1)
-                this.profile += " x" + selectedEffectsCount[x] + "";
+            if (selectedEffectsCount[x] > 1) this.profile += " x" + selectedEffectsCount[x] + "";
             this.profile += ", ";
         }
         this.profile = this.profile.substring(0, this.profile.length - 2);
@@ -3116,27 +2916,19 @@ export let autoBattle = {
             }
             amt *= mutMult;
         }
-        if (
-            this.items.Box_of_Spores.equipped &&
-            !this.enemy.hadBleed &&
-            this.enemy.poison.time > 0
-        ) {
+        if (this.items.Box_of_Spores.equipped && !this.enemy.hadBleed && this.enemy.poison.time > 0) {
             amt *= this.items.Box_of_Spores.dustMult();
         }
         if (this.scruffyLvl21) amt *= 5; //don't even look at this line, just move on
         return amt;
     },
     getEnrageMult: function () {
-        var enrages = Math.floor(
-            this.battleTime / (this.enemy.enrageFreq * 1000),
-        );
+        var enrages = Math.floor(this.battleTime / (this.enemy.enrageFreq * 1000));
         if (enrages < 1) return 1;
         return Math.pow(this.enemy.enrageMult, enrages);
     },
     getDustReward: function () {
-        var amt =
-            (1 + (this.enemy.level - 1) * 5) *
-            Math.pow(1.19, this.enemy.level - 1);
+        var amt = (1 + (this.enemy.level - 1) * 5) * Math.pow(1.19, this.enemy.level - 1);
         if (this.enemy.level >= 50) amt *= Math.pow(1.1, this.enemy.level - 49);
         amt *= this.getDustMult();
         return amt;
@@ -3227,8 +3019,7 @@ export let autoBattle = {
         var itemObj = this.items[item];
         if (!itemObj) return;
         var cost = this.upgradeCost(item);
-        var currency =
-            this.items[item].dustType == "shards" ? this.shards : this.dust;
+        var currency = this.items[item].dustType == "shards" ? this.shards : this.dust;
         if (currency < cost) return;
         this.saveLastAction("upgrade", item);
         if (this.items[item].dustType == "shards") this.shards -= cost;
@@ -3245,19 +3036,11 @@ export let autoBattle = {
 
     getRingStatusDamage: function () {
         if (!this.oneTimers.The_Ring.owned) return 0;
-        return (
-            this.rings.level *
-            25 *
-            Math.pow(1.5, Math.floor(this.rings.level / 10))
-        );
+        return this.rings.level * 25 * Math.pow(1.5, Math.floor(this.rings.level / 10));
     },
     getRingPoisonDamage: function () {
         if (!this.oneTimers.The_Ring.owned) return 0;
-        return (
-            this.rings.level *
-            15 *
-            Math.pow(5, Math.floor(this.rings.level / 10))
-        );
+        return this.rings.level * 15 * Math.pow(5, Math.floor(this.rings.level / 10));
     },
     getRingStatusChance: function () {
         if (this.rings.level < 10) return 0;
@@ -3265,11 +3048,7 @@ export let autoBattle = {
         return calcLevel * 20 * Math.pow(1.25, Math.floor(calcLevel / 10));
     },
     getRingStatAmt: function (modObj) {
-        return (
-            modObj.baseGain *
-            this.rings.level *
-            Math.pow(modObj.perTen, Math.floor(this.rings.level / 10))
-        );
+        return modObj.baseGain * this.rings.level * Math.pow(modObj.perTen, Math.floor(this.rings.level / 10));
     },
     getRingSlots: function () {
         var amt = Math.floor((this.rings.level - 5) / 10) + 1;
@@ -3285,8 +3064,7 @@ export let autoBattle = {
         var slots = this.getRingSlots();
         if (this.rings.mods.length < slots) {
             var availableMods = this.getAvailableRingMods();
-            var randomMod =
-                availableMods[Math.floor(Math.random() * availableMods.length)];
+            var randomMod = availableMods[Math.floor(Math.random() * availableMods.length)];
             this.rings.mods.push(randomMod);
         }
     },
@@ -3294,8 +3072,7 @@ export let autoBattle = {
         var availableMods = [];
         var keys = Object.keys(autoBattle.ringStats);
         for (var x = 0; x < keys.length; x++) {
-            if (this.rings.mods.indexOf(keys[x]) == -1)
-                availableMods.push(keys[x]);
+            if (this.rings.mods.indexOf(keys[x]) == -1) availableMods.push(keys[x]);
         }
         return availableMods;
     },
@@ -3370,9 +3147,7 @@ export let autoBattle = {
         },
     },
     getCurrencyName: function (item) {
-        var curName = this.items[item].dustType
-            ? this.items[item].dustType
-            : "dust";
+        var curName = this.items[item].dustType ? this.items[item].dustType : "dust";
         return curName.charAt(0).toUpperCase() + curName.slice(1);
     },
     hideMode: false,
@@ -3390,19 +3165,10 @@ export let autoBattle = {
         if (level <= 50) doubleResist = true;
         let effects = ["Healthy", "Fast", "Strong", "Defensive"];
         if (level > 5) {
-            effects.push(
-                "Poisoning",
-                "Bloodletting",
-                "Shocking",
-                "Lifestealing",
-            );
+            effects.push("Poisoning", "Bloodletting", "Shocking", "Lifestealing");
         }
         if (level > 10) {
-            effects.push(
-                "Poison Resistant",
-                "Shock Resistant",
-                "Bleed Resistant",
-            );
+            effects.push("Poison Resistant", "Shock Resistant", "Bleed Resistant");
         }
         if (level > 20) {
             effects.push("Enraging");
@@ -3443,59 +3209,37 @@ export let autoBattle = {
             let count;
             switch (effect) {
                 case "Healthy":
-                    if (selectedEffectsCount[checkSelected] >= 4)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 4) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Strong":
-                    if (selectedEffectsCount[checkSelected] >= 4)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 4) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Fast":
-                    if (selectedEffectsCount[checkSelected] >= 2)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 2) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Poison Resistant":
                     effects.splice(effects.indexOf(effect), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Bleed Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Bleed Resistant") != -1)
                         effects.splice(effects.indexOf("Shock Resistant"), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Shock Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Shock Resistant") != -1)
                         effects.splice(effects.indexOf("Bleed Resistant"), 1);
                     break;
                 case "Bleed Resistant":
                     effects.splice(effects.indexOf(effect), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Poison Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Poison Resistant") != -1)
                         effects.splice(effects.indexOf("Shock Resistant"), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Shock Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Shock Resistant") != -1)
                         effects.splice(effects.indexOf("Poison Resistant"), 1);
                     break;
                 case "Shock Resistant":
                     effects.splice(effects.indexOf(effect), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Bleed Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Bleed Resistant") != -1)
                         effects.splice(effects.indexOf("Poison Resistant"), 1);
-                    if (
-                        !doubleResist ||
-                        selectedEffects.indexOf("Poison Resistant") != -1
-                    )
+                    if (!doubleResist || selectedEffects.indexOf("Poison Resistant") != -1)
                         effects.splice(effects.indexOf("Bleed Resistant"), 1);
                     break;
                 case "Enraging":
-                    if (selectedEffectsCount[checkSelected] >= 2)
-                        effects.splice(effects.indexOf(effect), 1);
+                    if (selectedEffectsCount[checkSelected] >= 2) effects.splice(effects.indexOf(effect), 1);
                     break;
                 case "Explosive":
                     count = selectedEffectsCount[checkSelected];
@@ -3590,10 +3334,8 @@ export let autoBattle = {
             }
 
             this.checkPoison(this.trimp);
-            if (this.trimp.bleed.time > 0)
-                this.trimp.bleed.time -= this.frameTime;
-            if (this.trimp.shock.time > 0)
-                this.trimp.shock.time -= this.frameTime;
+            if (this.trimp.bleed.time > 0) this.trimp.bleed.time -= this.frameTime;
+            if (this.trimp.shock.time > 0) this.trimp.shock.time -= this.frameTime;
             if (this.enemy.health <= 0) {
                 this.enemyDied();
                 return this.enemy;
@@ -3608,8 +3350,7 @@ export let autoBattle = {
                 this.attack(this.enemy, this.trimp, luck * -1);
             }
 
-            if (!this.enemy.noSlow)
-                this.enemy.attackSpeed *= this.trimp.slowAura;
+            if (!this.enemy.noSlow) this.enemy.attackSpeed *= this.trimp.slowAura;
             var enemyAttackTime = this.enemy.attackSpeed;
             if (this.enemy.lastAttack >= enemyAttackTime) {
                 this.enemy.lastAttack -= enemyAttackTime;
@@ -3619,22 +3360,16 @@ export let autoBattle = {
                 this.enemy.lastExplode += this.frameTime;
                 if (this.enemy.lastExplode >= this.enemy.explodeFreq) {
                     this.enemy.lastExplode -= this.enemy.explodeFreq;
-                    var dmg =
-                        this.enemy.explodeDamage * this.getAttack(this.enemy) -
-                        this.trimp.defense;
+                    var dmg = this.enemy.explodeDamage * this.getAttack(this.enemy) - this.trimp.defense;
                     this.damageCreature(this.trimp, dmg);
                 }
             }
 
             this.checkPoison(this.enemy);
-            if (this.enemy.bleed.time > 0)
-                this.enemy.bleed.time -= this.frameTime;
-            if (this.enemy.shock.time > 0 && this.enemy.shock.time != 9999999)
-                this.enemy.shock.time -= this.frameTime;
-            if (this.trimp.health > this.trimp.maxHealth)
-                this.trimp.health = this.trimp.maxHealth;
-            if (this.enemy.health > this.enemy.maxHealth)
-                this.enemy.health = this.enemy.maxHealth;
+            if (this.enemy.bleed.time > 0) this.enemy.bleed.time -= this.frameTime;
+            if (this.enemy.shock.time > 0 && this.enemy.shock.time != 9999999) this.enemy.shock.time -= this.frameTime;
+            if (this.trimp.health > this.trimp.maxHealth) this.trimp.health = this.trimp.maxHealth;
+            if (this.enemy.health > this.enemy.maxHealth) this.enemy.health = this.enemy.maxHealth;
             if (this.trimp.health <= 0) {
                 this.trimpDied();
                 return this.trimp;
@@ -3666,8 +3401,7 @@ const seededRandom = (seed) => {
 };
 
 const getRandomIntSeeded = (seed, minIncl, maxExcl) => {
-    let toReturn =
-        Math.floor(seededRandom(seed) * (maxExcl - minIncl)) + minIncl;
+    let toReturn = Math.floor(seededRandom(seed) * (maxExcl - minIncl)) + minIncl;
     return toReturn === maxExcl ? minIncl : toReturn;
 };
 
