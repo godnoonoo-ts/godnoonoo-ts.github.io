@@ -2,8 +2,8 @@
 Functions for calculating best ring mods.
 */
 import { uiSetMods, uiUpdateMod } from "../../view/extra/bestRingModsView.js";
-import { getKillTime, getDustPs, modifiedAutoBattle, startSimulation, } from "../autoBattleController.js";
-import { equipRingMods, getRing, unequipRingMods, } from "../bonusesController.js";
+import { getKillTime, getDustPs, modifiedAutoBattle, startSimulation } from "../autoBattleController.js";
+import { equipRingMods, getRing, unequipRingMods } from "../bonusesController.js";
 import { getModsToRun } from "./get.js";
 let MODSTORUN = [];
 let CURRENTMODS;
@@ -17,8 +17,11 @@ export function findBestMod() {
     if (lvl < 15) {
         MODSTORUN = getModsToRun(1);
     }
-    else {
+    else if (lvl < 30) {
         MODSTORUN = getModsToRun(2);
+    }
+    else {
+        MODSTORUN = getModsToRun(3);
     }
     uiSetMods(MODSTORUN);
     CURRENTMODS = MODSTORUN.shift();
