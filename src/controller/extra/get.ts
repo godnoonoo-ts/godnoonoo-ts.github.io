@@ -32,21 +32,30 @@ export function getItemsToRun(withDoppel: boolean, withRing: boolean) {
     return itemsWithRing;
 }
 
+export function* permutations(array: string[], length: number, start = 0): Generator<Array<string>> {
+    if (start >= array.length || length < 1) {
+        yield new Array();
+    } else {
+        while (start <= array.length - length) {
+            let first = array[start];
+            for (let subset of permutations(array, length - 1, start + 1)) {
+                subset.push(first);
+                yield subset;
+            }
+            ++start;
+        }
+    }
+}
+
 export function getModsToRun(count: number) {
-    let modsToRun: (string | string[])[] = [];
+    let modsToRun: string[] = [];
     const posMods = getPossibleRingMods();
     for (const mod in posMods) modsToRun.push(mod);
-    if (count > 1) {
-        modsToRun = modsToRun.flatMap((v, i) =>
-            modsToRun.slice(i + 1).map((w) => [v, w] as string[]),
-        );
-    }
-    return modsToRun;
+    return [...permutations(modsToRun, count)];
 }
 
 export function getOppositesLimit(items?: (keyof IABTypes["items"])[]) {
-    if (!items)
-        items = getItemsToRun(true, false) as (keyof IABTypes["items"])[];
+    if (!items) items = getItemsToRun(true, false) as (keyof IABTypes["items"])[];
     const allItems = getItemsOwned();
     const opposites = [] as (keyof IABTypes["items"])[];
     for (const item of allItems) {

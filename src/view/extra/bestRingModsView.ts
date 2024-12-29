@@ -33,7 +33,7 @@ function setupModsBtn() {
     });
 }
 
-export function uiSetMods(mods: (string | string[])[]) {
+export function uiSetMods(mods: string[][]) {
     currentExtraResults.clear();
     currentExtraResults.add(clearModsResults);
 
@@ -59,29 +59,20 @@ export function uiSetMods(mods: (string | string[])[]) {
     }
 }
 
-function getModName(mods: string | string[]) {
-    if (typeof mods === "string") {
-        let name = mods.replace("Mult", "");
-        name = capitaliseFirstLetter(name);
-        const mod = mods.replaceAll("_", " ");
-        return [mod, name];
-    } else {
-        let name1 = mods[0].replace("Mult", "");
-        name1 = capitaliseFirstLetter(name1);
-        let name2 = mods[1].replace("Mult", "");
-        name2 = capitaliseFirstLetter(name2);
-        const name = `${name1} & ${name2}`;
-        const mod = `${mods[0]}_${mods[1]}`;
-        return [mod, name];
+function getModName(mods: string[]) {
+    let names: string[] = [];
+    for (const item of mods) {
+        let itemName = item.replace("Mult", "");
+        itemName = capitaliseFirstLetter(itemName);
+        names.push(itemName);
     }
+    const name = names.reduce((str, curr) => str + " & " + curr);
+    const mod = mods.reduce((str, curr) => str + "_" + curr);
+    return [mod, name];
 }
 
-export function uiUpdateMod(
-    mod: string | string[],
-    killTime: number,
-    dustPs: number,
-) {
-    // if mod is an array, it's a combined mod
+export function uiUpdateMod(mod: string | string[], killTime: number, dustPs: number) {
+    // If mod is an array, it's a combined mod.
     if (Array.isArray(mod)) {
         mod = mod.join("_");
     }

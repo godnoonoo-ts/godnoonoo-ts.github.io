@@ -8,8 +8,8 @@ import { getKillTime, getDustPs, modifiedAutoBattle, startSimulation } from "../
 import { equipRingMods, getRing, unequipRingMods } from "../bonusesController.js";
 import { getModsToRun } from "./get.js";
 
-let MODSTORUN: (string | string[])[] = [];
-let CURRENTMODS: string | string[];
+let MODSTORUN: string[][] = [];
+let CURRENTMODS: string[];
 let ORIGINALMODS: string | string[];
 
 export function findBestMod() {
@@ -25,7 +25,7 @@ export function findBestMod() {
         MODSTORUN = getModsToRun(3);
     }
     uiSetMods(MODSTORUN);
-    CURRENTMODS = MODSTORUN.shift() as string;
+    CURRENTMODS = MODSTORUN.shift() as string[];
     simulateNextMod();
 }
 
@@ -45,7 +45,7 @@ function onUpdate() {
 }
 
 function onComplete() {
-    const mod = MODSTORUN.shift() as string;
+    const mod = MODSTORUN.shift() as string[];
     if (mod !== undefined) {
         CURRENTMODS = mod;
         simulateNextMod();

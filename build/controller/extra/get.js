@@ -28,15 +28,27 @@ export function getItemsToRun(withDoppel, withRing) {
     }
     return itemsWithRing;
 }
+export function* permutations(array, length, start = 0) {
+    if (start >= array.length || length < 1) {
+        yield new Array();
+    }
+    else {
+        while (start <= array.length - length) {
+            let first = array[start];
+            for (let subset of permutations(array, length - 1, start + 1)) {
+                subset.push(first);
+                yield subset;
+            }
+            ++start;
+        }
+    }
+}
 export function getModsToRun(count) {
     let modsToRun = [];
     const posMods = getPossibleRingMods();
     for (const mod in posMods)
         modsToRun.push(mod);
-    if (count > 1) {
-        modsToRun = modsToRun.flatMap((v, i) => modsToRun.slice(i + 1).map((w) => [v, w]));
-    }
-    return modsToRun;
+    return [...permutations(modsToRun, count)];
 }
 export function getOppositesLimit(items) {
     if (!items)
