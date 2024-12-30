@@ -1283,7 +1283,8 @@ export let autoBattle = {
                 if (
                     autoBattle.items.Rusty_Dagger.equipped ||
                     autoBattle.items.Big_Cleaver.equipped ||
-                    autoBattle.items.Bag_of_Nails.equipped
+                    autoBattle.items.Bag_of_Nails.equipped ||
+                    autoBattle.items.Doppelganger_Diadem.equipped
                 ) {
                     autoBattle.enemy.baseHealth *= 0.75;
                     autoBattle.enemy.maxHealth *= 0.75;
