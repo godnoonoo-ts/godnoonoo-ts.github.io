@@ -2140,7 +2140,7 @@ export let autoBattle = {
             doStuff: function () {
                 if (autoBattle.trimp.bleedTime <= 10000) autoBattle.trimp.bleedTime = 10000;
                 if (autoBattle.items.Doppelganger_Signet.equipped) {
-                    autoBattle.trimp.attack *= 2;
+                    autoBattle.trimp.attack *= 3;
                     if (!autoBattle.trimp.doppDown) autoBattle.trimp.attack *= 2;
                     if (typeof autoBattle.trimp.doppLives === "undefined") autoBattle.trimp.doppLives = 1;
                 }

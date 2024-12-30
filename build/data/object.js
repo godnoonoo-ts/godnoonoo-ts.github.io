@@ -1237,7 +1237,8 @@ export let autoBattle = {
             onEnemy: function () {
                 if (autoBattle.items.Rusty_Dagger.equipped ||
                     autoBattle.items.Big_Cleaver.equipped ||
-                    autoBattle.items.Bag_of_Nails.equipped) {
+                    autoBattle.items.Bag_of_Nails.equipped ||
+                    autoBattle.items.Doppelganger_Diadem.equipped) {
                     autoBattle.enemy.baseHealth *= 0.75;
                     autoBattle.enemy.maxHealth *= 0.75;
                     autoBattle.enemy.health = autoBattle.enemy.maxHealth;
@@ -2075,7 +2076,7 @@ export let autoBattle = {
                 if (autoBattle.trimp.bleedTime <= 10000)
                     autoBattle.trimp.bleedTime = 10000;
                 if (autoBattle.items.Doppelganger_Signet.equipped) {
-                    autoBattle.trimp.attack *= 2;
+                    autoBattle.trimp.attack *= 3;
                     if (!autoBattle.trimp.doppDown)
                         autoBattle.trimp.attack *= 2;
                     if (typeof autoBattle.trimp.doppLives === "undefined")
