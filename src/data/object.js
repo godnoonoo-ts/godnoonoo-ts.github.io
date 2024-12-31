@@ -2140,7 +2140,7 @@ export let autoBattle = {
             doStuff: function () {
                 if (autoBattle.trimp.bleedTime <= 10000) autoBattle.trimp.bleedTime = 10000;
                 if (autoBattle.items.Doppelganger_Signet.equipped) {
-                    autoBattle.trimp.attack *= 3;
+                    autoBattle.trimp.attack *= 2;
                     if (!autoBattle.trimp.doppDown) autoBattle.trimp.attack *= 2;
                     if (typeof autoBattle.trimp.doppLives === "undefined") autoBattle.trimp.doppLives = 1;
                 }
@@ -2176,7 +2176,7 @@ export let autoBattle = {
             },
             explodeDmg: function () {
                 var damageAmt = autoBattle.enemy.dmgTaken;
-                if (autoBattle.items.Doppelganger_Diadem.equipped && autoBattle.trimp.doppLives == 1) damageAmt *= 2;
+                if (autoBattle.items.Doppelganger_Diadem.equipped && autoBattle.trimp.doppLives == 1) damageAmt *= 3;
                 return damageAmt;
             },
             doStuff: function () {
