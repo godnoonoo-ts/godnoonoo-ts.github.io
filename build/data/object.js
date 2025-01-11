@@ -1616,6 +1616,7 @@ export let autoBattle = {
             startPrice: 15e5,
             priceMod: 20,
         },
+        //Dopp Diadem 250
         //Final calc items
         //After all shock resist
         Stormbringer: {
@@ -2154,6 +2155,37 @@ export let autoBattle = {
             priceMod: 20,
             dustType: "shards",
         },
+        Gaseous_Greataxe: {
+            owned: false,
+            equipped: false,
+            hidden: false,
+            level: 1,
+            zone: 260,
+            description: function () {
+                return ("Multiplies your Poison Damage by your Bleed Damage or Shock Damage, whichever is higher. Doubles Poison Stack Rate. +" +
+                    prettify(this.maxStacks()) +
+                    " Max Poison Stacks. Increases Max Poison stacks by this amount again and doubles Poison damage every minute.");
+            },
+            upgrade: "+50% more (compounding) Max Poison Stacks",
+            maxStacks: function () {
+                return Math.floor(100 * Math.pow(1.2, this.level - 1));
+            },
+            doStuff: function () {
+                var higherMod = autoBattle.trimp.shockMod > autoBattle.trimp.bleedMod
+                    ? autoBattle.trimp.shockMod
+                    : autoBattle.trimp.bleedMod;
+                if (higherMod < 1)
+                    higherMod = 1;
+                autoBattle.trimp.poisonMod *= higherMod;
+                var minutes = Math.floor(autoBattle.battleTime / 60000);
+                autoBattle.trimp.poisonMod *= Math.pow(2, minutes);
+                autoBattle.trimp.poisonStack += this.maxStacks() * (minutes + 1);
+                autoBattle.trimp.poisonRate *= 2;
+            },
+            dustType: "shards",
+            startPrice: 15e5,
+            priceMod: 20,
+        },
     },
     bonuses: {
         Extra_Limbs: {
@@ -2174,6 +2206,7 @@ export let autoBattle = {
             level: 0,
             price: 30000,
             priceMod: 3,
+            max: 50,
         },
         Stats: {
             description: function () {
@@ -2197,6 +2230,7 @@ export let autoBattle = {
             price: 50,
             useShards: true,
             priceMod: 10,
+            max: 18,
         },
     },
     oneTimers: {
@@ -2300,15 +2334,6 @@ export let autoBattle = {
             requiredItems: 48,
             useShards: true,
         },
-        Radiant_Ring: {
-            description: "Your ring gains a third slot.",
-            owned: false,
-            requiredItems: 50,
-            useShards: true,
-            onPurchase: function () {
-                autoBattle.checkAddRingSlot();
-            },
-        },
         Expanding_Tauntimp: {
             description: "Starting after your next Portal, U2 Tauntimps will increase all Trimps gained by " +
                 "prettify(game.badGuys.Tauntimp.expandingBase() * 100) " +
@@ -2361,6 +2386,9 @@ export let autoBattle = {
         this.trimp.slowAura = 1;
         this.trimp.dustMult = 0;
         this.checkItems();
+        if (this.enemy.immune != "") {
+            this.trimp[this.enemy.immune + "Chance"] = 0;
+        }
         var trimpAttackTime = this.trimp.attackSpeed;
         if (this.trimp.lastAttack >= trimpAttackTime) {
             this.trimp.lastAttack -= trimpAttackTime;
@@ -2519,19 +2547,16 @@ export let autoBattle = {
             return 1;
         return Math.pow(this.enemy.berserkMod, Math.floor(this.enemy.berserkStack / this.enemy.berserkEvery));
     },
-    rollDamage: function (attacker, luck = false) {
+    rollDamage: function (attacker) {
         var baseAttack = this.getAttack(attacker);
         var attack = baseAttack * 0.2;
         var roll = Math.floor(Math.random() * 201);
-        if (luck) {
-            roll = 100 + luck * 100;
-        }
         roll -= 100;
         roll /= 100;
         return baseAttack + attack * roll;
     },
-    attack: function (attacker, defender, luck = 0) {
-        var damage = this.rollDamage(attacker, luck);
+    attack: function (attacker, defender) {
+        var damage = this.rollDamage(attacker);
         var shockMod = 1;
         if (defender.shock.time > 0) {
             shockMod = 1 + defender.shock.mod;
@@ -2718,6 +2743,10 @@ export let autoBattle = {
         for (var x = 0; x < effectsCount; x++) {
             var roll = getRandomIntSeeded(seed++, 0, effects.length);
             var effect = effects[roll];
+            if (x == 0 && this.enemyLevel > 150) {
+                var immunities = ["Poison Immune", "Shock Immune", "Bleed Immune"];
+                effect = immunities[(this.enemyLevel - 151) % 3];
+            }
             if (!doubleResist && effect.search("Resistant") != -1) {
                 var offset = this.enemyLevel % 3;
                 roll = getRandomIntSeeded(seed++, 0, 100);
@@ -2810,6 +2839,18 @@ export let autoBattle = {
                         effects.splice(effects.indexOf("Poison Resistant"), 1);
                     if (!doubleResist || selectedEffects.indexOf("Poison Resistant") != -1)
                         effects.splice(effects.indexOf("Bleed Resistant"), 1);
+                    break;
+                case "Poison Immune":
+                    this.enemy.immune = "poison";
+                    effects.splice(effects.indexOf("Poison Resistant"), 1);
+                    break;
+                case "Shock Immune":
+                    this.enemy.immune = "shock";
+                    effects.splice(effects.indexOf("Shock Resistant"), 1);
+                    break;
+                case "Bleed Immune":
+                    this.enemy.immune = "bleed";
+                    effects.splice(effects.indexOf("Bleed Resistant"), 1);
                     break;
                 case "Defensive":
                     this.enemy.defense += Math.ceil(this.enemy.level * 0.75 * Math.pow(1.05, this.enemy.level));
@@ -3061,9 +3102,9 @@ export let autoBattle = {
         return modObj.baseGain * this.rings.level * Math.pow(modObj.perTen, Math.floor(this.rings.level / 10));
     },
     getRingSlots: function () {
-        var amt = Math.floor((this.rings.level - 5) / 10) + 1;
-        if (amt > 2)
-            amt = 2;
+        var amt = Math.floor(this.rings.level / 15) + 1;
+        if (amt > 3)
+            amt = 3;
         return amt;
     },
     levelRing: function () {
