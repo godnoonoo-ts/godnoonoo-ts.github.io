@@ -91,6 +91,7 @@ export let autoBattle = {
             dustMult: 0,
             gooStored: 0,
             lastGoo: -1,
+            immune: "",
             bleed: {
                 time: 0,
                 mod: 0,
@@ -2277,6 +2278,7 @@ export let autoBattle = {
             level: 0,
             price: 20000,
             priceMod: 3,
+            max: 50,
         },
         Scaffolding: {
             description: function () {
@@ -3230,6 +3232,10 @@ export let autoBattle = {
         for (let x = 0; x < effectsCount; x++) {
             let roll = getRandomIntSeeded(seed++, 0, effects.length);
             let effect = effects[roll];
+            if (x == 0 && this.enemyLevel > 150) {
+                var immunities = ["Poison Immune", "Shock Immune", "Bleed Immune"];
+                effect = immunities[(this.enemyLevel - 151) % 3];
+            }
             if (!doubleResist && effect.search("Resistant") != -1) {
                 let offset = level % 3;
                 roll = getRandomIntSeeded(seed++, 0, 100);
@@ -3281,6 +3287,15 @@ export let autoBattle = {
                         effects.splice(effects.indexOf("Poison Resistant"), 1);
                     if (!doubleResist || selectedEffects.indexOf("Poison Resistant") != -1)
                         effects.splice(effects.indexOf("Bleed Resistant"), 1);
+                    break;
+                case "Poison Immune":
+                    effects.splice(effects.indexOf("Poison Resistant"), 1);
+                    break;
+                case "Shock Immune":
+                    effects.splice(effects.indexOf("Shock Resistant"), 1);
+                    break;
+                case "Bleed Immune":
+                    effects.splice(effects.indexOf("Bleed Resistant"), 1);
                     break;
                 case "Enraging":
                     if (selectedEffectsCount[checkSelected] >= 2) effects.splice(effects.indexOf(effect), 1);
