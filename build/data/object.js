@@ -2165,9 +2165,9 @@ export let autoBattle = {
             description: function () {
                 return ("Multiplies your Poison Damage by your Bleed Damage or Shock Damage, whichever is higher. Doubles Poison Stack Rate. +" +
                     prettify(this.maxStacks()) +
-                    " Max Poison Stacks. Increases Max Poison stacks by this amount again and doubles Poison damage every minute.");
+                    " Max Poison Stacks. Every 10 seconds increases Max Poison stacks by 10% of this amount and increases Poison damage by 10% (compounding).");
             },
-            upgrade: "+50% more (compounding) Max Poison Stacks",
+            upgrade: "+20% more (compounding) Max Poison Stacks",
             maxStacks: function () {
                 return Math.floor(100 * Math.pow(1.2, this.level - 1));
             },
@@ -2178,9 +2178,9 @@ export let autoBattle = {
                 if (higherMod < 1)
                     higherMod = 1;
                 autoBattle.trimp.poisonMod *= higherMod;
-                var minutes = Math.floor(autoBattle.battleTime / 60000);
-                autoBattle.trimp.poisonMod *= Math.pow(2, minutes);
-                autoBattle.trimp.poisonStack += this.maxStacks() * (minutes + 1);
+                var timeStacks = Math.floor(autoBattle.battleTime / 10000);
+                autoBattle.trimp.poisonMod *= Math.pow(1.1, timeStacks);
+                autoBattle.trimp.poisonStack += Math.floor(this.maxStacks() * ((timeStacks + 10) * 0.1));
                 autoBattle.trimp.poisonRate *= 2;
             },
             dustType: "shards",
