@@ -2162,12 +2162,20 @@ export let autoBattle = {
             hidden: false,
             level: 1,
             zone: 260,
+            dustMult: function () {
+                var mult = 0.75 + (this.level - 1) * 0.01;
+                if (mult > 1)
+                    mult = 1;
+                return mult;
+            },
             description: function () {
                 return ("Multiplies your Poison Damage by your Bleed Damage or Shock Damage, whichever is higher. Doubles Poison Stack Rate. +" +
                     prettify(this.maxStacks()) +
-                    " Max Poison Stacks. Every 10 seconds increases Max Poison stacks by 10% of this amount and increases Poison damage by 10% (compounding).");
+                    " Max Poison Stacks. Every 10 seconds increases Max Poison stacks by 10% of this amount and increases Poison damage by 10% (compounding). Reduces Dust and Shard gains by " +
+                    Math.round((1 - this.dustMult()) * 100) +
+                    "%.");
             },
-            upgrade: "+20% more (compounding) Max Poison Stacks",
+            upgrade: "+20% more (compounding) Max Poison Stacks, -1% to Dust Penalty",
             maxStacks: function () {
                 return Math.floor(100 * Math.pow(1.2, this.level - 1));
             },
@@ -2184,7 +2192,46 @@ export let autoBattle = {
                 autoBattle.trimp.poisonRate *= 2;
             },
             dustType: "shards",
-            startPrice: 15e5,
+            startPrice: 1e10,
+            priceMod: 20,
+        },
+        The_Fibrillator: {
+            owned: false,
+            equipped: false,
+            hidden: false,
+            level: 1,
+            zone: 270,
+            description: function () {
+                return ("Multiplies Attack and Poison Damage by " +
+                    prettify(this.shockMod()) +
+                    "x. Adds " +
+                    prettify(this.shockMod() - 1) +
+                    " to this item's Attack and Poison Damage multplier for every 10 seconds the current shock on the enemy has lasted. Shocks last a minimum of 30 seconds (Overrides Sundering Scythe). Multiplies Health by " +
+                    prettify(this.healthMod()) +
+                    "x");
+            },
+            upgrade: "+0.05 to scaling Attack and Poison Multiplier, +0.25x Health",
+            shockMod: function () {
+                return 1.1 + (this.level - 1) * 0.05;
+            },
+            healthMod: function () {
+                return 2 + (this.level - 1) * 0.25;
+            },
+            doStuff: function () {
+                autoBattle.trimp.maxHealth *= this.healthMod();
+                var shockSeconds = 0;
+                if (autoBattle.enemy.shock.time > 0) {
+                    shockSeconds = (autoBattle.battleTime - autoBattle.enemy.shock.timeApplied) / 1000;
+                    shockSeconds = Math.floor(shockSeconds / 10);
+                    var shockMod = this.shockMod();
+                    var toAdd = (shockMod - 1) * shockSeconds;
+                    toAdd += shockMod;
+                    autoBattle.trimp.attack *= toAdd;
+                    autoBattle.trimp.poisonMod *= toAdd;
+                }
+            },
+            dustType: "shards",
+            startPrice: 1e12,
             priceMod: 20,
         },
     },
@@ -2479,6 +2526,8 @@ export let autoBattle = {
         }
         if (this.items.Sundering_Scythe.equipped && this.trimp.shockTime > 10000)
             this.trimp.shockTime = 10000;
+        if (this.items.The_Fibrillator.equipped && this.trimp.shockTime > 0 && this.trimp.shockTime < 30000)
+            this.trimp.shockTime = 30000;
         if (this.items.Blessed_Protector.equipped)
             this.items.Blessed_Protector.afterCheck(); //after anything that might hurt huffy
         if (this.items.Grounded_Crown.equipped)
@@ -2639,6 +2688,7 @@ export let autoBattle = {
                 if (attacker.isTrimp && this.items.Eelimp_in_a_Bottle.equipped)
                     defender.lastAttack = 0;
                 defender.shock.time = attacker.shockTime;
+                defender.shock.timeApplied = autoBattle.battleTime;
                 defender.shock.mod = attacker.shockMod;
                 defender.shock.count++;
             }
@@ -2934,6 +2984,9 @@ export let autoBattle = {
         var amt = 1;
         if (this.items.Lifegiving_Gem.equipped) {
             amt *= 1 + this.items.Lifegiving_Gem.dustIncrease();
+        }
+        if (this.items.Gaseous_Greataxe.equipped) {
+            amt *= this.items.Gaseous_Greataxe.dustMult();
         }
         amt += this.trimp.dustMult;
         if (this.oneTimers.Dusty_Tome.owned) {
