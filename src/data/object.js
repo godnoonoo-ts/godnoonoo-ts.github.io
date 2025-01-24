@@ -108,6 +108,7 @@ export let autoBattle = {
                 time: 0,
                 mod: 0,
                 count: 0,
+                timeApplied: 0,
             },
         };
     },
