@@ -6,7 +6,7 @@ import { getPossibleRingMods, getRing } from "../bonusesController.js";
 import { getItemsInOrder } from "../itemEquipController.js";
 import { getItem } from "../itemsController.js";
 export function getItemsToRun(withDoppel, withRing) {
-    let itemsToRun = [];
+    const itemsToRun = [];
     const names = getItemsInOrder();
     for (const name of names) {
         const item = getItem(name);
@@ -19,7 +19,7 @@ export function getItemsToRun(withDoppel, withRing) {
     if (!withRing)
         return itemsToRun;
     // Convert from keyof IABTypes["items"] to string[]
-    let itemsWithRing = [];
+    const itemsWithRing = [];
     for (const item of itemsToRun)
         itemsWithRing.push(item);
     const ring = getRing();
@@ -30,12 +30,12 @@ export function getItemsToRun(withDoppel, withRing) {
 }
 export function* permutations(array, length, start = 0) {
     if (start >= array.length || length < 1) {
-        yield new Array();
+        yield [];
     }
     else {
         while (start <= array.length - length) {
-            let first = array[start];
-            for (let subset of permutations(array, length - 1, start + 1)) {
+            const first = array[start];
+            for (const subset of permutations(array, length - 1, start + 1)) {
                 subset.push(first);
                 yield subset;
             }
@@ -44,7 +44,7 @@ export function* permutations(array, length, start = 0) {
     }
 }
 export function getModsToRun(count) {
-    let modsToRun = [];
+    const modsToRun = [];
     const posMods = getPossibleRingMods();
     for (const mod in posMods)
         modsToRun.push(mod);

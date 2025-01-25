@@ -3,7 +3,7 @@ Bonuses view panel, used for setting and leveling bonuses.
 This file should not interact directly with the data layer.
 */
 import { getOneTimersSA, getPossibleRingMods, getMutations, equipOneTimer, equipMutation, equipScruffy, getRingStatAmt, equipRingMods, setRingLevel, } from "../controller/bonusesController.js";
-import { addHover, capitaliseFirstLetter, getHTMLElement, prettyNumber, } from "../utility.js";
+import { addHover, capitaliseFirstLetter, getHTMLElement, prettyNumber } from "../utility.js";
 export function bonusesView() {
     setupOneTimerBtns();
     setupRingBtns();
@@ -23,10 +23,7 @@ function setupOneTimerBtns() {
         descriptionDiv.classList.add("hover", "bonusHover");
         const oneTimer = oneTimers[key];
         let description = oneTimer.description;
-        description +=
-            " Unlocks at " +
-                (oneTimer.requiredItems - 4).toString() +
-                " contracts.";
+        description += " Unlocks at " + (oneTimer.requiredItems - 4).toString() + " contracts.";
         descriptionDiv.innerHTML = description;
         button.appendChild(descriptionDiv);
         addHover(button, descriptionDiv);
@@ -55,9 +52,7 @@ function setupRingBtns() {
         descriptionDiv.classList.add("hover", "ringHover");
         modButton.addEventListener("mouseover", () => {
             const stat = prettyNumber(getRingStatAmt(ringMod)).toString();
-            const description = "+" +
-                stat +
-                (key === "lifesteal" || key === "dustMult" ? "%" : "");
+            const description = "+" + stat + (key === "lifesteal" || key === "dustMult" ? "%" : "");
             descriptionDiv.innerHTML = description;
         });
         modButton.appendChild(descriptionDiv);
@@ -111,8 +106,7 @@ function setupS21Btn(mutationsPanel) {
     addChangeForScruffyButton(button);
     const descriptionDiv = document.createElement("div");
     descriptionDiv.classList.add("hover", "mutationHover");
-    descriptionDiv.innerHTML =
-        "Scruffy teaches Huffy how to find 5x Dust from SA enemies.";
+    descriptionDiv.innerHTML = "Scruffy teaches Huffy how to find 5x Dust from SA enemies.";
     button.appendChild(descriptionDiv);
     addHover(button, descriptionDiv);
 }

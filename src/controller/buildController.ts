@@ -13,11 +13,7 @@ import {
 import { equipItem, levelItem } from "./itemEquipController.js";
 import { u2Mutations } from "../data/mutations.js";
 import { updatePresetButton } from "../view/simulationView.js";
-import {
-    getLimbs,
-    setEnemyLevel,
-    setMaxEnemyLevel,
-} from "./levelsController.js";
+import { getLimbs, setEnemyLevel, setMaxEnemyLevel } from "./levelsController.js";
 import { uiUpdateBuildCost, updateLimbs } from "../view/levelsView.js";
 import { builderData } from "../data/buildData.js";
 import { getSaveData } from "./saveController.js";
@@ -73,9 +69,7 @@ export function setPresets(presets: typeof autoBattle.presets) {
     autoBattle.presets.names = names;
     names.forEach((name, index) => {
         index += 1;
-        const presetName = Object.keys(autoBattle.presets)[
-            index
-        ] as keyof typeof autoBattle.presets;
+        const presetName = Object.keys(autoBattle.presets)[index] as keyof typeof autoBattle.presets;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const preset = presets[presetName] as any;
         if (preset.length > 0) {

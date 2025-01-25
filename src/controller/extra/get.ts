@@ -9,7 +9,7 @@ import { getItemsInOrder } from "../itemEquipController.js";
 import { Item, getItem } from "../itemsController.js";
 
 export function getItemsToRun(withDoppel: boolean, withRing: boolean) {
-    let itemsToRun = [] as (keyof IABTypes["items"])[];
+    const itemsToRun = [] as (keyof IABTypes["items"])[];
     const names = getItemsInOrder();
     for (const name of names) {
         const item = getItem(name);
@@ -21,7 +21,7 @@ export function getItemsToRun(withDoppel: boolean, withRing: boolean) {
     if (!withRing) return itemsToRun;
 
     // Convert from keyof IABTypes["items"] to string[]
-    let itemsWithRing = [] as string[];
+    const itemsWithRing = [] as string[];
     for (const item of itemsToRun) itemsWithRing.push(item);
 
     const ring = getRing();
@@ -34,11 +34,11 @@ export function getItemsToRun(withDoppel: boolean, withRing: boolean) {
 
 export function* permutations(array: string[], length: number, start = 0): Generator<Array<string>> {
     if (start >= array.length || length < 1) {
-        yield new Array();
+        yield [];
     } else {
         while (start <= array.length - length) {
-            let first = array[start];
-            for (let subset of permutations(array, length - 1, start + 1)) {
+            const first = array[start];
+            for (const subset of permutations(array, length - 1, start + 1)) {
                 subset.push(first);
                 yield subset;
             }
@@ -48,7 +48,7 @@ export function* permutations(array: string[], length: number, start = 0): Gener
 }
 
 export function getModsToRun(count: number) {
-    let modsToRun: string[] = [];
+    const modsToRun: string[] = [];
     const posMods = getPossibleRingMods();
     for (const mod in posMods) modsToRun.push(mod);
     return [...permutations(modsToRun, count)];

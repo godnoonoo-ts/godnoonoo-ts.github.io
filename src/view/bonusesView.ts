@@ -14,12 +14,7 @@ import {
     equipRingMods,
     setRingLevel,
 } from "../controller/bonusesController.js";
-import {
-    addHover,
-    capitaliseFirstLetter,
-    getHTMLElement,
-    prettyNumber,
-} from "../utility.js";
+import { addHover, capitaliseFirstLetter, getHTMLElement, prettyNumber } from "../utility.js";
 import { IABTypes } from "../data/buildTypes.js";
 
 export function bonusesView() {
@@ -35,12 +30,7 @@ function setupOneTimerBtns() {
         const button = document.createElement("button");
         button.innerHTML = key.replaceAll("_", " ");
         button.id = key + "_Button";
-        button.classList.add(
-            "uncheckedButton",
-            "text",
-            "generalButton",
-            "oneTimerButton"
-        );
+        button.classList.add("uncheckedButton", "text", "generalButton", "oneTimerButton");
         oneTimersPanel.appendChild(button);
         addChangeForOneTimerButton(button, key as keyof IABTypes["oneTimers"]);
 
@@ -48,20 +38,14 @@ function setupOneTimerBtns() {
         descriptionDiv.classList.add("hover", "bonusHover");
         const oneTimer = oneTimers[key as keyof IABTypes["oneTimers"]];
         let description = oneTimer.description;
-        description +=
-            " Unlocks at " +
-            (oneTimer.requiredItems - 4).toString() +
-            " contracts.";
+        description += " Unlocks at " + (oneTimer.requiredItems - 4).toString() + " contracts.";
         descriptionDiv.innerHTML = description;
         button.appendChild(descriptionDiv);
         addHover(button, descriptionDiv);
     }
 }
 
-function addChangeForOneTimerButton(
-    button: HTMLButtonElement,
-    oneTimer: keyof IABTypes["oneTimers"]
-) {
+function addChangeForOneTimerButton(button: HTMLButtonElement, oneTimer: keyof IABTypes["oneTimers"]) {
     button.addEventListener("click", () => {
         equipOneTimer(oneTimer);
     });
@@ -87,10 +71,7 @@ function setupRingBtns() {
         descriptionDiv.classList.add("hover", "ringHover");
         modButton.addEventListener("mouseover", () => {
             const stat = prettyNumber(getRingStatAmt(ringMod)).toString();
-            const description =
-                "+" +
-                stat +
-                (key === "lifesteal" || key === "dustMult" ? "%" : "");
+            const description = "+" + stat + (key === "lifesteal" || key === "dustMult" ? "%" : "");
             descriptionDiv.innerHTML = description;
         });
         modButton.appendChild(descriptionDiv);
@@ -122,12 +103,7 @@ function setupMutationsBtns() {
         const button = document.createElement("button");
         button.innerHTML = mutation.dn.replaceAll("_", " ");
         button.id = key + "_Button";
-        button.classList.add(
-            "uncheckedButton",
-            "text",
-            "generalButton",
-            "mutationsButton"
-        );
+        button.classList.add("uncheckedButton", "text", "generalButton", "mutationsButton");
         mutationsPanel.appendChild(button);
         const mutationName = key as keyof IABTypes["mutations"];
         addChangeForMutationButton(button, mutationName);
@@ -143,10 +119,7 @@ function setupMutationsBtns() {
     setupS21Btn(mutationsPanel);
 }
 
-function addChangeForMutationButton(
-    button: HTMLButtonElement,
-    mutation: keyof IABTypes["mutations"]
-) {
+function addChangeForMutationButton(button: HTMLButtonElement, mutation: keyof IABTypes["mutations"]) {
     button.addEventListener("click", () => {
         equipMutation(mutation);
     });
@@ -156,19 +129,13 @@ function setupS21Btn(mutationsPanel: Element) {
     const button = document.createElement("button");
     button.innerHTML = "S21";
     button.id = "S21_Button";
-    button.classList.add(
-        "uncheckedButton",
-        "text",
-        "generalButton",
-        "mutationsButton"
-    );
+    button.classList.add("uncheckedButton", "text", "generalButton", "mutationsButton");
     mutationsPanel.appendChild(button);
     addChangeForScruffyButton(button);
 
     const descriptionDiv = document.createElement("div");
     descriptionDiv.classList.add("hover", "mutationHover");
-    descriptionDiv.innerHTML =
-        "Scruffy teaches Huffy how to find 5x Dust from SA enemies.";
+    descriptionDiv.innerHTML = "Scruffy teaches Huffy how to find 5x Dust from SA enemies.";
     button.appendChild(descriptionDiv);
     addHover(button, descriptionDiv);
 }

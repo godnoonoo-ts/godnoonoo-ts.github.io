@@ -3,23 +3,15 @@ Controls buttons and fields for importing and exporting data.
 */
 import { Build } from "../data/buildTypes.js";
 import { LZString } from "./lz-string.js";
-import { buildFromSave, buildItems, clearBuilderData, setPresets, } from "./buildController.js";
+import { buildFromSave, buildItems, clearBuilderData, setPresets } from "./buildController.js";
 import { clearItems } from "./itemEquipController.js";
 import { clearBonuses, clearExtras, equipOneTimer, equipRingMod, getOneTimersSAName, setBonuses, setRingLevel, } from "./bonusesController.js";
-import { enemyCount, modifiedAutoBattleWithBuild, startSimulationFromButton, } from "./autoBattleController.js";
+import { enemyCount, modifiedAutoBattleWithBuild, startSimulationFromButton } from "./autoBattleController.js";
 import { setSaveData } from "./saveController.js";
 import { getItems } from "./itemsController.js";
 export function stringPaste(paste) {
     clear(false);
-    let savegame;
-    try {
-        // Wtf do you think the try catch is for you stupid linter
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        savegame = JSON.parse(LZString.decompressFromBase64(paste));
-    }
-    catch (error) {
-        // Do nothing
-    }
+    const savegame = JSON.parse(LZString.decompressFromBase64(paste));
     if (savegame) {
         //  Import save
         if (savegame.global) {
@@ -117,6 +109,7 @@ function findBonusesSplit(row) {
     }
     return -1;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function equipRowItems(ABItems, items) {
     items.forEach((itemLevel, index) => {
         if (itemLevel !== "") {

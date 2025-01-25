@@ -2,8 +2,8 @@
 Items view panel, used for equipping and leveling items.
 This file should not interact directly with the data layer.
 */
-import { equipItem, getItemsInOrder, levelItem, } from "../controller/itemEquipController.js";
-import { addHover, getHTMLElement, round, updateButton, updateTrinaryButton, } from "../utility.js";
+import { equipItem, getItemsInOrder, levelItem } from "../controller/itemEquipController.js";
+import { addHover, getHTMLElement, round, updateButton, updateTrinaryButton } from "../utility.js";
 import { getItem } from "../controller/itemsController.js";
 export function itemsView() {
     setupItemBtns();

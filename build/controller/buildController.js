@@ -4,7 +4,7 @@ import { equipMutation, equipOneTimer, equipRingMods, equipScruffy, getOneTimers
 import { equipItem, levelItem } from "./itemEquipController.js";
 import { u2Mutations } from "../data/mutations.js";
 import { updatePresetButton } from "../view/simulationView.js";
-import { getLimbs, setEnemyLevel, setMaxEnemyLevel, } from "./levelsController.js";
+import { getLimbs, setEnemyLevel, setMaxEnemyLevel } from "./levelsController.js";
 import { uiUpdateBuildCost, updateLimbs } from "../view/levelsView.js";
 import { builderData } from "../data/buildData.js";
 import { getSaveData } from "./saveController.js";

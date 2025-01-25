@@ -188,7 +188,6 @@ export function uiUpdateChances(huffy, enemy, shankInfo) {
     hfPoisonChanceSpan.innerHTML = hfPoisonChance.join("% to ");
     hfBleedChanceSpan.innerHTML = hfBleedChance.join("% to ");
     hfShockChanceSpan.innerHTML = hfShockChance.join("% to ");
-    /* eslint-disable @typescript-eslint/no-non-null-assertion */
     hfPoisonChanceSpan.parentElement.hidden = !huffy.canPoison;
     hfBleedChanceSpan.parentElement.hidden = !huffy.canBleed;
     hfShockChanceSpan.parentElement.hidden = !huffy.canShock;
@@ -201,7 +200,6 @@ export function uiUpdateChances(huffy, enemy, shankInfo) {
     enPoisonChanceSpan.parentElement.hidden = enemy.poison <= 0;
     enBleedChanceSpan.parentElement.hidden = enemy.bleed <= 0;
     enShockChanceSpan.parentElement.hidden = enemy.shock <= 0;
-    /* eslint-enable @typescript-eslint/no-non-null-assertion*/
 }
 export function uiUpdateBuildCost(dust, shards) {
     const dustSpan = getHTMLElement("#dustCost");

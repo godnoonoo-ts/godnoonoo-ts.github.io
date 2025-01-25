@@ -5,18 +5,11 @@ Get information about the simulation, start and stop it.
 
 import { u2Mutations } from "../data/mutations.js";
 import { autoBattle } from "../data/object.js";
-import {
-    CallbackFunction,
-    convertMilliSecondsToTime,
-    round,
-} from "../utility.js";
-import {
-    uiUpdateLiveResults,
-    updateTimeSpent,
-} from "../view/simulationView.js";
+import { CallbackFunction, convertMilliSecondsToTime, round } from "../utility.js";
+import { uiUpdateLiveResults, updateTimeSpent } from "../view/simulationView.js";
 import { getOneTimersSA } from "./bonusesController.js";
 import { updateBuildCost } from "./buildController.js";
-import { conConfig, gameController } from "./gameController.js"; // eslint-disable-line no-restricted-imports -- this is allowed here
+import { conConfig, gameController } from "./gameController.js";
 import { updateResistances } from "./resistanceController.js";
 import { setSimResultsDps } from "./resultsController.js";
 import { getRemainingEnemies } from "./saveController.js";
@@ -48,11 +41,7 @@ export function updateAutoRun() {
     _isAutoRun = !_isAutoRun;
 }
 
-export function startSimulation(
-    onUpdate?: CallbackFunction,
-    onComplete?: CallbackFunction,
-    onInterrupt?: CallbackFunction,
-) {
+export function startSimulation(onUpdate?: CallbackFunction, onComplete?: CallbackFunction, onInterrupt?: CallbackFunction) {
     if (gameController.isRunning()) {
         return;
     }
@@ -66,9 +55,7 @@ export function startSimulation(
     if (onComplete) {
         conConfig.setOnComplete(onComplete);
     } else {
-        conConfig.setOnComplete(
-            () => {} /* eslint-disable-line @typescript-eslint/no-empty-function -- setting onComplete to empty function */,
-        );
+        conConfig.setOnComplete(() => {});
     }
 
     if (onInterrupt) {
@@ -105,9 +92,7 @@ function runSimulation() {
 
 export function startSimulationFromButton() {
     conConfig.incRuntime();
-    conConfig.setOnComplete(
-        () => {} /* eslint-disable-line @typescript-eslint/no-empty-function -- setting onComplete to empty function */,
-    );
+    conConfig.setOnComplete(() => {});
     if (!gameController.modified && !gameController.isRunning()) {
         conConfig.setOnUpdate(liveUpdate);
         runSimulation();
@@ -208,9 +193,7 @@ export function getDustPs() {
 export function getClearingTime() {
     const enemyLevel = autoBattle.enemyLevel;
     const toKill = enemyCount(enemyLevel);
-    return (
-        (toKill / autoBattle.sessionEnemiesKilled) * autoBattle.lootAvg.counter
-    );
+    return (toKill / autoBattle.sessionEnemiesKilled) * autoBattle.lootAvg.counter;
 }
 
 export function getKillTime() {
@@ -272,25 +255,15 @@ export function getResults(): IResults {
 
     // Health
     const resultCounter = gameController.resultCounter;
-    const enemyHealth = round(
-        (resultCounter.healthSum / resultCounter.fights) * 100,
-        2,
-    );
-    const enemyHealthLoss = round(
-        (resultCounter.healthSum / resultCounter.losses) * 100,
-        2,
-    );
+    const enemyHealth = round((resultCounter.healthSum / resultCounter.fights) * 100, 2);
+    const enemyHealthLoss = round((resultCounter.healthSum / resultCounter.losses) * 100, 2);
 
     // Best fight
     const resultBest = gameController.resultBest;
     const bestTime = convertMilliSecondsToTime(resultBest.time);
     const bestFight = resultBest.win
         ? "win in " + bestTime
-        : "loss in " +
-          bestTime +
-          " with " +
-          round(resultBest.enemy * 100, 1) +
-          "% enemy health left";
+        : "loss in " + bestTime + " with " + round(resultBest.enemy * 100, 1) + "% enemy health left";
 
     return {
         isRunning: gameController.isRunning(),

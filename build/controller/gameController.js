@@ -8,9 +8,9 @@ export const conConfig = {
     onSimInterrupt: null,
     onSimComplete: null,
     onUpdate: null,
-    baseRuntime: 1 * 60 * 60 * 1000,
+    baseRuntime: 1 * 60 * 60 * 1000, // 4 hours
     runtime: 0,
-    updateInterval: 1000,
+    updateInterval: 1000, // 1 second
     incRuntime() {
         this.runtime += this.baseRuntime;
     },
@@ -38,7 +38,7 @@ export const conConfig = {
 export const gameController = {
     battleCount: 0,
     complete: false,
-    interval: null,
+    interval: null, // Interval ID
     halt: false,
     resultBest: { enemy: 1, time: 0, win: false },
     resultCounter: { fights: 0, healthSum: 0, losses: 0 },

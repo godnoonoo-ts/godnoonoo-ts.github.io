@@ -60,7 +60,7 @@ export function uiSetMods(mods: string[][]) {
 }
 
 function getModName(mods: string[]) {
-    let names: string[] = [];
+    const names: string[] = [];
     for (const item of mods) {
         let itemName = item.replace("Mult", "");
         itemName = capitaliseFirstLetter(itemName);

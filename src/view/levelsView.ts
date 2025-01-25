@@ -74,7 +74,7 @@ export function updateEffects() {
         effectsString = "None";
     }
     for (let i = 0; i < effects.size; ++i) {
-        const [effect, multiplier] = effectsIter.next().value;
+        const [effect, multiplier] = effectsIter.next().value!;
         if (multiplier === 1) {
             effectsString += capitaliseFirstLetter(effect);
         } else {
@@ -160,32 +160,32 @@ export function uiUpdateChances(huffy: IHuffy, enemy: IEnemy, shankInfo: IShank)
 
         // Enemy poison chance
         enPoisonChance.push(
-            enemy.poison - resistAllMin - huffy.resistPoison - (enemy.shankedEffect === "poison" ? enemy.shank : 0)
+            enemy.poison - resistAllMin - huffy.resistPoison - (enemy.shankedEffect === "poison" ? enemy.shank : 0),
         );
 
         if (resistAllMax !== resistAllMin) {
             enPoisonChance.push(
-                enemy.poison - resistAllMax - huffy.resistPoison - (enemy.shankedEffect === "poison" ? enemy.shank : 0)
+                enemy.poison - resistAllMax - huffy.resistPoison - (enemy.shankedEffect === "poison" ? enemy.shank : 0),
             );
         }
 
         // Enemy bleed chance
         enBleedChance.push(
-            enemy.bleed - resistAllMin - huffy.resistBleed - (enemy.shankedEffect === "bleed" ? enemy.shank : 0)
+            enemy.bleed - resistAllMin - huffy.resistBleed - (enemy.shankedEffect === "bleed" ? enemy.shank : 0),
         );
         if (resistAllMax !== resistAllMin) {
             enBleedChance.push(
-                enemy.bleed - resistAllMax - huffy.resistBleed - (enemy.shankedEffect === "bleed" ? enemy.shank : 0)
+                enemy.bleed - resistAllMax - huffy.resistBleed - (enemy.shankedEffect === "bleed" ? enemy.shank : 0),
             );
         }
 
         // Enemy shock chance
         enShockChance.push(
-            enemy.shock - resistAllMin - huffy.resistShock - (enemy.shankedEffect === "shock" ? enemy.shank : 0)
+            enemy.shock - resistAllMin - huffy.resistShock - (enemy.shankedEffect === "shock" ? enemy.shank : 0),
         );
         if (resistAllMax !== resistAllMin) {
             enShockChance.push(
-                enemy.shock - resistAllMax - huffy.resistShock - (enemy.shankedEffect === "shock" ? enemy.shank : 0)
+                enemy.shock - resistAllMax - huffy.resistShock - (enemy.shankedEffect === "shock" ? enemy.shank : 0),
             );
         }
 
@@ -242,7 +242,6 @@ export function uiUpdateChances(huffy: IHuffy, enemy: IEnemy, shankInfo: IShank)
     hfBleedChanceSpan.innerHTML = hfBleedChance.join("% to ");
     hfShockChanceSpan.innerHTML = hfShockChance.join("% to ");
 
-    /* eslint-disable @typescript-eslint/no-non-null-assertion */
     hfPoisonChanceSpan.parentElement!.hidden = !huffy.canPoison;
     hfBleedChanceSpan.parentElement!.hidden = !huffy.canBleed;
     hfShockChanceSpan.parentElement!.hidden = !huffy.canShock;
@@ -256,7 +255,6 @@ export function uiUpdateChances(huffy: IHuffy, enemy: IEnemy, shankInfo: IShank)
     enPoisonChanceSpan.parentElement!.hidden = enemy.poison <= 0;
     enBleedChanceSpan.parentElement!.hidden = enemy.bleed <= 0;
     enShockChanceSpan.parentElement!.hidden = enemy.shock <= 0;
-    /* eslint-enable @typescript-eslint/no-non-null-assertion*/
 }
 
 export function uiUpdateBuildCost(dust: number, shards: number) {

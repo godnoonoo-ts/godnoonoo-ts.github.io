@@ -12,7 +12,7 @@ export let autoBattle = {
     speed: 1,
     enemyLevel: 1,
     maxEnemyLevel: 1,
-    autoLevel: false,
+    autoLevel: false, // Changed from true
     dust: 0,
     shards: 0,
     shardDust: 0,

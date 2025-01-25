@@ -2,11 +2,7 @@ import { prettify } from "./data/object.js";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function pick(obj: any, ...keys: any) {
-    return Object.fromEntries(
-        keys
-            .filter((key: any) => key in obj)
-            .map((key: any) => [key, obj[key]]),
-    );
+    return Object.fromEntries(keys.filter((key: any) => key in obj).map((key: any) => [key, obj[key]]));
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
@@ -18,10 +14,7 @@ export function lowerFirstLetter(string: string) {
     return string.charAt(0).toLowerCase() + string.slice(1);
 }
 
-export function updateButton(
-    button: HTMLButtonElement | string,
-    setUnselected?: boolean,
-) {
+export function updateButton(button: HTMLButtonElement | string, setUnselected?: boolean) {
     let classList;
     if (typeof button === "string") {
         classList = getHTMLElement("#" + button + "_Button").classList;
@@ -32,7 +25,7 @@ export function updateButton(
     if (setUnselected || classList.contains("checkedButton")) {
         classList.remove("checkedButton");
         classList.add("uncheckedButton");
-    } else if (setUnselected && classList.contains("butButton")) {
+    } else if (classList.contains("butButton")) {
         classList.remove("butButton");
         classList.add("uncheckedButton");
     } else {
@@ -60,10 +53,7 @@ export function updateTrinaryButton(button: HTMLButtonElement | string) {
     }
 }
 
-export function updateInput(
-    name: HTMLInputElement | string,
-    level: number | string,
-) {
+export function updateInput(name: HTMLInputElement | string, level: number | string) {
     let input;
     if (typeof name === "string") {
         name = "#" + name + "_Input";
@@ -89,9 +79,7 @@ export function getHTMLElement(name: string): HTMLElement {
     const element = document.querySelector(name);
     if (!element) {
         if (!name.startsWith("#") && !name.startsWith(".")) {
-            throw new Error(
-                "Invalid selector. Please use a valid CSS selector.",
-            );
+            throw new Error("Invalid selector. Please use a valid CSS selector.");
         }
         throw new Error("Element not found: " + name);
     }

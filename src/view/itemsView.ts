@@ -3,19 +3,8 @@ Items view panel, used for equipping and leveling items.
 This file should not interact directly with the data layer.
 */
 
-import {
-    equipItem,
-    getItemsInOrder,
-    levelItem,
-} from "../controller/itemEquipController.js";
-import {
-    Trinary,
-    addHover,
-    getHTMLElement,
-    round,
-    updateButton,
-    updateTrinaryButton,
-} from "../utility.js";
+import { equipItem, getItemsInOrder, levelItem } from "../controller/itemEquipController.js";
+import { addHover, getHTMLElement, round, updateButton, updateTrinaryButton } from "../utility.js";
 import { IABTypes } from "../data/buildTypes.js";
 import { getItem } from "../controller/itemsController.js";
 
@@ -51,12 +40,7 @@ function partItemsDiv(parts: number, ind: number) {
         const name = itemName.replaceAll("_", " ");
         button.innerHTML = name;
         button.id = itemName + "_Button";
-        button.classList.add(
-            "uncheckedButton",
-            "small-text",
-            "itemsButton",
-            "generalButton",
-        );
+        button.classList.add("uncheckedButton", "small-text", "itemsButton", "generalButton");
         div.appendChild(button);
         addChangeForItemButton(button, itemName);
 
@@ -95,19 +79,13 @@ function partItemsDiv(parts: number, ind: number) {
     return table;
 }
 
-function addChangeForItemButton(
-    button: HTMLButtonElement,
-    item: keyof IABTypes["items"],
-) {
+function addChangeForItemButton(button: HTMLButtonElement, item: keyof IABTypes["items"]) {
     button.addEventListener("click", () => {
         equipItem(item, true);
     });
 }
 
-function addChangeForLevel(
-    input: HTMLInputElement,
-    item: keyof IABTypes["items"],
-) {
+function addChangeForLevel(input: HTMLInputElement, item: keyof IABTypes["items"]) {
     input.addEventListener("input", () => {
         const value = parseInt(input.value);
         levelItem(item, value, true);
@@ -123,9 +101,7 @@ export function updateFrontendItem(itemName: string) {
 }
 
 export function updateDescription(itemName: keyof IABTypes["items"]) {
-    const descriptionDiv = getHTMLElement(
-        "#" + itemName + "_Description",
-    ) as HTMLDivElement;
+    const descriptionDiv = getHTMLElement("#" + itemName + "_Description") as HTMLDivElement;
     descriptionDiv.innerHTML = getDescription(itemName);
 }
 

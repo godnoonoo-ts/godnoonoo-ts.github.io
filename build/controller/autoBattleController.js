@@ -4,11 +4,11 @@ Get information about the simulation, start and stop it.
 */
 import { u2Mutations } from "../data/mutations.js";
 import { autoBattle } from "../data/object.js";
-import { convertMilliSecondsToTime, round, } from "../utility.js";
-import { uiUpdateLiveResults, updateTimeSpent, } from "../view/simulationView.js";
+import { convertMilliSecondsToTime, round } from "../utility.js";
+import { uiUpdateLiveResults, updateTimeSpent } from "../view/simulationView.js";
 import { getOneTimersSA } from "./bonusesController.js";
 import { updateBuildCost } from "./buildController.js";
-import { conConfig, gameController } from "./gameController.js"; // eslint-disable-line no-restricted-imports -- this is allowed here
+import { conConfig, gameController } from "./gameController.js";
 import { updateResistances } from "./resistanceController.js";
 import { setSimResultsDps } from "./resultsController.js";
 import { getRemainingEnemies } from "./saveController.js";
@@ -33,7 +33,7 @@ export function startSimulation(onUpdate, onComplete, onInterrupt) {
         conConfig.setOnComplete(onComplete);
     }
     else {
-        conConfig.setOnComplete(() => { } /* eslint-disable-line @typescript-eslint/no-empty-function -- setting onComplete to empty function */);
+        conConfig.setOnComplete(() => { });
     }
     if (onInterrupt) {
         conConfig.setOnInterrupt(onInterrupt);
@@ -63,7 +63,7 @@ function runSimulation() {
 }
 export function startSimulationFromButton() {
     conConfig.incRuntime();
-    conConfig.setOnComplete(() => { } /* eslint-disable-line @typescript-eslint/no-empty-function -- setting onComplete to empty function */);
+    conConfig.setOnComplete(() => { });
     if (!gameController.modified && !gameController.isRunning()) {
         conConfig.setOnUpdate(liveUpdate);
         runSimulation();
@@ -150,7 +150,7 @@ export function getDustPs() {
 export function getClearingTime() {
     const enemyLevel = autoBattle.enemyLevel;
     const toKill = enemyCount(enemyLevel);
-    return ((toKill / autoBattle.sessionEnemiesKilled) * autoBattle.lootAvg.counter);
+    return (toKill / autoBattle.sessionEnemiesKilled) * autoBattle.lootAvg.counter;
 }
 export function getKillTime() {
     const timeUsed = autoBattle.lootAvg.counter;
@@ -207,11 +207,7 @@ export function getResults() {
     const bestTime = convertMilliSecondsToTime(resultBest.time);
     const bestFight = resultBest.win
         ? "win in " + bestTime
-        : "loss in " +
-            bestTime +
-            " with " +
-            round(resultBest.enemy * 100, 1) +
-            "% enemy health left";
+        : "loss in " + bestTime + " with " + round(resultBest.enemy * 100, 1) + "% enemy health left";
     return {
         isRunning: gameController.isRunning(),
         timeUsed,
