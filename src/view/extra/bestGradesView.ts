@@ -11,14 +11,6 @@ import {
 } from "../../utility.js";
 import { currentExtraResults } from "./extrasView.js";
 
-const BESTGRADESPANEL = getHTMLElement("#bestGradesResults");
-const GRADESITEMSDUST = getHTMLElement("#gradesItemsDust");
-const GRADESITEMSSHARDS = getHTMLElement("#gradesItemsShards");
-const GRADESCLEARINGDUST = getHTMLElement("#gradesClearingDust");
-const GRADESCLEARINGSHARDS = getHTMLElement("#gradesClearingShards");
-const GRADESPROFITDUST = getHTMLElement("#gradesProfitDust");
-const GRADESPROFITSHARDS = getHTMLElement("#gradesProfitShards");
-
 export function setupGrades() {
     setupGradeBtns();
 }
@@ -28,9 +20,7 @@ function setupGradeBtns() {
     clickingAnimation(upgradeBtn);
     upgradeBtn.addEventListener("click", () => {
         if (!simIsRunning()) {
-            const input = getHTMLElement(
-                "#bestGradesInput",
-            ) as HTMLInputElement;
+            const input = getHTMLElement("#bestGradesInput") as HTMLInputElement;
             const increment = +input.value;
             findBestGrade(increment);
         }
@@ -67,11 +57,7 @@ export function uiSetGradesItems(items: string[]) {
     }
 }
 
-export function uiUpdateGradeItem(
-    item: string,
-    reducedTime: number,
-    timeUntilProfit: number,
-) {
+export function uiUpdateGradeItem(item: string, reducedTime: number, timeUntilProfit: number) {
     const clearingSpan = getHTMLElement(`#gradesClearing${item}`);
     if (reducedTime < 0) {
         reducedTime = Math.abs(reducedTime);
@@ -79,8 +65,7 @@ export function uiUpdateGradeItem(
     } else clearingSpan.innerHTML = convertMilliSecondsToTime(reducedTime);
 
     const profitSpan = getHTMLElement(`#gradesProfit${item}`);
-    if (timeUntilProfit < 0)
-        profitSpan.innerHTML = convertMilliSecondsToTime(Infinity);
+    if (timeUntilProfit < 0) profitSpan.innerHTML = convertMilliSecondsToTime(Infinity);
     else profitSpan.innerHTML = convertSecondsToTime(timeUntilProfit);
 }
 
@@ -93,3 +78,16 @@ function clearGradesResults() {
     clearHTMLChilds(GRADESPROFITDUST);
     clearHTMLChilds(GRADESPROFITSHARDS);
 }
+
+export function displayBestItem(timeItem: string, profitItem: string) {
+    getHTMLElement(`#gradesClearing${timeItem}`).classList.add("bestLine");
+    getHTMLElement(`#gradesProfit${profitItem}`).classList.add("bestLine");
+}
+
+const BESTGRADESPANEL = getHTMLElement("#bestGradesResults");
+const GRADESITEMSDUST = getHTMLElement("#gradesItemsDust");
+const GRADESITEMSSHARDS = getHTMLElement("#gradesItemsShards");
+const GRADESCLEARINGDUST = getHTMLElement("#gradesClearingDust");
+const GRADESCLEARINGSHARDS = getHTMLElement("#gradesClearingShards");
+const GRADESPROFITDUST = getHTMLElement("#gradesProfitDust");
+const GRADESPROFITSHARDS = getHTMLElement("#gradesProfitShards");

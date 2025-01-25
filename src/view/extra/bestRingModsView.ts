@@ -89,3 +89,11 @@ function clearModsResults() {
     clearHTMLChilds(KILLTIME);
     clearHTMLChilds(DUSTPS);
 }
+
+export function displayBestMods(dpsMods: string[], timeMods: string[]) {
+    let mod = getModName(dpsMods)[0];
+    getHTMLElement(`#modsDustPs${mod}`).classList.add("bestLine");
+
+    mod = getModName(timeMods)[0];
+    getHTMLElement(`#modsKill${mod}`).classList.add("bestLine");
+}

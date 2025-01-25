@@ -5,7 +5,7 @@ import { builderData } from "../data/buildData.js";
 import { autoBattle } from "../data/object.js";
 import { updateInput } from "../utility.js";
 import { updateEffects, updateLimbs } from "../view/levelsView.js";
-import { getEnemyLevel, modifiedAutoBattle, modifiedAutoBattleWithBuild, } from "./autoBattleController.js";
+import { getEnemyLevel, modifiedAutoBattle, modifiedAutoBattleWithBuild } from "./autoBattleController.js";
 export function getActiveEffects() {
     const level = getEnemyLevel();
     const effects = autoBattle.getEffects(level);

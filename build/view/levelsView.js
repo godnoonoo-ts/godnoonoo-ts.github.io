@@ -49,6 +49,9 @@ export function updateEffects() {
     const effects = getActiveEffects();
     let effectsString = "";
     const effectsIter = effects.entries();
+    if (effects.size === 0) {
+        effectsString = "None";
+    }
     for (let i = 0; i < effects.size; ++i) {
         const [effect, multiplier] = effectsIter.next().value;
         if (multiplier === 1) {
@@ -123,44 +126,22 @@ export function uiUpdateChances(huffy, enemy, shankInfo) {
     }
     const shank = getItem("Sacrificial_Shank");
     if (shank.equipped) {
-        const resistAllMax = huffy.resistAll +
-            Math.floor((shankInfo.reductionMax + enemy.shank) / 10) *
-                shank.level;
-        const resistAllMin = huffy.resistAll +
-            Math.floor((shankInfo.reductionMin + enemy.shank) / 10) *
-                shank.level;
+        const resistAllMax = huffy.resistAll + Math.floor((shankInfo.reductionMax + enemy.shank) / 10) * shank.level;
+        const resistAllMin = huffy.resistAll + Math.floor((shankInfo.reductionMin + enemy.shank) / 10) * shank.level;
         // Enemy poison chance
-        enPoisonChance.push(enemy.poison -
-            resistAllMin -
-            huffy.resistPoison -
-            (enemy.shankedEffect === "poison" ? enemy.shank : 0));
+        enPoisonChance.push(enemy.poison - resistAllMin - huffy.resistPoison - (enemy.shankedEffect === "poison" ? enemy.shank : 0));
         if (resistAllMax !== resistAllMin) {
-            enPoisonChance.push(enemy.poison -
-                resistAllMax -
-                huffy.resistPoison -
-                (enemy.shankedEffect === "poison" ? enemy.shank : 0));
+            enPoisonChance.push(enemy.poison - resistAllMax - huffy.resistPoison - (enemy.shankedEffect === "poison" ? enemy.shank : 0));
         }
         // Enemy bleed chance
-        enBleedChance.push(enemy.bleed -
-            resistAllMin -
-            huffy.resistBleed -
-            (enemy.shankedEffect === "bleed" ? enemy.shank : 0));
+        enBleedChance.push(enemy.bleed - resistAllMin - huffy.resistBleed - (enemy.shankedEffect === "bleed" ? enemy.shank : 0));
         if (resistAllMax !== resistAllMin) {
-            enBleedChance.push(enemy.bleed -
-                resistAllMax -
-                huffy.resistBleed -
-                (enemy.shankedEffect === "bleed" ? enemy.shank : 0));
+            enBleedChance.push(enemy.bleed - resistAllMax - huffy.resistBleed - (enemy.shankedEffect === "bleed" ? enemy.shank : 0));
         }
         // Enemy shock chance
-        enShockChance.push(enemy.shock -
-            resistAllMin -
-            huffy.resistShock -
-            (enemy.shankedEffect === "shock" ? enemy.shank : 0));
+        enShockChance.push(enemy.shock - resistAllMin - huffy.resistShock - (enemy.shankedEffect === "shock" ? enemy.shank : 0));
         if (resistAllMax !== resistAllMin) {
-            enShockChance.push(enemy.shock -
-                resistAllMax -
-                huffy.resistShock -
-                (enemy.shankedEffect === "shock" ? enemy.shank : 0));
+            enShockChance.push(enemy.shock - resistAllMax - huffy.resistShock - (enemy.shankedEffect === "shock" ? enemy.shank : 0));
         }
         // Huffy poison chance
         hfPoisonChance.push(shankInfo.poison[0] - enemy.resistPoison);
@@ -248,8 +229,7 @@ function setupTimeAffordBtn() {
             fromSaveSpan.innerHTML = "now!";
         }
         else {
-            fromSaveSpan.innerHTML =
-                "in: " + convertSecondsToTime(time.fromSave);
+            fromSaveSpan.innerHTML = "in: " + convertSecondsToTime(time.fromSave);
         }
         fromScratchSpan.innerHTML = convertSecondsToTime(time.fromScratch);
     });

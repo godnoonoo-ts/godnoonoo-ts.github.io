@@ -63,14 +63,16 @@ Stylesheet
 #itemsPanel {
     display: flex;
     flex-direction: row;
+    border-radius: 0.3em;
+    margin: 0.5em 0em 0em 0.5em;
 }
 
 #panel2 {
-    margin-left: 2em;
+    margin: 0.5em 0em 0em 2em;
 }
 
 #panel3 {
-    margin-left: 2em;
+    margin: 0.5em 0em 0em 2em;
 }
 
 /* Items */
@@ -112,6 +114,7 @@ Stylesheet
 #bonusesPanel {
     margin-bottom: 2em;
     padding: 0.5em 1em;
+    border-radius: 0em 0em 0.3em 0.3em;
 }
 
 #oneTimersPanel {
@@ -171,6 +174,7 @@ Stylesheet
 #infoPanel {
     border-collapse: collapse;
     margin-bottom: 2em;
+    border-radius: 0.3em;
 }
 
 #infoPanel > tbody > tr > td {
@@ -235,6 +239,8 @@ Stylesheet
     align-content: stretch;
     align-items: flex-start;
     padding: 0.3em 1em;
+    margin-bottom: 2em;
+    border-radius: 0.3em;
 }
 
 #enemyResistanceDiv {
@@ -244,10 +250,15 @@ Stylesheet
     justify-content: space-between;
     align-content: stretch;
     align-items: flex-start;
-    padding: 0.2em;
+    padding: 0.5em 0em 0em 0em;
 }
 
 /* More info */
+#moreInfoPanel {
+    padding: 0.3em;
+    border-radius: 0.3em;
+}
+
 #timeAffordTime {
     display: none;
     flex-direction: column;
@@ -267,6 +278,7 @@ Stylesheet
     padding: 0.5em 1em;
     margin-bottom: 2em;
     min-width: 30em;
+    border-radius: 0.3em;
 }
 
 #saveImportInp {
@@ -289,6 +301,7 @@ Stylesheet
     justify-content: center;
     padding: 0.3em 1em;
     margin-bottom: 2em;
+    border-radius: 0.3em;
 }
 
 /* Calc panel */
@@ -298,6 +311,7 @@ Stylesheet
     align-items: center;
     justify-content: center;
     padding: 0.3em 1em;
+    border-radius: 0.3em 0.3em 0em 0em;
 }
 
 #calcBtns2 {
@@ -308,6 +322,10 @@ Stylesheet
 }
 
 /* Calc results panel */
+
+#calcResultsPanel {
+    border-radius: 0em 0em 0.3em 0.3em;
+}
 
 #bestGradesResults {
     display: none;
@@ -397,6 +415,10 @@ Stylesheet
     height: 1.3em;
 }
 
+.bestLine {
+    text-decoration: underline;
+}
+
 /* Colours */
 
 .dark {
@@ -437,4 +459,8 @@ Stylesheet
 
 .butButton {
     background-color: rgb(143, 140, 0);
+}
+
+.bestLine {
+    color: rgb(241, 134, 27);
 }

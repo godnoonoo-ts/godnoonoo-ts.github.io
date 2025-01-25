@@ -4,13 +4,6 @@ import { getCurrency } from "../../controller/general.js";
 import { Currency } from "../../data/buildTypes.js";
 import { clearHTMLChilds, clickingAnimation, convertMilliSecondsToTime, convertSecondsToTime, getHTMLElement, } from "../../utility.js";
 import { currentExtraResults } from "./extrasView.js";
-const BESTGRADESPANEL = getHTMLElement("#bestGradesResults");
-const GRADESITEMSDUST = getHTMLElement("#gradesItemsDust");
-const GRADESITEMSSHARDS = getHTMLElement("#gradesItemsShards");
-const GRADESCLEARINGDUST = getHTMLElement("#gradesClearingDust");
-const GRADESCLEARINGSHARDS = getHTMLElement("#gradesClearingShards");
-const GRADESPROFITDUST = getHTMLElement("#gradesProfitDust");
-const GRADESPROFITSHARDS = getHTMLElement("#gradesProfitShards");
 export function setupGrades() {
     setupGradeBtns();
 }
@@ -76,3 +69,14 @@ function clearGradesResults() {
     clearHTMLChilds(GRADESPROFITDUST);
     clearHTMLChilds(GRADESPROFITSHARDS);
 }
+export function displayBestItem(timeItem, profitItem) {
+    getHTMLElement(`#gradesClearing${timeItem}`).classList.add("bestLine");
+    getHTMLElement(`#gradesProfit${profitItem}`).classList.add("bestLine");
+}
+const BESTGRADESPANEL = getHTMLElement("#bestGradesResults");
+const GRADESITEMSDUST = getHTMLElement("#gradesItemsDust");
+const GRADESITEMSSHARDS = getHTMLElement("#gradesItemsShards");
+const GRADESCLEARINGDUST = getHTMLElement("#gradesClearingDust");
+const GRADESCLEARINGSHARDS = getHTMLElement("#gradesClearingShards");
+const GRADESPROFITDUST = getHTMLElement("#gradesProfitDust");
+const GRADESPROFITSHARDS = getHTMLElement("#gradesProfitShards");

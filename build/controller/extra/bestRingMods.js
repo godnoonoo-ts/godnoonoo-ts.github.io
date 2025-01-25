@@ -1,13 +1,10 @@
 /*
 Functions for calculating best ring mods.
 */
-import { uiSetMods, uiUpdateMod } from "../../view/extra/bestRingModsView.js";
+import { displayBestMods, uiSetMods, uiUpdateMod } from "../../view/extra/bestRingModsView.js";
 import { getKillTime, getDustPs, modifiedAutoBattle, startSimulation } from "../autoBattleController.js";
 import { equipRingMods, getRing, unequipRingMods } from "../bonusesController.js";
 import { getModsToRun } from "./get.js";
-let MODSTORUN = [];
-let CURRENTMODS;
-let ORIGINALMODS;
 export function findBestMod() {
     const ring = getRing().stats;
     ORIGINALMODS = ring.mods;
@@ -25,6 +22,8 @@ export function findBestMod() {
     }
     uiSetMods(MODSTORUN);
     CURRENTMODS = MODSTORUN.shift();
+    BESTMODSDPS = [CURRENTMODS, 0];
+    BESTMODSTIME = [CURRENTMODS, Infinity];
     simulateNextMod();
 }
 function simulateNextMod() {
@@ -37,6 +36,7 @@ function simulateNextMod() {
 function onUpdate() {
     const killTime = getKillTime();
     const dustPs = getDustPs();
+    updateBestMods(killTime, dustPs);
     uiUpdateMod(listMods(CURRENTMODS), killTime, dustPs);
 }
 function onComplete() {
@@ -48,6 +48,7 @@ function onComplete() {
     else {
         unequipRingMods();
         equipRingMods(listMods(ORIGINALMODS));
+        displayBestMods(BESTMODSDPS[0], BESTMODSTIME[0]);
     }
 }
 function listMods(mod) {
@@ -55,3 +56,16 @@ function listMods(mod) {
         return mod;
     return [mod];
 }
+function updateBestMods(killTime, dustPs) {
+    if (killTime < BESTMODSTIME[1]) {
+        BESTMODSTIME = [CURRENTMODS, killTime];
+    }
+    if (dustPs > BESTMODSDPS[1]) {
+        BESTMODSDPS = [CURRENTMODS, dustPs];
+    }
+}
+let MODSTORUN = [];
+let CURRENTMODS;
+let ORIGINALMODS;
+let BESTMODSDPS;
+let BESTMODSTIME;
