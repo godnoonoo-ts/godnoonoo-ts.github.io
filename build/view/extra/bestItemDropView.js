@@ -68,3 +68,8 @@ function clearDropItemsResults() {
     clearHTMLChilds(WR);
     clearHTMLChilds(INCOME);
 }
+export function displayBestItem(timeItem, wrItem, incomeItem) {
+    getHTMLElement(`#dropWR${wrItem}`).classList.add("bestLine");
+    getHTMLElement(`#dropClearing${timeItem}`).classList.add("bestLine");
+    getHTMLElement(`#dropIncome${incomeItem}`).classList.add("bestLine");
+}

@@ -58,12 +58,7 @@ export function uiSetDropsItems(items: string[]) {
     }
 }
 
-export function uiUpdateDropItem(
-    item: string,
-    time: number,
-    wr: number,
-    income: number,
-) {
+export function uiUpdateDropItem(item: string, time: number, wr: number, income: number) {
     const clearingSpan = getHTMLElement(`#dropClearing${item}`);
     if (time < 0) {
         time = Math.abs(time);
@@ -86,4 +81,10 @@ function clearDropItemsResults() {
     clearHTMLChilds(CLEARING);
     clearHTMLChilds(WR);
     clearHTMLChilds(INCOME);
+}
+
+export function displayBestItem(timeItem: string, wrItem: string, incomeItem: string) {
+    getHTMLElement(`#dropWR${wrItem}`).classList.add("bestLine");
+    getHTMLElement(`#dropClearing${timeItem}`).classList.add("bestLine");
+    getHTMLElement(`#dropIncome${incomeItem}`).classList.add("bestLine");
 }

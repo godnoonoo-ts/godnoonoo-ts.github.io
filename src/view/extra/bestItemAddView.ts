@@ -58,12 +58,7 @@ export function uiSetAddItems(items: string[]) {
     }
 }
 
-export function uiUpdateAddItem(
-    item: string,
-    time: number,
-    wr: number,
-    income: number,
-) {
+export function uiUpdateAddItem(item: string, time: number, wr: number, income: number) {
     const clearingSpan = getHTMLElement(`#addClearing${item}`);
     if (time < 0) {
         time = Math.abs(time);
@@ -86,4 +81,10 @@ function clearAddItemsResults() {
     clearHTMLChilds(CLEARING);
     clearHTMLChilds(WR);
     clearHTMLChilds(INCOME);
+}
+
+export function displayBestItem(timeItem: string, wrItem: string, incomeItem: string) {
+    getHTMLElement(`#addWR${timeItem}`).classList.add("bestLine");
+    getHTMLElement(`#addClearing${wrItem}`).classList.add("bestLine");
+    getHTMLElement(`#addIncome${incomeItem}`).classList.add("bestLine");
 }
