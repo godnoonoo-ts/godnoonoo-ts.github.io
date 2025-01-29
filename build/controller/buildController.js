@@ -1,6 +1,15 @@
 import { Currency } from "../data/buildTypes.js";
 import { autoBattle } from "../data/object.js";
-import { equipMutation, equipOneTimer, equipRingMods, equipScruffy, getOneTimersSA, getRingPrice, setRingLevel, unequipRingMods, } from "./bonusesController.js";
+import {
+    equipMutation,
+    equipOneTimer,
+    equipRingMods,
+    equipScruffy,
+    getOneTimersSA,
+    getRingPrice,
+    setRingLevel,
+    unequipRingMods,
+} from "./bonusesController.js";
 import { equipItem, levelItem } from "./itemEquipController.js";
 import { u2Mutations } from "../data/mutations.js";
 import { updatePresetButton } from "../view/simulationView.js";
@@ -10,13 +19,13 @@ import { builderData } from "../data/buildData.js";
 import { getSaveData } from "./saveController.js";
 import { getCurrency, getPrice } from "./general.js";
 import { Items } from "../data/items.js";
+
 export function buildItems(items) {
     for (const [key, value] of Object.entries(items)) {
         const name = key;
         if (value.equipped) {
             equipItem(name, false, value.level);
-        }
-        else {
+        } else {
             levelItem(name, value.level);
         }
     }
@@ -25,7 +34,6 @@ export function buildFromSave() {
     const saveString = getSaveData();
     buildItems(saveString.items);
     // Set ring
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ringMods = saveString.ring.mods;
     setRingLevel(saveString.ring.level);
     equipRingMods(ringMods);
@@ -54,7 +62,6 @@ export function setPresets(presets) {
     names.forEach((name, index) => {
         index += 1;
         const presetName = Object.keys(autoBattle.presets)[index];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const preset = presets[presetName];
         if (preset.length > 0) {
             updatePresetButton(name, index);
@@ -65,8 +72,7 @@ export function setPresets(presets) {
 export function loadPreset(buttonName) {
     const r = /\d/;
     const id = Number(buttonName.match(r));
-    const presetName = ("p" + id);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const presetName = "p" + id;
     const preset = autoBattle.presets[presetName];
     const newItems = [];
     preset.forEach((row) => {
@@ -81,8 +87,7 @@ export function loadPreset(buttonName) {
                     equipRingMods(ringMods);
                 }
             }
-        }
-        else {
+        } else {
             // Item
             newItems.push(row);
         }
@@ -107,8 +112,7 @@ function calcBuildCost() {
             const currency = getCurrency(item.name);
             if (currency === Currency.shards) {
                 shardCost += cost;
-            }
-            else if (currency === Currency.dust) {
+            } else if (currency === Currency.dust) {
                 dustCost += cost;
             }
         }
@@ -120,8 +124,7 @@ function calcBuildCost() {
             const cost = getPrice(name);
             if ("useShards" in value && value.useShards) {
                 shardCost += cost;
-            }
-            else {
+            } else {
                 dustCost += cost;
             }
         }

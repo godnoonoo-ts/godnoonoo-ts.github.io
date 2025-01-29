@@ -5,9 +5,12 @@ import { displayBestItem, uiSetDropsItems, uiUpdateDropItem } from "../../view/e
 import { getResults, modifiedAutoBattle, startSimulation } from "../autoBattleController.js";
 import { equipItemBackendOnly } from "../itemEquipController.js";
 import { getItemsToRun } from "./get.js";
+import { updateTimeSpent } from "../../view/simulationView.js";
+
 export function testDropItems() {
     runAllItems();
 }
+
 function runAllItems() {
     STORAGE.itemsToRun = getItemsToRun(true, false);
     if (STORAGE.itemsToRun.length > 0) {
@@ -19,22 +22,27 @@ function runAllItems() {
         startSimulation(undefined, baseOnComplete);
     }
 }
+
 function simulateNextItem() {
     equipItemBackendOnly(STORAGE.currentItem);
     modifiedAutoBattle();
-    startSimulation(onUpdate, onComplete);
+    startSimulation(onUpdate, onComplete, onInterrupt);
 }
+
 function baseOnComplete() {
     STORAGE.currentItem = STORAGE.itemsToRun.shift();
     simulateNextItem();
 }
+
 function getReducedWR(results) {
     return results.enemiesKilled / (results.enemiesKilled + results.trimpsKilled);
 }
+
 function onUpdate() {
     const results = getResults();
     uiUpdateDropItem(STORAGE.currentItem, results.clearingTime, getReducedWR(results), results.gameDust);
 }
+
 function onComplete() {
     setBestItem();
     equipItemBackendOnly(STORAGE.currentItem);
@@ -42,11 +50,17 @@ function onComplete() {
     if (item !== undefined) {
         STORAGE.currentItem = item;
         simulateNextItem();
-    }
-    else if (STORAGE.bestTime[0] !== "") {
+    } else if (STORAGE.bestTime[0] !== "") {
         displayBestItem(STORAGE.bestTime[0], STORAGE.bestWR[0], STORAGE.bestIncome[0]);
     }
 }
+
+function onInterrupt() {
+    equipItemBackendOnly(STORAGE.currentItem);
+    const results = getResults();
+    updateTimeSpent(results.isRunning, results.timeUsed, results.runtime);
+}
+
 function setBestItem() {
     const results = getResults();
     if (results.clearingTime < STORAGE.bestTime[1]) {
@@ -60,6 +74,7 @@ function setBestItem() {
         STORAGE.bestIncome = [STORAGE.currentItem, results.gameDust];
     }
 }
+
 const STORAGE = {
     itemsToRun: [],
     currentItem: "",

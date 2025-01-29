@@ -1194,7 +1194,7 @@ export let autoBattle = {
                 autoBattle.trimp.maxHealth += this.health();
                 autoBattle.trimp.poisonStack += Math.min(
                     this.maxStacks(),
-                    Math.floor(autoBattle.enemy.poison.hitsAtMax / 3)
+                    Math.floor(autoBattle.enemy.poison.hitsAtMax / 3),
                 );
             },
             startPrice: 100e6,

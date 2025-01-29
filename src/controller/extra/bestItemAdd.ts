@@ -53,7 +53,7 @@ function onComplete() {
         STORAGE.currentItem = item;
         simulateNextItem();
     } else if (STORAGE.bestTime[0] !== "") {
-        displayBestItem(STORAGE.bestTime[0], STORAGE.bestWR[0], STORAGE.bestIncome[0]);
+        displayBestItem(STORAGE.bestWR[0], STORAGE.bestTime[0], STORAGE.bestIncome[0]);
     }
 }
 

@@ -5,10 +5,19 @@ import { Build } from "../data/buildTypes.js";
 import { LZString } from "./lz-string.js";
 import { buildFromSave, buildItems, clearBuilderData, setPresets } from "./buildController.js";
 import { clearItems } from "./itemEquipController.js";
-import { clearBonuses, clearExtras, equipOneTimer, equipRingMod, getOneTimersSAName, setBonuses, setRingLevel, } from "./bonusesController.js";
+import {
+    clearBonuses,
+    clearExtras,
+    equipOneTimer,
+    equipRingMod,
+    getOneTimersSAName,
+    setBonuses,
+    setRingLevel,
+} from "./bonusesController.js";
 import { enemyCount, modifiedAutoBattleWithBuild, startSimulationFromButton } from "./autoBattleController.js";
 import { setSaveData } from "./saveController.js";
 import { getItems } from "./itemsController.js";
+
 export function stringPaste(paste) {
     clear(false);
     const savegame = JSON.parse(LZString.decompressFromBase64(paste));
@@ -16,18 +25,16 @@ export function stringPaste(paste) {
         //  Import save
         if (savegame.global) {
             importSave(savegame);
-        }
-        else {
+        } else {
             alert("https://nsheetz.github.io/perks/");
         }
-    }
-    else if (paste.includes("\t")) {
+    } else if (paste.includes("\t")) {
         // Import spreadsheet line
         importSpreadsheet(paste);
     }
     startSimulationFromButton();
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 function importSave(savegame) {
     clear(true);
     modifiedAutoBattleWithBuild();
@@ -61,6 +68,7 @@ function importSave(savegame) {
     const presets = savegame.global.autoBattleData.presets;
     setPresets(presets);
 }
+
 function importSpreadsheet(row) {
     modifiedAutoBattleWithBuild();
     const ABItems = JSON.parse(JSON.stringify(getItems())); // Deep copy
@@ -74,24 +82,24 @@ function importSpreadsheet(row) {
     equipRowItems(ABItems, items);
     equipRowBonuses(remaining);
 }
+
 function cleanRow(row) {
     let rowSplit = row.split("\t");
     rowSplit = removeStringFirst(rowSplit);
-    rowSplit = removeTrailing(rowSplit);
-    return rowSplit;
+    return removeTrailing(rowSplit);
 }
+
 function removeStringFirst(row) {
     // If the first non-tab character is a string, aka name, remove everything before and including it.
     for (let i = 0; i < row.length; i++) {
         if (row[i] !== "") {
-            if (isNaN(parseInt(row[i])))
-                return row.slice(i + 1);
-            else
-                return row;
+            if (isNaN(parseInt(row[i]))) return row.slice(i + 1);
+            else return row;
         }
     }
     return row;
 }
+
 function removeTrailing(row) {
     // Remove everything from the WR (which has percentage) and after.
     for (let i = 0; i < row.length; i++) {
@@ -101,6 +109,7 @@ function removeTrailing(row) {
     }
     return row;
 }
+
 function findBonusesSplit(row) {
     for (let i = 0; i < row.length; i++) {
         if (row[i].includes("X")) {
@@ -109,7 +118,7 @@ function findBonusesSplit(row) {
     }
     return -1;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 function equipRowItems(ABItems, items) {
     items.forEach((itemLevel, index) => {
         if (itemLevel !== "") {
@@ -120,6 +129,7 @@ function equipRowItems(ABItems, items) {
     });
     buildItems(ABItems);
 }
+
 function equipRowBonuses(bonuses) {
     if (!isNaN(parseInt(bonuses[0]))) {
         // The first bonus is the ring so equip all oneTimers
@@ -133,23 +143,21 @@ function equipRowBonuses(bonuses) {
         }
     });
 }
+
 function equipBonus(value, position) {
     const oneTimers = getOneTimersSAName();
-    if (value === "X")
-        equipOneTimer(oneTimers[position]);
+    if (value === "X") equipOneTimer(oneTimers[position]);
     else {
         // Ring
         const lvl = parseInt(value);
-        if (!isNaN(lvl))
-            setRingLevel(lvl);
-        else
-            equipRingMod(value);
+        if (!isNaN(lvl)) setRingLevel(lvl);
+        else equipRingMod(value);
     }
 }
+
 export function clear(extras) {
     clearItems();
     clearBonuses();
-    if (extras)
-        clearExtras();
+    if (extras) clearExtras();
     clearBuilderData();
 }
